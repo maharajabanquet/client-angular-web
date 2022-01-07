@@ -1,0 +1,14 @@
+p {
+    text-align: center;
+}
+
+.font-style {
+    font-family: "Merriweather",serif;
+    font-size: 48px;
+    color: #23221f;
+    line-height: 72px;
+}
+
+.hint-style {
+    color: red;
+}

@@ -1,0 +1,141 @@
+
+<mat-spinner *ngIf="!formReadyToLoad" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+       
+       <form *ngIf="formReadyToLoad" [formGroup]="bookingForm" class="example-form">
+        <mat-form-field color="accent" appearance="outline">
+            <mat-label>Booking Date</mat-label>
+            <input formControlName="bookingDate"  matInput >
+            <mat-icon matSuffix>date_range</mat-icon>
+          </mat-form-field>
+      
+        <table class="example-full-width" cellspacing="0"><tr>
+          <td>
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>First Name</mat-label>
+                <input formControlName="firstName"  matInput placeholder="Enter First Name">
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error *ngIf="checkError('firstName', 'required')">First Name is required</mat-error>
+                <mat-error *ngIf="checkError('firstName', 'minlength')">First Name should be more than 2 characters</mat-error>
+                <mat-error *ngIf="checkError('firstName', 'maxlength')">First Name should be less than 20 characters</mat-error>
+              </mat-form-field>
+          </td>
+          <td>
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Last Name</mat-label>
+                <input formControlName="lastName" matInput placeholder="Enter Last Name">
+                <mat-icon matSuffix>person</mat-icon>
+                <mat-error *ngIf="checkError('lastName', 'required')">Last Name is required</mat-error>
+                <mat-error *ngIf="checkError('lastName', 'minlength')">Last Name should be more than 2 characters</mat-error>
+                <mat-error *ngIf="checkError('lastName', 'maxlength')">Last Name should be less than 20 characters</mat-error>
+              </mat-form-field>
+          </td>
+        </tr></table>
+      
+        <p>
+            <mat-form-field color="accent" appearance="outline">
+                <mat-label>Phone Number</mat-label>
+                <input formControlName="phoneNumber" matInput placeholder="Enter Phone Number">
+                <mat-icon matSuffix>phone</mat-icon>
+                <mat-error *ngIf="checkError('phoneNumber', 'required')">Phone Number is required</mat-error>
+                <mat-error *ngIf="checkError('phoneNumber', 'pattern')">Inavlid Phone Number</mat-error>
+              </mat-form-field>
+       
+        </p>
+        <table class="example-full-width" cellspacing="0"><tr>
+          <td>
+            <mat-form-field style="width: 450px;" appearance="outline">
+                <mat-label>Address</mat-label>
+                <textarea formControlName="address"  matInput placeholder="Enter Customer Address"></textarea>
+                <mat-error *ngIf="checkError('address', 'required')">Address is required</mat-error>
+                <mat-error *ngIf="checkError('address', 'minlength')">Address should be more than 50 characters</mat-error>
+                <mat-error *ngIf="checkError('address', 'maxlength')">Address should be less than 5 characters</mat-error>
+              </mat-form-field>
+          </td>
+        </tr></table>
+        <table class="example-full-width" cellspacing="0"><tr>
+            <td>
+                <mat-form-field *ngIf="!formDisabled" appearance="outline">
+                    <mat-label>Requirements</mat-label>
+                    <mat-select  formControlName="requirements">
+                      <mat-option *ngFor="let item of requirements" [value]="item">{{item}}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="checkError('requirements', 'required')">Requirements is required</mat-error>
+                  </mat-form-field>
+                  &nbsp;
+                  <ng-container *ngIf="bookingForm.get('requirements')?.value === 'Ring Ceremony or Dekha suni' || bookingForm.get('requirements')?.value === 'Birthday Party' || bookingForm.get('requirements')?.value === 'Others'">
+                    <mat-form-field *ngIf="!formDisabled " appearance="outline">
+                      <mat-label>Facilites</mat-label>
+                      <mat-select  formControlName="facilities" multiple>
+                        <mat-option *ngFor="let item of facilites" [value]="item">{{item.label}}</mat-option>
+                      </mat-select>
+                      <mat-error *ngIf="checkError('facilities', 'required')">Facilites is required</mat-error>
+                    </mat-form-field>
+                  </ng-container>
+
+                 <div *ngIf="formDisabled">
+                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+                    <!--- Note that these columns can be defined in any order.
+                          The actual rendered columns are set as a property on the row definition" -->
+                  
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                      <th mat-header-cell *matHeaderCellDef>Sl.No </th>
+                      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container>
+                  
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="facilities">
+                      <th mat-header-cell *matHeaderCellDef> Facilites </th>
+                      <td mat-cell *matCellDef="let element"> {{element.facilities}} </td>
+                    </ng-container>
+                    <ng-container matColumnDef="price">
+                      <th mat-header-cell *matHeaderCellDef> Price </th>
+                      <td mat-cell *matCellDef="let element"> {{element.price}} </td>
+                    </ng-container>
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                  </table>
+                  <!-- <h2 style="font-size: 14px;">Requirement List:</h2>
+                  <ol *ngFor="let item of bookingForm.get('requirements')?.value">
+                    <li>{{item}}</li>
+                  </ol>  -->
+                 </div>
+               
+            </td>
+          </tr></table>
+        <table class="example-full-width" cellspacing="0"><tr>
+            <td>
+                <mat-form-field color="accent" appearance="outline">
+                    <mat-label>Booking Amount</mat-label>
+                    <input  (keyup)="onInputBalanceAmount($event)" formControlName="BookingAmount" matInput placeholder="Enter Booking Amount">
+                    <mat-icon matSuffix>money</mat-icon>
+                    <mat-error *ngIf="checkError('address', 'required')">Booking Amount is required</mat-error>
+                  </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field color="accent" appearance="outline">
+                    <mat-label>Final Amount</mat-label>
+                    <input  formControlName="finalAmount"  matInput placeholder="Enter Final Amount">
+                    <mat-error *ngIf="checkError('address', 'required')">Final Amount is required</mat-error>
+                    <mat-icon matSuffix>money</mat-icon>
+                  </mat-form-field>
+            </td>
+          </tr></table>
+          <table>
+            <tr>
+              <td>
+                <mat-form-field color="accent" appearance="outline">
+                  <mat-label>Balanced Amount</mat-label>
+                  <input style="font-weight: bold;" formControlName="balancedAmount"  matInput>
+                  <mat-icon matSuffix>money</mat-icon>
+                </mat-form-field>
+              </td>
+            </tr>
+          </table>
+          <button  mat-stroked-button style="color:red" (click)="closeModal()">Cancel</button>&nbsp;
+          <button *ngIf="!printReady"  mat-stroked-button style="color:green" [disabled]="bookingForm?.status === 'INVALID'" (click)="submit()">Submit</button>&nbsp;
+          <button *ngIf="printReady"  mat-stroked-button   (click)="givePrint()"> 
+            <mat-icon>print</mat-icon>&nbsp;Print
+          </button>
+      </form>
+      

@@ -1,0 +1,68 @@
+
+<div (dblclick)="toggleTabel()">
+
+
+<ng-container *ngIf="currentView === 'form'">
+<h1 style="text-align: center;" class="font-style">Enquiry</h1>
+<mat-spinner *ngIf="hideForm" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
+<form (dblclick)="toggleTabel()" *ngIf="!hideForm" [formGroup]="enquiryForm">
+<p>
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label class="input-font-style">First Name</mat-label>
+      <input formControlName="firstName" matInput placeholder="Placeholder">
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="checkError('firstName', 'required')">First Name is required</mat-error>
+      <mat-error *ngIf="checkError('firstName', 'minlength')">First Name should be more than 2 characters</mat-error>
+      <mat-error *ngIf="checkError('firstName', 'maxlength')">First Name should be less than 20 characters</mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label class="input-font-style">Last Name</mat-label>
+      <input formControlName="lastName" matInput placeholder="Placeholder">
+      <mat-icon matSuffix>person</mat-icon>
+      <mat-error *ngIf="checkError('lastName', 'required')">Last Name is required</mat-error>
+      <mat-error *ngIf="checkError('lastName', 'minlength')">Last Name should be more than 2 characters</mat-error>
+      <mat-error *ngIf="checkError('lastName', 'maxlength')">Last Name should be less than 20 characters</mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field color="accent" appearance="outline">
+      <mat-label class="input-font-style">Phone Number</mat-label>
+      <input formControlName="phoneNumber" matInput placeholder="Placeholder">
+      <mat-icon matSuffix>phone</mat-icon>
+      <mat-error *ngIf="checkError('phoneNumber', 'required')">Phone Number is required</mat-error>
+      <mat-error *ngIf="checkError('phoneNumber', 'pattern')">Inavlid Phone Number</mat-error>
+
+    </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field color="accent" appearance="outline">
+        <mat-label class="input-font-style">Address</mat-label>
+        <input formControlName="address" matInput placeholder="Placeholder">
+        <mat-icon matSuffix>home</mat-icon>
+        <mat-error *ngIf="checkError('address', 'required')">Address is required</mat-error>
+        <mat-error *ngIf="checkError('address', 'minlength')">Address should be more than 50 characters</mat-error>
+        <mat-error *ngIf="checkError('address', 'maxlength')">Address should be less than 5 characters</mat-error>
+      </mat-form-field>
+  </p>
+  <p>
+    <mat-form-field appearance="outline">
+        <mat-label class="input-font-style">Booking Date</mat-label>
+        <input formControlName="BookingDate" matInput [matDatepicker]="picker">
+        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+        <mat-datepicker #picker></mat-datepicker>
+        <mat-error *ngIf="checkError('BookingDate', 'required')">Booking Date is required</mat-error>
+        <mat-error *ngIf="checkError('BookingDate', 'minlength')">Booking Date should be more than 2 characters</mat-error>
+        <mat-error *ngIf="checkError('BookingDate', 'maxlength')">Booking Date should be less than 20 characters</mat-error>
+    </mat-form-field>
+  </p>
+  <p>
+    <button mat-stroked-button style="color:black" [disabled]="enquiryForm.status === 'INVALID'" (click)="submit()">Submit</button>
+  </p>
+</form>
+</ng-container>
+<ng-container  *ngIf="currentView === 'table'">
+  <enquiry-table></enquiry-table>
+</ng-container>
+</div>
