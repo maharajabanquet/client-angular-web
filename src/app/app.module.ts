@@ -12,6 +12,8 @@ import { BookingModalComponent } from './modals/booking-modal/booking-modal.comp
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EnquiryTableComponent } from './components/enquiry/enquiry-table/enquiry-table.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +22,9 @@ import { EnquiryTableComponent } from './components/enquiry/enquiry-table/enquir
     DashboardComponent,
     EnquiryComponent,
     BookingModalComponent,
-    EnquiryTableComponent
+    EnquiryTableComponent,
+    LandingPageComponent,
+    BookingDashboardComponent
   ],
   imports: [
     BrowserModule,

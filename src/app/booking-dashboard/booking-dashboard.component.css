@@ -1,0 +1,11 @@
+mat-toolbar{
+    background: #df810f;
+  }
+  .example-card {
+    max-width: 300px;
+    margin-bottom: 50px;
+    float: left;
+}
+.card-style {
+    flex: 2 1 auto;
+}
