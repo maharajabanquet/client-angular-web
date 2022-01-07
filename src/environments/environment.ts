@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 const LOCAL_PORT = '3000'
 const LOCAL_HOST = `http://localhost:${LOCAL_PORT}/`;
-const HEROKU_UAT = 'https://maharaja-banquet.herokuapp.com'
+const HEROKU_UAT = 'https://maharajabanquet.herokuapp.com'
 export const environment = {
   production: false,
   host: HEROKU_UAT
