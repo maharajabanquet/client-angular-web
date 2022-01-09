@@ -18,7 +18,7 @@ export class InlineCalendarComponent implements OnInit {
   selectedDate: any;
 
  @Input() datesToHighlight = [];
-
+  @Input() isPublic: boolean | undefined;
   animal: string | undefined;
   name: string | undefined;
   ready: boolean | undefined;
@@ -73,22 +73,25 @@ export class InlineCalendarComponent implements OnInit {
   }
 
   openDialog(selectedDate: Date, disabled: any): void {
-    let height = 'auto';
-    if(disabled) {
-      height = '100%';
+    if(!this.isPublic) {
+      let height = 'auto';
+      if(disabled) {
+        height = '100%';
+      }
+      const dialogRef = this.dialog.open(BookingModalComponent, {
+        width: 'auto',
+        height: height,
+        data: {selectedDate: selectedDate, disabled: disabled},
+      });
+  
+      dialogRef.afterClosed().subscribe(result => {
+        console.log('The dialog was closed');
+        this.selectedDate = null;
+       this.getBookedDates();
+       this.dialog.openDialogs.pop();
+      });
     }
-    const dialogRef = this.dialog.open(BookingModalComponent, {
-      width: 'auto',
-      height: height,
-      data: {selectedDate: selectedDate, disabled: disabled},
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      this.selectedDate = null;
-     this.getBookedDates();
-     this.dialog.openDialogs.pop();
-    });
+   
   }
 
   getBookedDates() {
@@ -110,7 +113,9 @@ export class InlineCalendarComponent implements OnInit {
       }
       }
       this.datesToHighlight = highlightDates;
-      this.holdDate = holdDates;
+      if(!this.isPublic) {
+        this.holdDate = holdDates;
+      }
       this.ready = true;
       console.log(this.datesToHighlight);
       console.log(this.holdDate);

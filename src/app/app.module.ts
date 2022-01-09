@@ -14,6 +14,11 @@ import { HttpClientModule } from '@angular/common/http';
 import { EnquiryTableComponent } from './components/enquiry/enquiry-table/enquiry-table.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
+import { FooterComponent } from './landing-page/footer/footer.component';
+import { ContactUsComponent } from './landing-page/contact-us/contact-us.component';
+import { PhotogalleryComponent } from './landing-page/photogallery/photogallery.component';
+import { ReviewPageComponent } from './landing-page/review-page/review-page.component';
+import { OurServiceComponent } from './landing-page/our-service/our-service.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +29,12 @@ import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard
     BookingModalComponent,
     EnquiryTableComponent,
     LandingPageComponent,
-    BookingDashboardComponent
+    BookingDashboardComponent,
+    FooterComponent,
+    ContactUsComponent,
+    PhotogalleryComponent,
+    ReviewPageComponent,
+    OurServiceComponent
   ],
   imports: [
     BrowserModule,
