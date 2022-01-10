@@ -19,4 +19,9 @@ export class EnquiryServiceService {
     const URL = `api/v1/enquiry/view-all-enquiry?pageNo=${pageNo}&pageSize=${pageSize}`;
     return this.apiService.get(URL);
   }
+
+  sendMail(payload: any) {
+    const URL = `api/v1/enquiry/contact-us`;
+    return this.apiService.post(URL, payload);
+  }
 }

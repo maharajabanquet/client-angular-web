@@ -1,5 +1,5 @@
 
-	<div id="contact" class="map">
+	<div id="contact" class="map map-pos">
         <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14223.228661151647!2d84.8487546!3d26.9730053!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x10130f4d84416f78!2sMaharaja%20Banquet%20Hall!5e0!3m2!1sen!2sin!4v1641751105994!5m2!1sen!2sin" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
           </div>
         <div class="contact">
@@ -20,11 +20,15 @@
               </div>
               <div class="col-md-8 contact-grids contact-grids-w3right">
                 <div class="contact-form">  
-                  <form action="#" method="post">
-                    <textarea name="Message" placeholder="Message" required=""></textarea>
-                    <input type="text" name="First Name" placeholder="Name" required="">
-                    <input type="email" name="Email" placeholder="Email" required=""> 
-                    <input type="submit" value="SUBMIT">
+                  <form [formGroup]="contactForm" action="#" method="post">
+                    <textarea formControlName="message" name="Message" placeholder="Message" required=""></textarea><br>
+                    <input formControlName="name" type="text" name="First Name" placeholder="Enter Your Name" required="">
+                    <input formControlName="phone" type="text" name="phone" placeholder="Enter Your Phone Number" required=""><br>
+                    <br>
+                    <input  formControlName="email" type="email" name="Email" placeholder="Enter Your Email Id" required=""> 
+                    <!-- <input (change)="submit()" [disabled]="contactForm.status === 'INVALID'" type="submit" value="SUBMIT"> -->
+                    <button mat-stroked-button style="color:black" [disabled]="contactForm.status === 'INVALID'" (click)="submit()">Submit</button>
+
                   </form> 
                 </div>
               </div> 
