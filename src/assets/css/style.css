@@ -62,7 +62,8 @@ body a:hover,body a:focus{
 	text-decoration: none;
 }
 .agile-logo a img {
-    width: 22%;
+    width: 117%;
+    height: 91px;
     display: inline-block;
     margin-top: -7px;
 	-webkit-animation: fa-spin 5s infinite linear;
@@ -109,7 +110,7 @@ body a:hover,body a:focus{
 /*-- //social-icons --*/ 
 /*-- //header --*/ 
 .banner-w3lstext {
-    padding: 20em 0;
+    padding: 26.6em 0;
 }
 .agileinfo-main h3 {
     margin: 0 auto;
@@ -119,8 +120,7 @@ body a:hover,body a:focus{
     line-height: 1.4em;
     font-size: 5em;
     letter-spacing: 2px;
-    border-top: 2px dashed rgba(0, 188, 212, 0.6);
-    border-bottom: 2px dashed rgba(0, 188, 212, 0.6);
+  
     padding: .2em 0;
 }
 /*-- top-nav --*/ 
@@ -222,6 +222,17 @@ span.menu {
   float: left;
   width: 100%;
   border: 0;
+  margin-top: -186px
+  }
+  @media only screen and (max-width: 600px) {
+    .rslides img {
+        display: block;
+        height: auto;
+        float: left;
+        width: 100%;
+        border: 0;
+        margin-top: -88px;
+        }
   }
 .callbacks_nav{
     position: absolute;
