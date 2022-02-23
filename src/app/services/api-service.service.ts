@@ -16,6 +16,11 @@ export class ApiServiceService {
     return this.http.get(this.startPoint + url)
   }
 
+  getThirdParty(url: any) {
+    return this.http.get(url)
+
+  }
+
   post(url: any, body: any) {
     return this.http.post(this.startPoint + url, body);
   }

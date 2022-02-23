@@ -38,7 +38,6 @@
               "src/assets/css/swipebox.css"
             ],
             "scripts": [
-              "src/assets/js/bars.js",
               "src/assets/js/bootstrap.js",
               "src/assets/js/controls.js",
               "src/assets/js/easing.js",
@@ -47,7 +46,8 @@
               "src/assets/js/jquery.swipebox.min.js",
               "src/assets/js/move-top.js",
               "src/assets/js/responsiveslides.min.js",
-              "src/assets/js/SmoothScroll.min.js"
+              "src/assets/js/SmoothScroll.min.js",
+              "src/assets/js/jquery-3.6.0.min.js"
             ]
           },
           "configurations": {

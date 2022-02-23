@@ -19,6 +19,7 @@ import { ContactUsComponent } from './landing-page/contact-us/contact-us.compone
 import { PhotogalleryComponent } from './landing-page/photogallery/photogallery.component';
 import { ReviewPageComponent } from './landing-page/review-page/review-page.component';
 import { OurServiceComponent } from './landing-page/our-service/our-service.component';
+import { NgImageSliderModule } from 'ng-image-slider';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { OurServiceComponent } from './landing-page/our-service/our-service.comp
     MaterialModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    NgImageSliderModule
   ],
   providers: [],
   bootstrap: [AppComponent]
