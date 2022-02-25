@@ -34,4 +34,9 @@ export class BookingServiceService {
     const URL = `api/v1/invoice/invoice?id=${invoiceId}`;
     return this.apiService.get(URL);
   }
+
+  getAuth() {
+    const URL = 'api/v1/auth/security';
+    return this.apiService.get(URL);
+  }
 }

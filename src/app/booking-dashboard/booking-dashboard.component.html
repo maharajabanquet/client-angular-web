@@ -5,11 +5,25 @@
 
   </mat-toolbar>
 </p>
-<div style="display: flex;">
+<div style="display: flex;" *ngIf="isAuthenticate">
   <mat-card  class="card-style">
-    <enquiry></enquiry>
+    <enquiry ></enquiry>
   </mat-card>
   <mat-card style="flex: 1 1 auto;">
-    <inline-calendar></inline-calendar>
+    <inline-calendar ></inline-calendar>
   </mat-card>
+</div>
+
+<div *ngIf="!isAuthenticate" class="parent"  >
+<form [formGroup]="loginForm" class="example-form">
+  <mat-form-field  class="example-full-width" appearance="outline">
+    <mat-label>Username</mat-label>
+    <input formControlName="username" matInput placeholder="Please enter username">
+  </mat-form-field><br>
+  <mat-form-field class="example-full-width" appearance="outline">
+    <mat-label>Password</mat-label>
+    <input type="password" formControlName="password" matInput placeholder="Please enter password">
+  </mat-form-field>
+</form>
+<button (click)="login()" mat-raised-button color="warn">Login</button>
 </div>

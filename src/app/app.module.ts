@@ -20,6 +20,7 @@ import { PhotogalleryComponent } from './landing-page/photogallery/photogallery.
 import { ReviewPageComponent } from './landing-page/review-page/review-page.component';
 import { OurServiceComponent } from './landing-page/our-service/our-service.component';
 import { NgImageSliderModule } from 'ng-image-slider';
+import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
 
 @NgModule({
   declarations: [
@@ -47,7 +48,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
     HttpClientModule,
     NgImageSliderModule
   ],
-  providers: [],
+  providers: [BnNgIdleService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

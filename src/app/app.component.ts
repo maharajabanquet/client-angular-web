@@ -10,6 +10,7 @@ export class AppComponent {
   title = 'maharaja';
   constructor(private trafficService: TrafficService) {
     this.snapShot();
+   
   }
 
   snapShot() {
