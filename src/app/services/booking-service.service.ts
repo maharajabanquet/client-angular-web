@@ -35,8 +35,8 @@ export class BookingServiceService {
     return this.apiService.get(URL);
   }
 
-  getAuth() {
-    const URL = 'api/v1/auth/security';
+  getAuth(username: string, password: string) {
+    const URL = `api/v1/auth/security?username=${username}&password=${password}`;
     return this.apiService.get(URL);
   }
 }

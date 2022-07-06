@@ -28,23 +28,11 @@ export class BookingDashboardComponent implements OnInit {
 
 
   login() {
-    this.bookService.getAuth().subscribe((res: any) => {
-      res = res.credentials;
-      const username = this.loginForm.get('username')?.value;
-      const password = this.loginForm.get('password')?.value;
-      if(atob(res.username) === username && atob(res.password) === password) {
-        this.isAuthenticate = true;
-        this.bnIdle.startWatching(40).subscribe((res) => {
-          console.log("check", res);
-          if(res) {
-            this.isAuthenticate = false;
-            this.loginForm.get('password')?.patchValue("")
-          }
-        })
-      } else {
-        this._snackBar.open('Unauthorized Access', 'Login Failed');
-
-      }
+    this.bookService.getAuth(this.loginForm.get('username')?.value, this.loginForm.get('password')?.value).subscribe((res: any) => {
+      this.isAuthenticate = true;
+  
+    }, (err) => {
+      this._snackBar.open('Unauthorized Access', 'Login Failed');
     })
   }
 
