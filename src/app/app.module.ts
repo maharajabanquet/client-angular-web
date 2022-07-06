@@ -20,10 +20,14 @@ import { PhotogalleryComponent } from './landing-page/photogallery/photogallery.
 import { ReviewPageComponent } from './landing-page/review-page/review-page.component';
 import { OurServiceComponent } from './landing-page/our-service/our-service.component';
 import { NgImageSliderModule } from 'ng-image-slider';
-import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
-
+import { BnNgIdleService } from 'bn-ng-idle';
+import { CalendarModule, DateAdapter } from 'angular-calendar';
+import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'; // import bn-ng-idle service
+import { PublicCalendarComponent } from './public-calendar/public-calendar.component';
+import { FlatpickrModule } from 'angularx-flatpickr';
 @NgModule({
   declarations: [
+    PublicCalendarComponent,
     AppComponent,
     InlineCalendarComponent,
     DashboardComponent,
@@ -36,7 +40,8 @@ import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
     ContactUsComponent,
     PhotogalleryComponent,
     ReviewPageComponent,
-    OurServiceComponent
+    OurServiceComponent,
+    
   ],
   imports: [
     BrowserModule,
@@ -46,7 +51,9 @@ import { BnNgIdleService } from 'bn-ng-idle'; // import bn-ng-idle service
     ReactiveFormsModule,
     FormsModule,
     HttpClientModule,
-    NgImageSliderModule
+    NgImageSliderModule,
+    FlatpickrModule.forRoot(),
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
   ],
   providers: [BnNgIdleService],
   bootstrap: [AppComponent]
