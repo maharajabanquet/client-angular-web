@@ -19,10 +19,10 @@ export class LandingPageComponent implements OnInit {
   onResize(event: Event) {
     console.log(window.innerWidth);
     
-    if(window.innerWidth > 1800) {
-      this.isMobile = true
-    } else {
+    if(window.innerWidth > 1500) {
       this.isMobile = false
+    } else {
+      this.isMobile = true
     }
     
 }
