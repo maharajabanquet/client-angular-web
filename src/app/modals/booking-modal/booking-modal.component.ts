@@ -47,6 +47,9 @@ export class BookingModalComponent implements OnInit {
   formDisabled: boolean | undefined;
   printReady: boolean | undefined;
   facilites: any;
+  blob!: Blob;
+  invoice_generated!: boolean;
+  showLoader!: boolean;
   constructor(
     public dialogRef: MatDialogRef<BookingModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -163,6 +166,7 @@ export class BookingModalComponent implements OnInit {
     this.ready = false;
     this.bookingService.getASpecificBooking(this.selectedBookingDate.toLocaleDateString()).subscribe((data: any) => {
       this.bookingForm.patchValue(data.bookingData[0])
+      this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
 
       for(let index=0; index < data.bookingData[0].facilities.length; index++) {
         this.ELEMENT_DATA.push({position: index+1, facilities: data.bookingData[0].facilities[index].label, price: data.bookingData[0].facilities[index].price})
@@ -175,8 +179,26 @@ export class BookingModalComponent implements OnInit {
   }
 
   givePrint(){
-    window.open(environment.host + `api/v1/invoice/invoice?data=${JSON.stringify(this.bookingForm.getRawValue())}`, "_blank");
-    this._snackBar.open('Invoice Generated!', 'OK',{duration: 1000});
+    // window.open(environment.host + `api/v1/invoice/invoice?data=${JSON.stringify(this.bookingForm.getRawValue())}`, "_blank");
+    // this.bookingService.generateInvoice(this.bookingForm.getRawValue()).subscribe(res => {
+    //   this._snackBar.open('Invoice Generated!', 'OK',{duration: 1000});
+    // })
+    this.showLoader = true;
+    this.bookingService.generateInvoice(this.bookingForm.getRawValue()).subscribe((data: any) => {
+
+      this.blob = new Blob([data as BlobPart], {type: 'application/pdf'});
+    
+      var downloadURL = window.URL.createObjectURL(data);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = `${this.bookingForm.getRawValue().firstName}`+ "_invoice.pdf";
+      link.click();
+      this.bookingService.getASpecificBooking(this.selectedBookingDate.toLocaleDateString()).subscribe((data: any) => {
+        this.showLoader = false;
+        this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
+      })
+    
+    });
   }
 
   onRequirementSelect() { 

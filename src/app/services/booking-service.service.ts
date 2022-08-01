@@ -39,4 +39,9 @@ export class BookingServiceService {
     const URL = `api/v1/auth/security?username=${username}&password=${password}`;
     return this.apiService.get(URL);
   }
+
+  generateInvoice(body: any) {
+    const URL = `api/v1/invoice/generate_invoice`;
+    return this.apiService.postPdf(URL, body);
+  }
 }

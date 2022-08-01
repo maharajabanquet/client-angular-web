@@ -134,8 +134,18 @@
           </table>
           <button  mat-stroked-button style="color:red" (click)="closeModal()">Cancel</button>&nbsp;
           <button *ngIf="!printReady"  mat-stroked-button style="color:green" [disabled]="bookingForm?.status === 'INVALID'" (click)="submit()">Submit</button>&nbsp;
-          <button *ngIf="printReady"  mat-stroked-button   (click)="givePrint()"> 
-            <mat-icon>print</mat-icon>&nbsp;Print
-          </button>
+       <ng-container *ngIf="!invoice_generated">
+         <button *ngIf="printReady"  mat-stroked-button   (click)="givePrint()"> 
+           <mat-icon>print</mat-icon>&nbsp;Print
+         </button>
+         <mat-spinner *ngIf="showLoader" [diameter]="30" style="margin-left:194px;margin-top:-36px;"></mat-spinner>
+       </ng-container>
+       <ng-container *ngIf="invoice_generated">
+        <mat-label style="color:green;font-weight: bold;">Invoice Generated</mat-label>
+
+       </ng-container>
+       <ng-container>
+       
+       </ng-container>
       </form>
       
