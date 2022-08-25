@@ -44,4 +44,10 @@ export class BookingServiceService {
     const URL = `api/v1/invoice/generate_invoice`;
     return this.apiService.postPdf(URL, body);
   }
+
+  getLagan() {
+    const URL = `api/v1/lagan/get-lagan`;
+    return this.apiService.get(URL);
+  } 
+
 }

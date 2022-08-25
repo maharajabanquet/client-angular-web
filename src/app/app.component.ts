@@ -8,8 +8,9 @@ import { TrafficService } from 'src/app/services/traffic.service';
 })
 export class AppComponent {
   title = 'maharaja';
+  websiteRead!: boolean;
   constructor(private trafficService: TrafficService) {
-    // this.snapShot();
+    this.snapShot();
    
   }
 
@@ -17,6 +18,7 @@ export class AppComponent {
     this.trafficService.getUserIp().subscribe((resp: any) => {
       this.trafficService.snapShot(resp).subscribe(res => {
         console.log('snapshot completed');
+        this.websiteRead = true;
       })
     })
   }

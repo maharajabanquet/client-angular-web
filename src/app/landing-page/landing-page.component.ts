@@ -7,6 +7,7 @@ import { Component, OnInit, Input, HostListener } from '@angular/core';
 })
 export class LandingPageComponent implements OnInit {
   isMobile!: boolean;
+  isReady!: boolean;
   constructor() { }
 
   ngOnInit(): void {
@@ -25,6 +26,9 @@ export class LandingPageComponent implements OnInit {
       this.isMobile = true
     }
     
+}
+isReadyToLoad(eventData: any) {
+  this.isReady = eventData;
 }
 
 }
