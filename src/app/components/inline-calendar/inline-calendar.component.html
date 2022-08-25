@@ -1,4 +1,6 @@
 <mat-spinner *ngIf="!ready" color="warn" style="margin:50% auto;" mode="indeterminate"></mat-spinner>
+<mat-icon (click)="getBookedDates();">refresh</mat-icon>
+
 <h2 style="text-align: center;">Booking</h2>
 <mat-card *ngIf="ready"   class="demo-inline-calendar-card">
     <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDate" (selectedChange)="onSelect($event)"></mat-calendar>

@@ -9,7 +9,7 @@ import { TrafficService } from 'src/app/services/traffic.service';
 export class AppComponent {
   title = 'maharaja';
   constructor(private trafficService: TrafficService) {
-    this.snapShot();
+    // this.snapShot();
    
   }
 

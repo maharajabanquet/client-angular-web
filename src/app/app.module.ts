@@ -25,6 +25,7 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'; // import bn-ng-idle service
 import { PublicCalendarComponent } from './public-calendar/public-calendar.component';
 import { FlatpickrModule } from 'angularx-flatpickr';
+
 @NgModule({
   declarations: [
     PublicCalendarComponent,

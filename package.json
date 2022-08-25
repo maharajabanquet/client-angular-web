@@ -25,6 +25,7 @@
     "angularx-flatpickr": "^6.6.0",
     "bn-ng-idle": "^1.0.1",
     "date-fns": "^2.23.0",
+    "flatpickr": "^4.6.13",
     "ng-image-slider": "^2.8.0",
     "rxjs": "~6.6.0",
     "tslib": "^2.3.0",

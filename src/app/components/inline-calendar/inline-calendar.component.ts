@@ -1,7 +1,8 @@
+import { Subject } from 'rxjs';
 
 
 
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, HostListener } from '@angular/core';
 import { MatCalendarCellCssClasses } from '@angular/material/datepicker';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { BookingModalComponent } from 'src/app/modals/booking-modal/booking-modal.component';
@@ -18,7 +19,9 @@ export class InlineCalendarComponent implements OnInit {
   selectedDate: any;
 
  @Input() datesToHighlight = [];
-  @Input() isPublic: boolean | undefined;
+  userActivity: any;
+  userInactive: Subject<any> = new Subject();
+   @Input() isPublic: boolean | undefined;
   animal: string | undefined;
   name: string | undefined;
   ready: boolean | undefined;
@@ -65,11 +68,22 @@ export class InlineCalendarComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private bookingService: BookingServiceService
-  ) { }
+  ) {
+    this.setTimeout();
+    this.userInactive.subscribe(() => this.getBookedDates());
+   }
 
   ngOnInit(): void {
    this.getBookedDates();
  
+  }
+  setTimeout() {
+    this.userActivity = setTimeout(() => this.userInactive.next(undefined), 300000);
+  }
+
+  @HostListener('window:mousemove') refreshUserState() {
+    clearTimeout(this.userActivity);
+    this.setTimeout();
   }
 
   openDialog(selectedDate: Date, disabled: any): void {
