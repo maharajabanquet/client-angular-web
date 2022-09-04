@@ -25,6 +25,8 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'; // import bn-ng-idle service
 import { PublicCalendarComponent } from './public-calendar/public-calendar.component';
 import { FlatpickrModule } from 'angularx-flatpickr';
+import { QRCodeModule } from 'angularx-qrcode';
+import { QrcodeGenComponent } from './components/qrcode-gen/qrcode-gen.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +44,7 @@ import { FlatpickrModule } from 'angularx-flatpickr';
     PhotogalleryComponent,
     ReviewPageComponent,
     OurServiceComponent,
-    
+    QrcodeGenComponent,
   ],
   imports: [
     BrowserModule,
@@ -54,7 +56,10 @@ import { FlatpickrModule } from 'angularx-flatpickr';
     HttpClientModule,
     NgImageSliderModule,
     FlatpickrModule.forRoot(),
-    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory })
+    CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
+    QRCodeModule
+    
+    
   ],
   providers: [BnNgIdleService],
   bootstrap: [AppComponent]

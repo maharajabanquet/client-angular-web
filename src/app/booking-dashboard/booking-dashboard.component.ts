@@ -7,11 +7,13 @@ import { BnNgIdleService } from 'bn-ng-idle'; // import it to your component
 @Component({
   selector: 'app-booking-dashboard',
   templateUrl: './booking-dashboard.component.html',
-  styleUrls: ['./booking-dashboard.component.css']
+  styleUrls: ['./booking-dashboard.component.css'],
 })
 export class BookingDashboardComponent implements OnInit {
-  isAuthenticate = false;
+  isAuthenticate = true;
   loginForm!: FormGroup
+  showFiller = false;
+
   constructor(
     private fb: FormBuilder,
     private bookService: BookingServiceService,

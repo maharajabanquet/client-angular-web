@@ -1,0 +1,30 @@
+<!-- <div *ngIf="!qrCode" (click)="generate()">
+    <img src="../../../assets/images/qr-logo.png">
+</div>
+<div *ngIf="qrCode" class="qr-div">
+    <qrcode [qrdata]="qrCode" [width]="256" [errorCorrectionLevel]="'M'" ></qrcode>
+</div> -->
+<ng-container *ngIf="!isAuthenticated">
+    <div class="center">To Pair WhatsApp With Maharaja Official WhatsApp Account:</div>
+    <ol class="center">
+        <li class="QtrYx">Open WhatsApp on your phone</li>
+        <li class="QtrYx"><span dir="ltr" class="i0jNr">Tap <strong><span dir="ltr" class="i0jNr">Menu <span class="_30yMe">
+                            <mat-icon>more_vert</mat-icon>
+    
+                        </span></span></strong> or <strong><span dir="ltr" class="i0jNr">Settings
+                        <span class="_30yMe">
+                            <mat-icon>settings</mat-icon>
+    
+                        </span></span></strong> and select <strong>Linked Devices</strong></span></li>
+        <li class="QtrYx">Point your phone to this screen to capture the code
+        </li>
+    </ol>
+    <qrcode [className]="'center'" [qrdata]="qrCode" [errorCorrectionLevel]="'M'"></qrcode>
+</ng-container>
+<ng-container *ngIf="isAuthenticated">
+    <div class="center">WhatsApp Connected</div>
+
+    <p class="center" style="margin-top:18px;">
+        <img [width]="200" [height]="200" src="../../../assets/images/success.svg">
+    </p>
+</ng-container>

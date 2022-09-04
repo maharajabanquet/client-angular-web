@@ -23,11 +23,13 @@
     "angular": "^1.8.3",
     "angular-calendar": "^0.29.0",
     "angularx-flatpickr": "^6.6.0",
+    "angularx-qrcode": "^12.0.3",
     "bn-ng-idle": "^1.0.1",
     "date-fns": "^2.23.0",
     "flatpickr": "^4.6.13",
     "ng-image-slider": "^2.8.0",
     "rxjs": "~6.6.0",
+    "sweetalert2": "^11.4.29",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

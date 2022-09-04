@@ -1,0 +1,16 @@
+.center {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    margin: auto;
+}
+
+#canvas-container {
+    width: 100%;
+    text-align:center;
+ }
+ 
+ qrcode {
+    display: inline;
+ }
