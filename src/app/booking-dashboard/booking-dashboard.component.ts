@@ -10,7 +10,7 @@ import { BnNgIdleService } from 'bn-ng-idle'; // import it to your component
   styleUrls: ['./booking-dashboard.component.css'],
 })
 export class BookingDashboardComponent implements OnInit {
-  isAuthenticate = true;
+  isAuthenticate = false;
   loginForm!: FormGroup
   showFiller = false;
 

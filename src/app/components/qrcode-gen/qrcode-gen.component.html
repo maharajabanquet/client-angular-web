@@ -22,9 +22,13 @@
     <qrcode [className]="'center'" [qrdata]="qrCode" [errorCorrectionLevel]="'M'"></qrcode>
 </ng-container>
 <ng-container *ngIf="isAuthenticated">
-    <div class="center">WhatsApp Connected</div>
-
-    <p class="center" style="margin-top:18px;">
-        <img [width]="200" [height]="200" src="../../../assets/images/success.svg">
-    </p>
+    <mat-list>
+        <div mat-subheader>Connected Services</div>
+        <mat-list-item *ngFor="let folder of connectedDevice">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <div mat-line>{{folder.name}}</div>
+          <div mat-line> {{folder.updated | date}} </div>
+        </mat-list-item>
+       
+      </mat-list>
 </ng-container>

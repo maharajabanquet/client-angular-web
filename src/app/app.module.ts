@@ -8,7 +8,7 @@ import { MaterialModule } from './material-module';
 import { InlineCalendarComponent } from './components/inline-calendar/inline-calendar.component';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { EnquiryComponent } from './components/enquiry/enquiry.component';
-import { BookingModalComponent } from './modals/booking-modal/booking-modal.component';
+import { BookingModalComponent, DialogOverviewExampleDialog } from './modals/booking-modal/booking-modal.component';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { EnquiryTableComponent } from './components/enquiry/enquiry-table/enquiry-table.component';
@@ -45,6 +45,7 @@ import { QrcodeGenComponent } from './components/qrcode-gen/qrcode-gen.component
     ReviewPageComponent,
     OurServiceComponent,
     QrcodeGenComponent,
+    DialogOverviewExampleDialog
   ],
   imports: [
     BrowserModule,

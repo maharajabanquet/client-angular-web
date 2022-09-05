@@ -20,5 +20,16 @@ export class UtilityService {
     const url = 'api/v1/whatsapp/check-auth';
     return this.apiService.get(url);
   }
+
+  updateComm(body:any) {
+    const url = `api/v1/coms/update-com`;
+    return this.apiService.post(url, body);
+
+  }
+
+  checkComm() {
+    const url = `api/v1/coms/check-com`;
+    return this.apiService.get(url)
+  }
 }
 

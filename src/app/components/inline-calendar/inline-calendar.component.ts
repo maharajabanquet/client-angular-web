@@ -94,7 +94,7 @@ export class InlineCalendarComponent implements OnInit {
       }
       const dialogRef = this.dialog.open(BookingModalComponent, {
         width: 'auto',
-        height: height,
+        height: 'auto',
         data: {selectedDate: selectedDate, disabled: disabled},
       });
   

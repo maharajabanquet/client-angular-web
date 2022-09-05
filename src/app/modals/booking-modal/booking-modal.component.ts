@@ -32,6 +32,11 @@ export class BookingModalComponent implements OnInit {
     'Birthday Party',
     'Others'
   ]
+  status = {
+    Pending: 'yellow',
+    Settled: 'green',
+    Confirmed: 'red'
+  }
   facilities: string[] = ['Lawn', 
                             'वर बधु के सलए सडल्क्स कमरा (A.C.)-02', 
                             'AC Main Hall', 
@@ -50,6 +55,11 @@ export class BookingModalComponent implements OnInit {
   blob!: Blob;
   invoice_generated!: boolean;
   showLoader!: boolean;
+  settled: any;
+  currentStatus!: { label: string; color: string; };
+  showStatusFlag!: boolean;
+  bookingId: any;
+  showSettleLoader!: boolean;
   constructor(
     public dialogRef: MatDialogRef<BookingModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -57,6 +67,7 @@ export class BookingModalComponent implements OnInit {
     private bookingService: BookingServiceService,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
+    
 
   ) { }
 
@@ -167,7 +178,10 @@ export class BookingModalComponent implements OnInit {
     this.bookingService.getASpecificBooking(this.selectedBookingDate.toLocaleDateString()).subscribe((data: any) => {
       this.bookingForm.patchValue(data.bookingData[0])
       this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
+      this.settled = data && data.bookingData && data.bookingData[0] && data.bookingData[0].settled
+      this.bookingId = data && data.bookingData && data.bookingData[0] && data.bookingData[0]._id
 
+      this.showStatus(data && data.bookingData && data.bookingData[0] && data.bookingData[0].status)
       for(let index=0; index < data.bookingData[0].facilities.length; index++) {
         this.ELEMENT_DATA.push({position: index+1, facilities: data.bookingData[0].facilities[index].label, price: data.bookingData[0].facilities[index].price})
       }
@@ -196,6 +210,7 @@ export class BookingModalComponent implements OnInit {
       this.bookingService.getASpecificBooking(this.selectedBookingDate.toLocaleDateString()).subscribe((data: any) => {
         this.showLoader = false;
         this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
+        this.openPatchedForm();
       })
     
     });
@@ -231,4 +246,57 @@ export class BookingModalComponent implements OnInit {
       }
     })
   }
+
+  showStatus(status: string) {
+    if(status === 'pending') {
+      this.currentStatus =  {label: 'Pending', color: 'yellow'};
+    } else if(status === 'approved' && this.settled) {
+      this.currentStatus = {label: 'Settled', color: 'green'};
+    } else if(status === 'approved' && !this.settled) {
+      this.currentStatus = {label: 'Approved', color: 'red'};
+    }
+    this.showStatusFlag = true;
+  }
+
+  settleBooking() {
+    this.showLoader = true;
+    this.bookingService.settleBooking(this.bookingId).subscribe((resp: any) => {
+      this.showLoader = false;
+      if(resp && resp.status === 'ok') {
+        this.openPatchedForm();
+
+      }
+    })
+  }
+  openDialog(): void {
+    const dialogRef = this.dialog.open(DialogOverviewExampleDialog, {
+      width: '250px',
+      data:  {status: true},
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      console.log(result);
+      if(result && result.status === true) {
+        this.settleBooking();
+      }
+    });
+}
+}
+
+
+@Component({
+  selector: 'dialog-overview-example-dialog',
+  templateUrl: './dialog-overview-example-dialog.html',
+})
+export class DialogOverviewExampleDialog {
+  constructor(
+    public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+  ) {}
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
 }

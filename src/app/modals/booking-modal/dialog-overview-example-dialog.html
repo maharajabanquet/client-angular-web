@@ -1,0 +1,5 @@
+<h3  style="font-weight: bold;" mat-dialog-title>Are You Sure ?</h3>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Confirm</button>
+</div>

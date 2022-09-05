@@ -1,7 +1,8 @@
 
 <mat-spinner *ngIf="!formReadyToLoad" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
-       
+  <p *ngIf="showStatusFlag" [ngStyle]="{color: currentStatus.color,  'font-weight': 'bold', 'font-size': '20px'}">{{currentStatus.label}}<p>
        <form *ngIf="formReadyToLoad" [formGroup]="bookingForm" class="example-form">
+    
         <mat-form-field color="accent" appearance="outline">
             <mat-label>Booking Date</mat-label>
             <input formControlName="bookingDate"  matInput >
@@ -73,17 +74,13 @@
                   </ng-container>
 
                  <div *ngIf="formDisabled">
-                  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
-                    <!--- Note that these columns can be defined in any order.
-                          The actual rendered columns are set as a property on the row definition" -->
+                  <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                   
-                    <!-- Position Column -->
                     <ng-container matColumnDef="position">
                       <th mat-header-cell *matHeaderCellDef>Sl.No </th>
                       <td mat-cell *matCellDef="let element"> {{element.position}} </td>
                     </ng-container>
                   
-                    <!-- Name Column -->
                     <ng-container matColumnDef="facilities">
                       <th mat-header-cell *matHeaderCellDef> Facilites </th>
                       <td mat-cell *matCellDef="let element"> {{element.facilities}} </td>
@@ -95,10 +92,7 @@
                     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                   </table>
-                  <!-- <h2 style="font-size: 14px;">Requirement List:</h2>
-                  <ol *ngFor="let item of bookingForm.get('requirements')?.value">
-                    <li>{{item}}</li>
-                  </ol>  -->
+               -->
                  </div>
                
             </td>
@@ -141,8 +135,8 @@
          <mat-spinner *ngIf="showLoader" [diameter]="30" style="margin-left:194px;margin-top:-36px;"></mat-spinner>
        </ng-container>
        <ng-container *ngIf="invoice_generated">
+        <button *ngIf="!settled"  mat-stroked-button style="font-weight: bold;" (click)="openDialog()">Settle</button>&nbsp;
         <mat-label style="color:green;font-weight: bold;">Invoice Generated</mat-label>
-
        </ng-container>
        <ng-container>
        

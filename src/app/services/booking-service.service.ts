@@ -50,4 +50,9 @@ export class BookingServiceService {
     return this.apiService.get(URL);
   } 
 
+  settleBooking(_id:string) {
+    const url = 'api/v1/booking/settle-booking';
+    return this.apiService.post(url, {'_id': _id});
+  }
+
 }
