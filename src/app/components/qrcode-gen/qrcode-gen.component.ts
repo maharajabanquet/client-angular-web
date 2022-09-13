@@ -32,10 +32,12 @@ export class QrcodeGenComponent implements OnInit {
   checkAuth() {
     this.ul.getWhatsappAuth().subscribe((authStatus: any) => {
       if(authStatus && authStatus.status === 'authenticated') {
+
         this.ul.updateComm({status: true, name: 'whatsapp'}).subscribe(res => {
+          this.checkComm();
           this.qrCode = ''
           this.isAuthenticated = true;
-          this.checkComm();
+          
         })
       }
     })
@@ -43,8 +45,21 @@ export class QrcodeGenComponent implements OnInit {
 
   checkComm() {
     this.ul.checkComm().subscribe((status: any) => {
+      console.log(status);
       let commArray = status && status.docs || [];
       if(commArray && commArray.length === 0) {
+        this.ul.checkComm().subscribe((status: any) => {
+          let verifyCom = status && status.docs || [];
+          if(verifyCom.length > 0) {
+            verifyCom.forEach((element: any) => {
+              this.connectedDevice.push({
+                name: element.name,
+                updated: new Date(element.updated)
+              })
+              this.isAuthenticated = true;
+            }
+            )}
+        })
         this.isAuthenticated = false;
        this.generate();
       } else {
