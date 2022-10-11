@@ -1,0 +1,27 @@
+<mat-tab-group mat-align-tabs="start" >
+    <mat-tab label="Booking">
+      <div style="display: flex;" >
+      
+        <mat-card style="flex: 1 1 auto;">
+            <tent-house-table [label]="'Crockery'"></tent-house-table>
+        </mat-card>
+      </div>
+    </mat-tab>
+    <mat-tab label="Tent House">
+      <div >
+        <mat-card  class="card-style">
+        <tent-house-table [label]="'Furniture'"></tent-house-table>
+        </mat-card>
+      </div>
+    </mat-tab>
+
+    <mat-tab label="Tent House">
+        <div >
+          <mat-card  class="card-style">
+        <tent-house-table [label]="'Buffet'"></tent-house-table>
+          </mat-card>
+        </div>
+      </mat-tab>
+   
+  </mat-tab-group>
+  

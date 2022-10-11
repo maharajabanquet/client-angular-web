@@ -27,6 +27,9 @@ import { PublicCalendarComponent } from './public-calendar/public-calendar.compo
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { QRCodeModule } from 'angularx-qrcode';
 import { QrcodeGenComponent } from './components/qrcode-gen/qrcode-gen.component';
+import { TentHouseComponent } from './tent-house/tent-house.component';
+import { TentHouseTableComponent } from './tent-house/tent-house-table/tent-house-table.component';
+import { LazyImgDirectiveDirective } from './lazy-img-directive.directive';
 
 @NgModule({
   declarations: [
@@ -45,7 +48,10 @@ import { QrcodeGenComponent } from './components/qrcode-gen/qrcode-gen.component
     ReviewPageComponent,
     OurServiceComponent,
     QrcodeGenComponent,
-    DialogOverviewExampleDialog
+    DialogOverviewExampleDialog,
+    TentHouseComponent,
+    TentHouseTableComponent,
+    LazyImgDirectiveDirective
   ],
   imports: [
     BrowserModule,

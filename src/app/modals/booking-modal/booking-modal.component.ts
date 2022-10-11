@@ -27,10 +27,8 @@ export class BookingModalComponent implements OnInit {
   bookingForm!: FormGroup;
   requirementFormControl = new FormControl();
   requirements: string[] = [
-    'Marriage or reception',
-    'Ring Ceremony or Dekha suni',
-    'Birthday Party',
-    'Others'
+    'Wedding',
+    'Engagement',
   ]
   status = {
     Pending: 'yellow',
@@ -79,12 +77,12 @@ export class BookingModalComponent implements OnInit {
       if(configResp && configResp.config && configResp.config.finalBookingAmount) {
         this.config = configResp.config;
         this.facilites = [
-          {label: 'AC Main Hall', price: configResp.config.acMainHall},
-          {label: 'Delux Room', price: configResp.config.deluxRoom},
+          // {label: 'AC Main Hall', price: configResp.config.acMainHall},
+          // {label: 'Delux Room', price: configResp.config.deluxRoom},
           {label: 'Mini AC Hall', price: configResp.config.miniAcHall},
-          {label: 'Kitcehn', price: configResp.config.kitchen},
-          {label: 'First Floor', price: configResp.config.firstFloor},
-          {label: 'DG with Diesel', price: configResp.config.dgWithDisel},
+          // {label: 'Kitcehn', price: configResp.config.kitchen},
+          // {label: 'First Floor', price: configResp.config.firstFloor},
+          {label: 'Diesel', price: configResp.config.dgWithDisel},
         ]
         //  {
         //   'AC Main Hall': configResp.config.acMainHall,
@@ -122,9 +120,11 @@ export class BookingModalComponent implements OnInit {
       finalAmount: [, [Validators.required]],
       balancedAmount: [, [Validators.required]],
       facilities: [[]],
-      status: ['pending']
+      status: ['pending'],
+      dgWithDiesel: [false, [Validators.required]]
 
     })
+    this.bookingForm.get('BookingAmount')?.disable();
     if(this.formDisabled) {
       this.openPatchedForm();
     } else {
@@ -132,7 +132,7 @@ export class BookingModalComponent implements OnInit {
       this.bookingForm.get('finalAmount')?.disable();
       this.bookingForm.get('balancedAmount')?.disable();
       this.bookingForm.get('bookingDate')?.disable();
-      // this.bookingForm.get('BookingAmount')?.disable();
+      this.bookingForm.get('BookingAmount')?.disable();
     }
   
     this.formReadyToLoad = true;
@@ -140,6 +140,29 @@ export class BookingModalComponent implements OnInit {
       this.onRequirementSelect();
       this.onFacilitiesSelection();
     }
+    this.bookingForm.get('requirements')?.valueChanges.subscribe(value => {
+      this.bookingForm.get('dgWithDiesel')?.patchValue(false);
+    })
+   
+    this.bookingForm.get('dgWithDiesel')?.valueChanges.subscribe(value => {
+      if(this.bookingForm.get('requirements')?.value === 'Wedding') {
+        let finalAmount = this.config.finalBookingAmount;
+        if(value) {
+          this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
+        } else {
+          this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
+        }
+      } else {
+        let finalAmount = this.config.engagement;
+        if(value) {
+          this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
+        } else {
+          this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
+        }
+      }
+   
+    })
+  
   }
 
   patchForm(value: any, controlName: string) {
@@ -181,6 +204,8 @@ export class BookingModalComponent implements OnInit {
       this.settled = data && data.bookingData && data.bookingData[0] && data.bookingData[0].settled
       this.bookingId = data && data.bookingData && data.bookingData[0] && data.bookingData[0]._id
 
+      console.log(data.bookingData[0].dgWithDiesel);
+      
       this.showStatus(data && data.bookingData && data.bookingData[0] && data.bookingData[0].status)
       for(let index=0; index < data.bookingData[0].facilities.length; index++) {
         this.ELEMENT_DATA.push({position: index+1, facilities: data.bookingData[0].facilities[index].label, price: data.bookingData[0].facilities[index].price})
@@ -189,6 +214,9 @@ export class BookingModalComponent implements OnInit {
       this.bookingForm.disable();
       this.printReady = true;
       this.ready = true;
+      
+      this.bookingForm.get('dgWithDiesel')?.patchValue(data.bookingData[0].dgWithDiesel);
+      this.bookingForm.get('dgWithDiesel')?.disable();
     })
   }
 
@@ -218,13 +246,17 @@ export class BookingModalComponent implements OnInit {
 
   onRequirementSelect() { 
     this.bookingForm.get('requirements')?.valueChanges.subscribe(data => {
-      if(data === 'Marriage or reception')  {
+      if(data === 'Wedding')  {
         this.bookingForm.get('finalAmount')?.patchValue(this.config.finalBookingAmount)
         this.bookingForm.get('BookingAmount')?.enable();
       } else {
+        this.bookingForm.get('finalAmount')?.patchValue(this.config.engagement)
+        this.bookingForm.get('BookingAmount')?.enable();
+
         this.bookingForm.get('facilities')?.setValidators([Validators.required])
-        this.bookingForm.get('BookingAmount')?.disable();
+       
         this.bookingForm.get('BookingAmount')?.patchValue('');
+        
 
       }
     })

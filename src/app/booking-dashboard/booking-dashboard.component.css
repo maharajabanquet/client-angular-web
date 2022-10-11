@@ -1,5 +1,5 @@
 mat-toolbar{
-    background: #df810f;
+    background: black;
   }
   .example-card {
     max-width: 300px;
@@ -15,4 +15,21 @@ mat-toolbar{
   justify-content: center;
   align-items: center;
   flex-direction: column;
+}
+
+.mat-tab-label{
+  font-weight: bold;
+}
+
+label {
+  font-weight: bold;
+}
+
+/* Styles for tab labels */
+.mat-tab-label {
+  min-width: 25px !important;
+  padding: 5px;
+  background-color: transparent;
+  color: black;
+  font-weight: 700;
 }

@@ -54,7 +54,17 @@
           </td>
         </tr></table>
         <table class="example-full-width" cellspacing="0"><tr>
-            <td>
+          <td>
+            <mat-form-field appearance="outline">
+              <mat-label>Requirements</mat-label>
+              <mat-select  formControlName="requirements">
+                <mat-option *ngFor="let item of requirements" [value]="item">{{item}}</mat-option>
+              </mat-select>
+              <mat-error *ngIf="checkError('requirements', 'required')">Requirements is required</mat-error>
+            </mat-form-field>
+          </td>
+        
+            <!-- <td>
                 <mat-form-field *ngIf="!formDisabled" appearance="outline">
                     <mat-label>Requirements</mat-label>
                     <mat-select  formControlName="requirements">
@@ -63,7 +73,7 @@
                     <mat-error *ngIf="checkError('requirements', 'required')">Requirements is required</mat-error>
                   </mat-form-field>
                   &nbsp;
-                  <ng-container *ngIf="bookingForm.get('requirements')?.value === 'Ring Ceremony or Dekha suni' || bookingForm.get('requirements')?.value === 'Birthday Party' || bookingForm.get('requirements')?.value === 'Others'">
+                  <ng-container *ngIf="bookingForm.get('requirements')?.value === 'Engagement' || bookingForm.get('requirements')?.value === 'Birthday Party' || bookingForm.get('requirements')?.value === 'Others'">
                     <mat-form-field *ngIf="!formDisabled " appearance="outline">
                       <mat-label>Facilites</mat-label>
                       <mat-select  formControlName="facilities" multiple>
@@ -73,7 +83,7 @@
                     </mat-form-field>
                   </ng-container>
 
-                 <div *ngIf="formDisabled">
+                 <div *ngIf="formDisabled"> -->
                   <!-- <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
                   
                     <ng-container matColumnDef="position">
@@ -93,10 +103,18 @@
                     <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
                   </table>
                -->
-                 </div>
+                 <!-- </div> -->
                
-            </td>
+            <!-- </td> -->
           </tr></table>
+          <table class="example-full-width" cellspacing="0">
+            <tr>
+              <td>
+                <mat-checkbox  class="example-margin" formControlName="dgWithDiesel" >DG WITH DIESEL</mat-checkbox>
+              </td>
+            </tr>
+          </table>
+          <br>
         <table class="example-full-width" cellspacing="0"><tr>
             <td>
                 <mat-form-field color="accent" appearance="outline">
@@ -105,7 +123,7 @@
                     <mat-icon matSuffix>money</mat-icon>
                     <mat-error *ngIf="checkError('address', 'required')">Booking Amount is required</mat-error>
                   </mat-form-field>
-            </td>
+            </td>&nbsp;
             <td>
                 <mat-form-field color="accent" appearance="outline">
                     <mat-label>Final Amount</mat-label>

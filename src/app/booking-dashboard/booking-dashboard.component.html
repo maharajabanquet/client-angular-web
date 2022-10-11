@@ -1,11 +1,11 @@
 <p>
   <mat-toolbar color="dark">
     <!-- <span style="color:white">MAHARAJA BOOKING MANAGEMENT SYSTEM</span> -->
-    <span class="ankit">MAHARAJA BOOKING MANAGEMENT SYSTEM</span>
+    <span style="color: white;">MAHARAJA BOOKING MANAGEMENT SYSTEM</span>
 
   </mat-toolbar>
 </p>
-<mat-tab-group mat-align-tabs="start">
+<mat-tab-group mat-align-tabs="start" *ngIf="isAuthenticate">
   <mat-tab label="Booking">
     <div style="display: flex;" *ngIf="isAuthenticate">
       <mat-card  class="card-style">
@@ -16,10 +16,10 @@
       </mat-card>
     </div>
   </mat-tab>
-  <mat-tab label="Communication">
-    <div *ngIf="isAuthenticate">
+  <mat-tab  label="Tent House">
+    <div >
       <mat-card  class="card-style">
-       <qrcode-gen></qrcode-gen>
+      <tent-house></tent-house>
       </mat-card>
    
     </div>
