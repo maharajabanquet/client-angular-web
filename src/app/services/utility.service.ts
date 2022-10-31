@@ -31,5 +31,15 @@ export class UtilityService {
     const url = `api/v1/coms/check-com`;
     return this.apiService.get(url)
   }
+
+  getDepartment() {
+    const url = 'api/v1/department/get-department';
+    return this.apiService.get(url);
+  }
+
+  uploadFile(base64:any, empName: any, ext: any){
+    const url = `api/v1/upload/upload-proof?ext=${ext}`;
+    return this.apiService.post(url, {file: base64, employeeName: empName, ext: ext})
+  }
 }
 

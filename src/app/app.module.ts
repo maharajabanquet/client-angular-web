@@ -16,7 +16,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard.component';
 import { FooterComponent } from './landing-page/footer/footer.component';
 import { ContactUsComponent } from './landing-page/contact-us/contact-us.component';
-import { PhotogalleryComponent } from './landing-page/photogallery/photogallery.component';
+import { PhotogalleryComponent, DialogContentExampleDialog } from './landing-page/photogallery/photogallery.component';
 import { ReviewPageComponent } from './landing-page/review-page/review-page.component';
 import { OurServiceComponent } from './landing-page/our-service/our-service.component';
 import { NgImageSliderModule } from 'ng-image-slider';
@@ -30,6 +30,8 @@ import { QrcodeGenComponent } from './components/qrcode-gen/qrcode-gen.component
 import { TentHouseComponent } from './tent-house/tent-house.component';
 import { TentHouseTableComponent } from './tent-house/tent-house-table/tent-house-table.component';
 import { LazyImgDirectiveDirective } from './lazy-img-directive.directive';
+import { ManagementComponent } from './management/management.component';
+import { CommonModalDialog, DataTableComponent } from './data-table/data-table.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +53,10 @@ import { LazyImgDirectiveDirective } from './lazy-img-directive.directive';
     DialogOverviewExampleDialog,
     TentHouseComponent,
     TentHouseTableComponent,
-    LazyImgDirectiveDirective
+    LazyImgDirectiveDirective,
+    ManagementComponent,
+    DataTableComponent,
+    CommonModalDialog
   ],
   imports: [
     BrowserModule,
@@ -64,8 +69,7 @@ import { LazyImgDirectiveDirective } from './lazy-img-directive.directive';
     NgImageSliderModule,
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
-    QRCodeModule
-    
+    QRCodeModule,
     
   ],
   providers: [BnNgIdleService],
