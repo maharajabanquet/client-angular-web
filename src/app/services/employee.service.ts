@@ -24,4 +24,19 @@ export class EmployeeService {
     const url = `api/v1/employee/delete-employee?contact=${contact}`;
     return this.apiService.get(url);
   }
+
+  addHotelActivities(payload: any) {
+    const url = 'api/v1/hotel/add-hotel-activities';
+    return this.apiService.post(url, payload);
+  } 
+
+  getHotelActivityList() {
+    const url = 'api/v1/hotel/get-hotel-activities-list';
+    return this.apiService.get(url);
+  }
+
+  deleteHotelActivites(contactNumber: any) {
+    const url = `api/v1/hotel/delete-activities?contactNumber=${contactNumber}`;
+    return this.apiService.get(url);
+  }
 }

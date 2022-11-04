@@ -32,6 +32,7 @@ import { TentHouseTableComponent } from './tent-house/tent-house-table/tent-hous
 import { LazyImgDirectiveDirective } from './lazy-img-directive.directive';
 import { ManagementComponent } from './management/management.component';
 import { CommonModalDialog, DataTableComponent } from './data-table/data-table.component';
+import { HotelModalDialog, HotelTableComponent } from './hotel-table/hotel-table.component';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,9 @@ import { CommonModalDialog, DataTableComponent } from './data-table/data-table.c
     LazyImgDirectiveDirective,
     ManagementComponent,
     DataTableComponent,
-    CommonModalDialog
+    CommonModalDialog,
+    HotelTableComponent,
+    HotelModalDialog
   ],
   imports: [
     BrowserModule,
