@@ -129,7 +129,7 @@ export class BookingModalComponent implements OnInit {
       this.openPatchedForm();
     } else {
       this.bookingForm.get('bookingDate')?.patchValue(new Date(this.selectedBookingDate).toLocaleDateString());
-      this.bookingForm.get('finalAmount')?.disable();
+      // this.bookingForm.get('finalAmount')?.disable();
       this.bookingForm.get('balancedAmount')?.disable();
       this.bookingForm.get('bookingDate')?.disable();
       this.bookingForm.get('BookingAmount')?.disable();
