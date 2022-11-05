@@ -10,6 +10,7 @@ export interface PeriodicElement {
   bookingDate: any;
 }
 
+const ELEMENT_DATA: PeriodicElement[] = [];
 
 @Component({
   selector: 'enquiry-table',
@@ -18,7 +19,7 @@ export interface PeriodicElement {
 })
 export class EnquiryTableComponent implements OnInit {
   displayedColumns: string[] = ['position', 'name', 'phoneNumber', 'address', 'bookingDate'];
-  dataSource: any;
+  dataSource = new MatTableDataSource(ELEMENT_DATA);
   ELEMENT_DATA: PeriodicElement[] = [];
   isDataLoaded!: boolean;
   length = 100;
@@ -31,7 +32,7 @@ export class EnquiryTableComponent implements OnInit {
   constructor(
     private enquiryService: EnquiryServiceService
   ) { 
-    this.getEnquires();
+    
   }
   
 
@@ -41,11 +42,13 @@ export class EnquiryTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.getEnquires();
   }
+
 
   getEnquires() {
     this.enquiryService.getAllEnquiry(this.pageNo, this.pageSize).subscribe((data: any) => {
-      const elements = (data && data.success &&  data.success.docs) || [];
+      const elements = (data && data.success &&  data.success) || [];
       let index = 0;
       const mapElements = elements.map((element: any)=> ({
         position: index+1,
@@ -57,7 +60,10 @@ export class EnquiryTableComponent implements OnInit {
       this.ELEMENT_DATA = mapElements;
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       this.isDataLoaded = true;
+      console.log(this.dataSource);
+      
       this.length = data.success.total;
+      console.log(data);
       
     })
   }
