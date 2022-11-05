@@ -58,6 +58,8 @@ export class BookingModalComponent implements OnInit {
   showStatusFlag!: boolean;
   bookingId: any;
   showSettleLoader!: boolean;
+  isBooked!: boolean;
+  bookedFinalAmount: any;
   constructor(
     public dialogRef: MatDialogRef<BookingModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -146,14 +148,25 @@ export class BookingModalComponent implements OnInit {
    
     this.bookingForm.get('dgWithDiesel')?.valueChanges.subscribe(value => {
       if(this.bookingForm.get('requirements')?.value === 'Wedding') {
-        let finalAmount = this.config.finalBookingAmount;
+        let finalAmount: any;
+        if(this.isBooked) {
+          finalAmount = this.bookedFinalAmount;
+        } else {
+          finalAmount = this.config.finalBookingAmount;
+        }
+
         if(value) {
           this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
         } else {
           this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
         }
       } else {
-        let finalAmount = this.config.engagement;
+        let finalAmount: any;
+        if(this.isBooked) {
+          let finalAmount = this.bookedFinalAmount;
+        } else {
+          let finalAmount = this.config.engagement;
+        }
         if(value) {
           this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
         } else {
@@ -202,9 +215,14 @@ export class BookingModalComponent implements OnInit {
       this.bookingForm.patchValue(data.bookingData[0])
       this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
       this.settled = data && data.bookingData && data.bookingData[0] && data.bookingData[0].settled
-      this.bookingId = data && data.bookingData && data.bookingData[0] && data.bookingData[0]._id
+      this.bookingId = data && data.bookingData && data.bookingData[0] && data.bookingData[0]._id;
+      this.bookedFinalAmount = data && data.bookingData && data.bookingData[0] && data.bookingData[0].finalAmount
 
-      console.log(data.bookingData[0].dgWithDiesel);
+      if(data && data.bookingData.length > 0) {
+        this.isBooked = true;
+      } else {
+        this.isBooked = false
+      }
       
       this.showStatus(data && data.bookingData && data.bookingData[0] && data.bookingData[0].status)
       for(let index=0; index < data.bookingData[0].facilities.length; index++) {
@@ -216,6 +234,7 @@ export class BookingModalComponent implements OnInit {
       this.ready = true;
       
       this.bookingForm.get('dgWithDiesel')?.patchValue(data.bookingData[0].dgWithDiesel);
+
       this.bookingForm.get('dgWithDiesel')?.disable();
     })
   }
