@@ -7,7 +7,7 @@ const PRODUCTION = 'http://maharajaraxaul.com/';
 
 export const environment = {
   production: false,
-  host: PRODUCTION
+  host: LOCAL_HOST
 };
 
 /*

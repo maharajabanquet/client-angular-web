@@ -1,0 +1,59 @@
+<h2 mat-dialog-title>Add Cash Inflow</h2>
+<mat-dialog-content  class="mat-typography">
+    <form [formGroup]="cashInflowForm" class="example-form">
+        <mat-form-field class="example-full-width">
+            <mat-label>Party Name</mat-label>
+            <mat-select formControlName="partyName" >
+                <mat-option *ngFor="let party of bookingList" [value]="party.partyName">{{party.partyName}}</mat-option>
+                <mat-option value="Other">Other</mat-option>
+            </mat-select>
+           
+        </mat-form-field>
+        <mat-form-field *ngIf="showOtherInput" class="example-full-width">
+            <input formControlName="others" matInput placeholder="Please Enter Party Name">
+        </mat-form-field>
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Transaction Type</mat-label>
+                        <input formControlName="transactionType" matInput>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <mat-label class="input-font-style">Transaction Date</mat-label>
+                        <input formControlName="transactionDate"  matInput [matDatepicker]="picker">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+
+
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Remarks</mat-label>
+                        <input formControlName="remarks" matInput placeholder="Enter remarks">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field class="example-full-width">
+                        <mat-label>Amount</mat-label>
+                        <input formControlName="amount" matInput placeholder="Enter amount received">
+                    </mat-form-field>
+                </td>
+             
+            </tr>
+        </table>
+    </form>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button  (click)="submit()" cdkFocusInitial>Submit</button>
+</mat-dialog-actions>

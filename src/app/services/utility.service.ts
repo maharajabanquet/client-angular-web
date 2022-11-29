@@ -45,5 +45,10 @@ export class UtilityService {
     const url = `api/v1/upload/upload-customer-id-proof?ext=${ext}`;
     return this.apiService.post(url, {file: base64, employeeName: empName, ext: ext})
   }
+
+  login(payload: any) {
+    const url = 'api/v1/user/login';
+    return this.apiService.post(url, payload);
+  }
 }
 

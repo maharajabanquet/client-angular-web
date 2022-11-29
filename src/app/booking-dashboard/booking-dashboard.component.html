@@ -5,6 +5,12 @@
 
   </mat-toolbar>
 </p>
+
+<ng-container *ngIf="!isAuthenticate">
+  
+  <my-login-form [error]="error" (submitEM)='open($event)'>Your Form With Error Message</my-login-form>
+</ng-container>
+
 <mat-tab-group mat-align-tabs="start" *ngIf="isAuthenticate">
   <mat-tab label="Booking">
     <div style="display: flex;" *ngIf="isAuthenticate">
@@ -30,16 +36,3 @@
 
 
 
-<div *ngIf="!isAuthenticate" class="parent"  >
-<form [formGroup]="loginForm" class="example-form">
-  <mat-form-field  class="example-full-width" appearance="outline">
-    <mat-label>Username</mat-label>
-    <input formControlName="username" matInput placeholder="Please enter username">
-  </mat-form-field><br>
-  <mat-form-field class="example-full-width" appearance="outline">
-    <mat-label>Password</mat-label>
-    <input type="password" formControlName="password" matInput placeholder="Please enter password">
-  </mat-form-field>
-</form>
-<button (click)="login()" mat-raised-button color="warn">Login</button>
-</div>

@@ -33,6 +33,8 @@ import { LazyImgDirectiveDirective } from './lazy-img-directive.directive';
 import { ManagementComponent } from './management/management.component';
 import { CommonModalDialog, DataTableComponent } from './data-table/data-table.component';
 import { HotelModalDialog, HotelTableComponent } from './hotel-table/hotel-table.component';
+import { CashInFlowDialog, InCashflowComponent } from './management/in-cashflow/in-cashflow.component';
+import { LoginFormComponent } from './booking-dashboard/login-form.component';
 
 @NgModule({
   declarations: [
@@ -59,7 +61,10 @@ import { HotelModalDialog, HotelTableComponent } from './hotel-table/hotel-table
     DataTableComponent,
     CommonModalDialog,
     HotelTableComponent,
-    HotelModalDialog
+    HotelModalDialog,
+    InCashflowComponent,
+    CashInFlowDialog,
+    LoginFormComponent
   ],
   imports: [
     BrowserModule,

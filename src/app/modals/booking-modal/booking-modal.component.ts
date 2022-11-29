@@ -123,8 +123,15 @@ export class BookingModalComponent implements OnInit {
       balancedAmount: [, [Validators.required]],
       facilities: [[]],
       status: ['pending'],
-      dgWithDiesel: [false, [Validators.required]]
+      dgWithDiesel: [true, [Validators.required]]
 
+    })
+    this.bookingForm.get('finalAmount')?.valueChanges.subscribe(famountValue => {
+      if(famountValue < this.config.finalBookingAmount) {
+        this.bookingForm.get('dgWithDiesel')?.patchValue(false)
+      } else {
+        this.bookingForm.get('dgWithDiesel')?.patchValue(true)
+      }
     })
     this.bookingForm.get('BookingAmount')?.disable();
     if(this.formDisabled) {
@@ -142,9 +149,9 @@ export class BookingModalComponent implements OnInit {
       this.onRequirementSelect();
       this.onFacilitiesSelection();
     }
-    this.bookingForm.get('requirements')?.valueChanges.subscribe(value => {
-      this.bookingForm.get('dgWithDiesel')?.patchValue(false);
-    })
+    // this.bookingForm.get('requirements')?.valueChanges.subscribe(value => {
+    //   this.bookingForm.get('dgWithDiesel')?.patchValue(false);
+    // })
    
     this.bookingForm.get('dgWithDiesel')?.valueChanges.subscribe(value => {
       if(this.bookingForm.get('requirements')?.value === 'Wedding') {
@@ -154,12 +161,12 @@ export class BookingModalComponent implements OnInit {
         } else {
           finalAmount = this.config.finalBookingAmount;
         }
-
-        if(value) {
-          this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
-        } else {
-          this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
-        }
+        
+        // if(value) {
+        //   this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
+        // } else {
+        //   this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
+        // }
       } else {
         let finalAmount: any;
         if(this.isBooked) {

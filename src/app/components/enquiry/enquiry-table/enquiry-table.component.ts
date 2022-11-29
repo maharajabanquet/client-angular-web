@@ -60,7 +60,6 @@ export class EnquiryTableComponent implements OnInit {
       this.ELEMENT_DATA = mapElements;
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       this.isDataLoaded = true;
-      console.log(this.dataSource);
       
       this.length = data.success.total;
       console.log(data);

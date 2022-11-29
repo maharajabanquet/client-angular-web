@@ -55,4 +55,9 @@ export class BookingServiceService {
     return this.apiService.post(url, {'_id': _id});
   }
 
+  getBookingList() {
+    const url = 'api/v1/booking/get-booking-admin';
+    return this.apiService.get(url);
+  }
+
 }

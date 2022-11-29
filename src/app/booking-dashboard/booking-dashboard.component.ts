@@ -10,10 +10,10 @@ import { BnNgIdleService } from 'bn-ng-idle'; // import it to your component
   styleUrls: ['./booking-dashboard.component.css'],
 })
 export class BookingDashboardComponent implements OnInit {
-  isAuthenticate = true;
+  isAuthenticate = false;
   loginForm!: FormGroup
   showFiller = false;
-
+  error = ''
   constructor(
     private fb: FormBuilder,
     private bookService: BookingServiceService,
@@ -26,6 +26,11 @@ export class BookingDashboardComponent implements OnInit {
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     })
+    console.log(localStorage.getItem('token'));
+    
+    if(localStorage.getItem('token')) {
+      this.isAuthenticate = true;
+    }
   }
 
 
@@ -36,6 +41,10 @@ export class BookingDashboardComponent implements OnInit {
     }, (err) => {
       this._snackBar.open('Unauthorized Access', 'Login Failed');
     })
+  }
+
+  open(event: any) {
+    this.isAuthenticate = true;
   }
 
 }

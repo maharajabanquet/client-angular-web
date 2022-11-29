@@ -88,6 +88,7 @@ export class HotelTableComponent implements OnInit {
       }
     })
   }
+  
 
   isAllSelected() {
     const numSelected = this.selection.selected.length;
