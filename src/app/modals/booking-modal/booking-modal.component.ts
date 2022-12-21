@@ -122,7 +122,7 @@ export class BookingModalComponent implements OnInit {
       finalAmount: [, [Validators.required]],
       balancedAmount: [, [Validators.required]],
       facilities: [[]],
-      status: ['pending'],
+      status: ['approved'],
       dgWithDiesel: [true, [Validators.required]]
 
     })
@@ -195,7 +195,8 @@ export class BookingModalComponent implements OnInit {
 
   submit() {
     this.bookingService.add_booking(this.bookingForm.getRawValue()).subscribe(res => {
-      this.closeModal();
+      this.printReady = true;
+
       this._snackBar.open('Booking Done!', 'OK');
       
     }, (err) => {
@@ -265,6 +266,8 @@ export class BookingModalComponent implements OnInit {
         this.showLoader = false;
         this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
         this.openPatchedForm();
+        this.closeModal();
+
       })
     
     });

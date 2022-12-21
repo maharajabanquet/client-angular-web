@@ -118,7 +118,7 @@
         <table class="example-full-width" cellspacing="0"><tr>
             <td>
                 <mat-form-field color="accent" appearance="outline">
-                    <mat-label>Booking Amount</mat-label>
+                    <mat-label>Advance</mat-label>
                     <input  (keyup)="onInputBalanceAmount($event)" formControlName="BookingAmount" matInput placeholder="Enter Booking Amount">
                     <mat-icon matSuffix>money</mat-icon>
                     <mat-error *ngIf="checkError('address', 'required')">Booking Amount is required</mat-error>
@@ -126,7 +126,7 @@
             </td>&nbsp;
             <td>
                 <mat-form-field color="accent" appearance="outline">
-                    <mat-label>Final Amount</mat-label>
+                    <mat-label>Deal Amount</mat-label>
                     <input  formControlName="finalAmount"  matInput placeholder="Enter Final Amount">
                     <mat-error *ngIf="checkError('address', 'required')">Final Amount is required</mat-error>
                     <mat-icon matSuffix>money</mat-icon>
@@ -137,7 +137,7 @@
             <tr>
               <td>
                 <mat-form-field color="accent" appearance="outline">
-                  <mat-label>Balanced Amount</mat-label>
+                  <mat-label>Balanced Due</mat-label>
                   <input style="font-weight: bold;" formControlName="balancedAmount"  matInput>
                   <mat-icon matSuffix>money</mat-icon>
                 </mat-form-field>

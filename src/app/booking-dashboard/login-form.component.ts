@@ -89,11 +89,14 @@ export class LoginFormComponent {
             if(userResp && userResp.token) {
                 localStorage.setItem('token', userResp.token)
             }
-            this.isSubmit = false;
+            this.isSubmit = true;
+            this.submitEM.emit(this.form.value);
         }, err => {
+          console.log(err);
+          this.error = err.error;
             this.isSubmit = false;
         })
-      this.submitEM.emit(this.form.value);
+      
     }
   }
   @Input() error!: string | null;

@@ -74,8 +74,8 @@ export class InlineCalendarComponent implements OnInit {
    }
 
   ngOnInit(): void {
-  //  this.getBookedDates();
-  this.ready = true;
+   this.getBookedDates();
+  
  
   }
   setTimeout() {

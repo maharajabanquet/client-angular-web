@@ -76,17 +76,23 @@ const colors: Record < string, EventColor > = {
       width: 15px;
       background-color: #ad2121;
       border-radius: 50%;
+      
       display: inline-block;
     }
+    .cal-month-view .cal-event-title {
+    cursor: pointer;
+    font-weight: bold;
+}
       .my-custom-class span {
         color: #CFA240;
         animation: blinker 2s linear infinite;
         font-size:15px;
         font-weight: bold;
       }
-      .cal-day-badge {
-        color: #CFA240
-      }
+      .cal-month-view .cal-day-badge {
+      background-color: grey;;
+      color: #fff;
+}
       @keyframes blinker {
   50% {
     opacity: 0;
@@ -106,6 +112,7 @@ export class PublicCalendarComponent implements OnInit {
   CalendarView = CalendarView;
 
   viewDate: Date = new Date();
+  isready !: Boolean
   @Input() status!: String;
   @Output() isReady = new EventEmitter();
   modalData!: {
@@ -150,7 +157,7 @@ export class PublicCalendarComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBookedDates();
-    this.getLaganDate();
+    // this.getLaganDate();
   }
 
   dayClicked({
@@ -227,6 +234,7 @@ export class PublicCalendarComponent implements OnInit {
   }
 
   getBookedDates() {
+    this.isready = false;
     var i = this;
     this.bookingService.getAllBookingDate().subscribe((bookingData: any) => {
       let bookingDataIns = bookingData.bookingData;
@@ -236,16 +244,14 @@ export class PublicCalendarComponent implements OnInit {
           this.events.push({
             start: addHours(new Date(bookingDate), 10),
             end: addHours(new Date(bookingDate), 23),
-            title: "Marriage hall is booked for " + addHours(new Date(bookingDate), 10),
+            title: "मैरिज हॉल बुक हो चुका है -  " + addHours(new Date(bookingDate), 10),
             color: colors.red,
-            resizable: {
-              beforeStart: false,
-              afterEnd: false
-            },
-            draggable: false
+           
           })
         }
+        this.isready = true;
         console.log(this.events);
+        this.isReady.emit(true);
       }
     })
   }
@@ -259,15 +265,11 @@ export class PublicCalendarComponent implements OnInit {
           title: laganDate[index].description,
           color: colors.gold,
           cssClass: 'my-custom-class',
-          resizable: {
-            beforeStart: false,
-            afterEnd: false
-          },
-          draggable: false
+          
         })
 
       }
-      this.isReady.emit(true);
+     
     })
   }
 
