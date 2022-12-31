@@ -36,6 +36,7 @@ export class ReceivingComponent implements OnInit {
   columnsToDisplayWithExpand = [...this.columnsToDisplay, 'expand'];
   expandedElement!: PeriodicElement | null;
   title = 'angular-mat-table-example';
+  blob!: Blob;
 
   constructor(public dialog: MatDialog, private resService: ReceivingService) {}
 
@@ -60,8 +61,22 @@ export class ReceivingComponent implements OnInit {
     })
   }
   print(element: any) {
-    console.log(print);
+    console.log(element);
     
+    // window.open(environment.host + `api/v1/invoice/invoice?data=${JSON.stringify(this.bookingForm.getRawValue())}`, "_blank");
+    // this.bookingService.generateInvoice(this.bookingForm.getRawValue()).subscribe(res => {
+    //   this._snackBar.open('Invoice Generated!', 'OK',{duration: 1000});
+    // })
+    
+    this.resService.generateInvoice(element).subscribe((data: any) => {
+      this.blob = new Blob([data as BlobPart], {type: 'application/pdf'});
+      var downloadURL = window.URL.createObjectURL(data);
+      var link = document.createElement('a');
+      link.href = downloadURL;
+      link.download = `${element.name}`+ "_receiving-slip.pdf";
+      link.click();
+    
+    });
   }
   openDialog() {
     const dialogRef = this.dialog.open(ReceivingModalComponent);

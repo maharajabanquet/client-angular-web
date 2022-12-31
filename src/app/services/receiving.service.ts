@@ -20,4 +20,10 @@ export class ReceivingService {
     const url = 'api/v1/receiving/get';
     return this.apiService.get(url);
   }
+
+  
+  generateInvoice(body: any) {
+    const URL = `api/v1/receiving/generate/create_receiving_slip`;
+    return this.apiService.postPdf(URL, body);
+  }
 }
