@@ -30,6 +30,8 @@ export class InCashflowComponent implements OnInit {
   isLoaded!: boolean
   total: any;
   incashLoad: any = []
+  credited: any;
+  debited: any;
   constructor(
     public dialog: MatDialog,
     private cashInflowService: CashInflowService
@@ -71,9 +73,11 @@ export class InCashflowComponent implements OnInit {
     this.incashLoad.forEach((element: any) => {
       if(Math.sign(element.amount) === 1) {
         incash = incash+element.amount
+        this.credited = incash;
       }
       if(Math.sign(element.amount) === - 1) {
         outcash = outcash + element.amount;
+        this.debited = Math.abs(outcash);
       }
       this.total = incash - Math.abs(outcash);  
     });

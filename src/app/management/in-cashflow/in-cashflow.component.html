@@ -1,12 +1,17 @@
 <h1>Transaction Inflows and Outflows 2022 - 2023 (Balance: <span style="color: green;font-weight:bold;">{{total?total: 0}}</span>)</h1>
+<div class="chip_credited">
+  {{credited}}
+</div>
+&nbsp;
+<div class="chip_debited">
+  {{debited}}
+</div>
+
 <div class="demo-button-container">
-    <button  mat-raised-button (click)="openDialog()"  class="demo-button">
-      Add
+    <button  color="primary"  mat-raised-button (click)="openDialog()"  class="demo-button">
+      Create Flow
     </button>
     &nbsp;
-    <button  mat-raised-button  class="demo-button">
-        Download Report
-      </button>
 </div>
 <br>
 

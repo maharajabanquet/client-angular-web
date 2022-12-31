@@ -1,0 +1,79 @@
+<h2 mat-dialog-title style="font-weight: bolder;" class="header">Receiving Form</h2>
+<mat-dialog-content class="mat-typography">
+ 
+<div class="add-lessons-form" [formGroup]="form">
+      <mat-form-field appearance="outline">
+      <mat-label>Date</mat-label>
+      <mat-select  formControlName="date"
+      placeholder="Select Date">
+      <mat-option  *ngFor="let booking of bookingList" [value]="booking.bookingDate">{{showBookingDate(booking.bookingDate)}}</mat-option>
+      </mat-select>
+      </mat-form-field>
+
+
+      <mat-form-field appearance="outline">
+        <mat-label>Name</mat-label>
+        <input formControlName="name" matInput>
+      </mat-form-field>
+    
+      <mat-form-field appearance="outline">
+        <mat-label>Address</mat-label>
+        <textarea formControlName="address" matInput></textarea>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Mobile Number</mat-label>
+        <input formControlName="mobileNumber" matInput>
+      </mat-form-field>
+      <mat-form-field appearance="outline">
+        <mat-label>Security Deposit</mat-label>
+        <input formControlName="securityDeposit" matInput>
+      </mat-form-field>
+    <ng-container formArrayName="items">
+        <ng-container *ngFor="let items of lessons.controls; let i = index">
+            <div class="lesson-form-row" [formGroup]="toFormGroup(items)">
+                <mat-form-field appearance="outline">
+                    <input matInput
+                           formControlName="itemName"
+                           placeholder="Name of the item">
+                </mat-form-field>&nbsp;
+                <mat-form-field appearance="outline">
+                    <mat-select formControlName="quantity"
+                            placeholder="Select Quantity">
+                        <mat-option value="1">1</mat-option>
+                        <mat-option value="2">2</mat-option>
+                        <mat-option value="3">3</mat-option>
+                        <mat-option value="4">4</mat-option>
+                        <mat-option value="5">5</mat-option>
+                        <mat-option value="6">6</mat-option>
+                        <mat-option value="7">7</mat-option>
+                        <mat-option value="8">8</mat-option>
+                        <mat-option value="9">9</mat-option>
+                        <mat-option value="10">10</mat-option>
+                        <mat-option value="11">11</mat-option>
+                        <mat-option value="12">12</mat-option>
+                        <mat-option value="13">13</mat-option>
+                        <mat-option value="14">14</mat-option>
+                        <mat-option value="15">15</mat-option>
+                        <mat-option value="16">16</mat-option>
+                        <mat-option value="17">17</mat-option>
+                        <mat-option value="18">18</mat-option>
+                        <mat-option value="19">19</mat-option>
+                        <mat-option value="20">20</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-icon class="delete-btn" (click)="deleteLesson(i)">
+                    delete_forever</mat-icon>
+            </div>
+        </ng-container>
+    </ng-container>
+  
+    <button color="primary" style="top: -10px;" mat-mini-fab (click)="addLesson()">
+        <mat-icon class="add-course-btn">add</mat-icon>
+    </button>
+
+</div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+  <button mat-button mat-dialog-close>Cancel</button>
+  <button mat-button (click)="submit()" [disabled]="form.status === 'INVALID'" cdkFocusInitial>Create</button>
+</mat-dialog-actions>

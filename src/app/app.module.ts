@@ -1,3 +1,4 @@
+import { MatChipsModule } from '@angular/material/chips';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
@@ -35,6 +36,7 @@ import { CommonModalDialog, DataTableComponent } from './data-table/data-table.c
 import { HotelModalDialog, HotelTableComponent } from './hotel-table/hotel-table.component';
 import { CashInFlowDialog, InCashflowComponent } from './management/in-cashflow/in-cashflow.component';
 import { LoginFormComponent } from './booking-dashboard/login-form.component';
+import { ReceivingComponent, ReceivingModalComponent } from './management/receiving/receiving.component';
 
 @NgModule({
   declarations: [
@@ -64,7 +66,9 @@ import { LoginFormComponent } from './booking-dashboard/login-form.component';
     HotelModalDialog,
     InCashflowComponent,
     CashInFlowDialog,
-    LoginFormComponent
+    LoginFormComponent,
+    ReceivingComponent,
+    ReceivingModalComponent
   ],
   imports: [
     BrowserModule,
@@ -78,6 +82,7 @@ import { LoginFormComponent } from './booking-dashboard/login-form.component';
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     QRCodeModule,
+    MatChipsModule
     
   ],
   providers: [BnNgIdleService],

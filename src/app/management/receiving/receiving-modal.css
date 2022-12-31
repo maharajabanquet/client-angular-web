@@ -1,0 +1,14 @@
+.add-lessons-form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+ 
+  .header {
+    font-weight: bolder;
+    font-size: 26px;
+    border-style: dotted;
+    border: cyan;
+    text-shadow: -1px 1px 0 #a97921, 1px 1px 0 #e5ca7d, 1px -1px 0 #bfbb4c, -1px -1px 0 #897b3b;
+  }
