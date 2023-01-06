@@ -11,7 +11,7 @@ export class AppComponent {
   websiteRead!: boolean;
   constructor(private trafficService: TrafficService) {
     this.snapShot();
-   
+    
   }
 
   snapShot() {

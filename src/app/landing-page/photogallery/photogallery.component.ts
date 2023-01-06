@@ -11,23 +11,31 @@ export interface DialogData {
 })
 export class PhotogalleryComponent implements OnInit {
   marketingImage = [
-    "https://res.cloudinary.com/maharaja-banquet/image/upload/v1665473549/webapp-assets/WhatsApp_Image_2022-10-11_at_1.02.18_PM_fgusyj.jpg",
-    "https://res.cloudinary.com/maharaja-banquet/image/upload/v1665473343/webapp-assets/WhatsApp_Image_2022-10-11_at_12.58.52_PM_ze1nch.jpg",
-    "https://res.cloudinary.com/maharaja-banquet/image/upload/v1665472903/webapp-assets/310256473_797691548149872_6211848659489756468_n_njmnx7.jpg",
-    "https://res.cloudinary.com/maharaja-banquet/image/upload/v1665470585/webapp-assets/side_rwjl2o.jpg",
-    "https://res.cloudinary.com/maharaja-banquet/image/upload/v1665470584/webapp-assets/hall_mfpydo.jpg",
-    "https://res.cloudinary.com/maharaja-banquet/image/upload/v1665470583/webapp-assets/fall_celling_utdoaq.jpg"
+    "../../../assets/images/main.jpeg",
+    "../../../assets/images/barat.jpeg",
+    "../../../assets/images/mandap.jpeg",
+    "../../../assets/images/main2.jpeg",
+    "../../../assets/images/room.jpeg",
+    "../../../assets/images/minihall.jpeg"
   ]
   constructor(
     public dialog: MatDialog
   ) { }
 
   ngOnInit(): void {
+    
   }
 
   
+
+  
   openDialog(img: any) {
-    const dialogRef = this.dialog.open(DialogContentExampleDialog, {data: img });
+    const dialogRef = this.dialog.open(DialogContentExampleDialog, {
+      data: img ,
+      autoFocus: true,
+      maxHeight: '100vh'
+
+    });
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);

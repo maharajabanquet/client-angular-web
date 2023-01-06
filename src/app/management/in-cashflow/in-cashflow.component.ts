@@ -1,3 +1,4 @@
+import { PageEvent } from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
@@ -32,6 +33,13 @@ export class InCashflowComponent implements OnInit {
   incashLoad: any = []
   credited: any;
   debited: any;
+  isDataLoaded!: boolean;
+  length = 100;
+  pageSize = 10;
+  pageSizeOptions: number[] = [5, 10, 25, 100];
+  pageEvent!: PageEvent;
+  pageData: any;
+  pageNo = 1;
   constructor(
     public dialog: MatDialog,
     private cashInflowService: CashInflowService
@@ -42,11 +50,12 @@ export class InCashflowComponent implements OnInit {
   }
 
   getCashFlow() {
-    this.cashInflowService.getCashInflow().subscribe((cashInflowData: any) => {
-      const elements = (cashInflowData && cashInflowData.data) || [];
-      let index = 0;
+    let index = 1;
+    this.cashInflowService.getCashInflow(this.pageNo, this.pageSize).subscribe((cashInflowData: any) => {
+      const elements = (cashInflowData && cashInflowData.data && cashInflowData.data.docs) || [];
+      
       const mapElements = elements.map((element: any) => ({
-        position: index+1,
+        position: index++,
         id: element._id,
         partyName: element.partyName,
         transactionType: element.transactionType,
@@ -59,11 +68,27 @@ export class InCashflowComponent implements OnInit {
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
       this.dataSource
       this.isLoaded = true;
+      this.isDataLoaded = true;
+      
+      this.length = cashInflowData.data.total;
+      console.log("length", this.length);
+      
       this.getTotalBalance();
   })
   console.log("check it" ,this.ELEMENT_DATA);
  
   
+  }
+
+
+  getCurrentPage(event: any) {
+    console.log(event);
+    this.pageNo = event.pageIndex + 1;
+    this.pageSize = event.pageSize;
+    if(event && event.pageIndex === 0) {
+      this.pageNo = 1;
+    }
+    this.getCashFlow();
   }
 
   getTotalBalance() {

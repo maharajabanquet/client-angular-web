@@ -16,8 +16,8 @@ export class CashInflowService {
     return this.apiService.post(url, body);
   }
 
-  getCashInflow() {
-    const url = `api/v1/cashinflow/get-cash-inflow`;
+  getCashInflow(pageNo=1, pageSize: any) {
+    const url = `api/v1/cashinflow/get-cash-inflow?pageNo=${pageNo}&pageSize=${pageSize}`;
     return this.apiService.get(url);
   }
 

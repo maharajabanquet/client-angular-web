@@ -48,7 +48,7 @@ export class EnquiryTableComponent implements OnInit {
 
   getEnquires() {
     this.enquiryService.getAllEnquiry(this.pageNo, this.pageSize).subscribe((data: any) => {
-      const elements = (data && data.success &&  data.success) || [];
+      const elements = (data && data.success &&  data.success && data.success.docs) || [];
       let index = 0;
       const mapElements = elements.map((element: any)=> ({
         position: index+1,
