@@ -40,6 +40,7 @@ export class InCashflowComponent implements OnInit {
   pageEvent!: PageEvent;
   pageData: any;
   pageNo = 1;
+  allCashFlow: any = [];
   constructor(
     public dialog: MatDialog,
     private cashInflowService: CashInflowService
@@ -47,6 +48,16 @@ export class InCashflowComponent implements OnInit {
 
   ngOnInit(): void {
    this.getCashFlow();
+   this.getCashInflowWithoutPaginate();
+  }
+
+
+  getCashInflowWithoutPaginate() {
+    this.cashInflowService.getAllCashFlow(true).subscribe((allCashFlow: any) => {
+      this.allCashFlow = allCashFlow && allCashFlow.data || [];
+      this.getTotalBalance();
+      
+    })
   }
 
   getCashFlow() {
@@ -73,7 +84,7 @@ export class InCashflowComponent implements OnInit {
       this.length = cashInflowData.data.total;
       console.log("length", this.length);
       
-      this.getTotalBalance();
+     
   })
   console.log("check it" ,this.ELEMENT_DATA);
  
@@ -95,7 +106,7 @@ export class InCashflowComponent implements OnInit {
     
     let incash = 0;
     let outcash = 0;
-    this.incashLoad.forEach((element: any) => {
+    this.allCashFlow.forEach((element: any) => {
       if(Math.sign(element.amount) === 1) {
         incash = incash+element.amount
         this.credited = incash;

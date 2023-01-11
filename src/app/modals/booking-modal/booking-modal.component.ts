@@ -122,7 +122,7 @@ export class BookingModalComponent implements OnInit {
       finalAmount: [, [Validators.required]],
       balancedAmount: [, [Validators.required]],
       facilities: [[]],
-      status: ['approved'],
+      status: ['pending'],
       dgWithDiesel: [true, [Validators.required]]
 
     })

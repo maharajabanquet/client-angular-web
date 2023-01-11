@@ -47,4 +47,7 @@ export class BookingDashboardComponent implements OnInit {
     this.isAuthenticate = true;
   }
 
+  openMobileVersion() {
+    window.open('http://maharajaraxaul.com/tabs/tab2', '_self')
+  }
 }
