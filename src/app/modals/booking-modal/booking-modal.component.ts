@@ -195,8 +195,7 @@ export class BookingModalComponent implements OnInit {
 
   submit() {
     this.bookingService.add_booking(this.bookingForm.getRawValue()).subscribe(res => {
-      this.printReady = true;
-
+      this.closeModal();
       this._snackBar.open('Booking Done!', 'OK');
       
     }, (err) => {
