@@ -173,6 +173,8 @@ export class InCashflowComponent implements OnInit {
     const dialogRef = this.dialog.open(CashInFlowDialog);
     dialogRef.afterClosed().subscribe(result => {
       this.getCashFlow();
+      this.getCashInflowWithoutPaginate();
+
     });
   }
 
