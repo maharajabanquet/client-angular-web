@@ -8,7 +8,7 @@ const ISPROD = true;
 
 export const environment = {
   production: false,
-  host: PRODUCTION,
+  host: LOCAL_HOST,
   PROD: ISPROD
 };
 

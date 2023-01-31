@@ -26,4 +26,15 @@ export class ReceivingService {
     const URL = `api/v1/receiving/generate/create_receiving_slip`;
     return this.apiService.postPdf(URL, body);
   }
+
+  createInventory(payload:  any) {
+    const url = '/api/v1/inventory/add-inventory';
+    return this.apiService.post(url, payload);
+  }
+
+  getInventory() {
+    const url = 'api/v1/inventory/get-inventory-list';
+    return this.apiService.get(url);
+  }
+
 }

@@ -38,7 +38,9 @@ export class ReceivingComponent implements OnInit {
   title = 'angular-mat-table-example';
   blob!: Blob;
 
-  constructor(public dialog: MatDialog, private resService: ReceivingService) {}
+  constructor(public dialog: MatDialog, private resService: ReceivingService) {
+
+  }
 
   toggleRow(element: { expanded: boolean; }) {
     // Uncommnet to open only single row at once
@@ -60,6 +62,8 @@ export class ReceivingComponent implements OnInit {
       
     })
   }
+
+  
   print(element: any) {
     console.log(element);
     
@@ -82,6 +86,7 @@ export class ReceivingComponent implements OnInit {
     const dialogRef = this.dialog.open(ReceivingModalComponent);
 
     dialogRef.afterClosed().subscribe(result => {
+      this.getReceivingList();
       console.log(`Dialog result: ${result}`);
     });
   }
@@ -95,21 +100,32 @@ export class ReceivingComponent implements OnInit {
   styleUrls: ['receiving-modal.css']
 })
 export class ReceivingModalComponent {
+
   form!: FormGroup
   items!: FormGroup
   bookingList: any;
+info: any;
+  securityMoney: any;
   constructor(private fb: FormBuilder, private rService: ReceivingService, public dialog: MatDialog, private bookingService: BookingServiceService) {
+  
     this.getBookingList();
+
     this.form = this.fb.group({
       date: ['', Validators.required],
       items: this.fb.array([]),
       name: ['', Validators.required],
       address: ['', Validators.required],
       mobileNumber: ['', Validators.required],
-      securityDeposit: ['',  Validators.required]
+      securityDeposit: [this.securityMoney,  Validators.required]
   });
+  this.bookingService.getConfig().subscribe((config: any) => {
+    this.securityMoney = config && config.config &&  config.config.securityDepositCharges || 0;
+    this.form.get('securityDeposit')?.patchValue(this.securityMoney);
+  
+  })
+  
   this.patchDetails()
-
+  this.getInventoryList();
   }
 
   getBookingList() {
@@ -121,14 +137,26 @@ export class ReceivingModalComponent {
     return this.form.controls["items"] as FormArray;
   }
 
-  addLesson() {
+  addReciving(item: any) {
     this.items = this.fb.group({
-      itemName: ['', Validators.required],
-      quantity: ['1', Validators.required]
+      itemName: [item.itemName],
+      quantity: [item.quantity, Validators.required],
+      itemCode: [item.itemCode],
+      displayName: [item.displayName],
+      createdOn: [item.createdOn]
     });
     this.lessons.push(this.items);
   }
-
+  ADD() {
+    this.items = this.fb.group({
+      itemName: [''],
+      quantity: ['', Validators.required],
+      itemCode: [''],
+      displayName: [''],
+      createdOn: ['']
+    });
+    this.lessons.push(this.items);
+  }
   deleteLesson(lessonIndex: number) {
     this.lessons.removeAt(lessonIndex);
   }
@@ -155,7 +183,7 @@ export class ReceivingModalComponent {
     }).then((result) => {
       if (result.isConfirmed) {
         this.rService.create(this.form.getRawValue()).subscribe((res: any) => {
-          if(res && res.status === 'success') {
+          if(res && res.status === 'created') {
             Swal.fire(
               'Created!',
               'Receiving List Has Been Created.',
@@ -208,4 +236,20 @@ export class ReceivingModalComponent {
       })
     
   }
+
+  getInventoryList() {
+    this.rService.getInventory().subscribe((resp: any) => {
+      console.log(resp);
+      const inventoryList = resp && resp.inventory || [];
+      let transformedItems = inventoryList.map((item: any) =>
+      {
+        this.addReciving(item)
+      }
+    );
+
+    // this.form.setControl('items', this.fb.array(transformedItems));
+      
+    })
+  }
+
 }

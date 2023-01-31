@@ -153,35 +153,35 @@ export class BookingModalComponent implements OnInit {
     //   this.bookingForm.get('dgWithDiesel')?.patchValue(false);
     // })
    
-    this.bookingForm.get('dgWithDiesel')?.valueChanges.subscribe(value => {
-      if(this.bookingForm.get('requirements')?.value === 'Wedding') {
-        let finalAmount: any;
-        if(this.isBooked) {
-          finalAmount = this.bookedFinalAmount;
-        } else {
-          finalAmount = this.config.finalBookingAmount;
-        }
+    // this.bookingForm.get('dgWithDiesel')?.valueChanges.subscribe(value => {
+    //   if(this.bookingForm.get('requirements')?.value === 'Wedding') {
+    //     let finalAmount: any;
+    //     if(this.isBooked) {
+    //       finalAmount = this.bookedFinalAmount;
+    //     } else {
+    //       finalAmount = this.config.finalBookingAmount;
+    //     }
         
-        // if(value) {
-        //   this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
-        // } else {
-        //   this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
-        // }
-      } else {
-        let finalAmount: any;
-        if(this.isBooked) {
-          let finalAmount = this.bookedFinalAmount;
-        } else {
-          let finalAmount = this.config.engagement;
-        }
-        if(value) {
-          this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
-        } else {
-          this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
-        }
-      }
+    //     // if(value) {
+    //     //   this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
+    //     // } else {
+    //     //   this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
+    //     // }
+    //   } else {
+    //     let finalAmount: any;
+    //     if(this.isBooked) {
+    //       let finalAmount = this.bookedFinalAmount;
+    //     } else {
+    //       let finalAmount = this.config.engagement;
+    //     }
+    //     if(value) {
+    //       this.bookingForm.get('finalAmount')?.patchValue(finalAmount - 10000);
+    //     } else {
+    //       this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
+    //     }
+    //   }
    
-    })
+    // })
   
   }
 
@@ -281,7 +281,7 @@ export class BookingModalComponent implements OnInit {
         this.bookingForm.get('finalAmount')?.patchValue(this.config.engagement)
         this.bookingForm.get('BookingAmount')?.enable();
 
-        this.bookingForm.get('facilities')?.setValidators([Validators.required])
+      
        
         this.bookingForm.get('BookingAmount')?.patchValue('');
         

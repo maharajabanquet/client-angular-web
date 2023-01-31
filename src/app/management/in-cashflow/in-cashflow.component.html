@@ -1,10 +1,10 @@
-<h1>Transaction Inflows and Outflows 2022 - 2023 (Balance: <span style="color: green;font-weight:bold;">{{total?total: 0}}</span>)</h1>
+<h1>Transaction Inflows and Outflows 2022 - 2023 (Balance: <span style="color: green;font-weight:bold;">{{numberWithCommas(total) || 0}}</span>)</h1>
 <div class="chip_credited">
-  {{credited}}
+  {{numberWithCommas(credited)}}
 </div>
 &nbsp;
 <div class="chip_debited">
-  {{debited}}
+  {{numberWithCommas(debited)}}
 </div>
 
 <div class="demo-button-container">

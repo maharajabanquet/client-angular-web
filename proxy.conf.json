@@ -1,6 +1,6 @@
 {
     "/api": {
-      "target": "http://maharajabanquet.herokuapp.com",
+      "target": "http://maharajaraxaul.com",
       "secure": false
     }
   }
