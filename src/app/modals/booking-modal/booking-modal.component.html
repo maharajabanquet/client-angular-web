@@ -144,6 +144,24 @@
               </td>
             </tr>
           </table>
+          <p>
+            <div >
+                <input  type="file" style="display: none" #fileInput accept="*" (change)="onChangeFileInput($event)" />
+                <button mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
+                  <mat-icon>attach_file</mat-icon>
+                 Upload Proof
+                </button>
+              
+                <p class="file-name" *ngIf="!file; else fileName"></p>
+                <ng-template #fileName>
+                  <p *ngIf="bookingForm.get('expense_sheet')?.value === ''" class="file-name">{{ file?.name }}</p>
+                  <p style="color:green;" *ngIf="fileuploaded">File Has Been Uploaded</p>
+                </ng-template>
+                <br>
+             
+              </div>
+           <p>
+            
           <button  mat-stroked-button style="color:red" (click)="closeModal()">Cancel</button>&nbsp;
           <button *ngIf="!printReady"  mat-stroked-button style="color:green" [disabled]="bookingForm?.status === 'INVALID'" (click)="submit()">Submit</button>&nbsp;
        <ng-container *ngIf="!invoice_generated">
@@ -151,6 +169,12 @@
            <mat-icon>print</mat-icon>&nbsp;Print
          </button>
          <mat-spinner *ngIf="showLoader" [diameter]="30" style="margin-left:194px;margin-top:-36px;"></mat-spinner>
+       </ng-container>&nbsp;
+
+          <ng-container *ngIf="bookingForm.get('expense_sheet')?.value">
+         <button *ngIf="printReady"  mat-stroked-button   (click)="downloadExpenseSheet()"> 
+           <mat-icon>cloud_download</mat-icon>&nbsp;Download Expense Sheet
+         </button>
        </ng-container>
        <ng-container *ngIf="invoice_generated">
         <button *ngIf="!settled"  mat-stroked-button style="font-weight: bold;" (click)="openDialog()">Settle</button>&nbsp;

@@ -60,4 +60,15 @@ export class BookingServiceService {
     return this.apiService.get(url);
   }
 
+  uploadExpenseSheet(base64:any, fileName: any, ext: any) {
+    const url = `api/v1/upload/upload-expense-excel`;
+    return this.apiService.post(url, {file: base64, fileName: fileName, ext: ext})
+  }
+
+  addExpenseUrl(expenseSheetUrl:string, _id: string) {
+    const url = `api/v1/booking/add-expense`;
+    return this.apiService.post(url, {url: expenseSheetUrl, _id: _id})
+
+  }
+
 }

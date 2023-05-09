@@ -6,6 +6,7 @@ import { BookingServiceService } from 'src/app/services/booking-service.service'
 import Swal from 'sweetalert2'
 import { CashInflowService } from 'src/app/services/cash-inflow.service';
 import {MatTableDataSource} from '@angular/material/table';
+import * as XLSX from 'xlsx';
 
 export interface PeriodicElement {
   position: Number,
@@ -41,6 +42,7 @@ export class InCashflowComponent implements OnInit {
   pageData: any;
   pageNo = 1;
   allCashFlow: any = [];
+  fileName= 'ledger.xlsx';
   constructor(
     public dialog: MatDialog,
     private cashInflowService: CashInflowService
@@ -51,6 +53,20 @@ export class InCashflowComponent implements OnInit {
    this.getCashInflowWithoutPaginate();
   }
 
+  exportexcel(): void
+  {
+    /* pass here the table id */
+    let element = document.getElementById('excel-table');
+    const ws: XLSX.WorkSheet =XLSX.utils.table_to_sheet(element);
+ 
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+ 
+    /* save to file */  
+    XLSX.writeFile(wb, this.fileName);
+ 
+  }
 
   getCashInflowWithoutPaginate() {
     this.cashInflowService.getAllCashFlow(true).subscribe((allCashFlow: any) => {
@@ -77,6 +93,8 @@ export class InCashflowComponent implements OnInit {
       this.incashLoad = mapElements;
       this.ELEMENT_DATA = mapElements
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      console.log(this.ELEMENT_DATA);
+      
       this.dataSource
       this.isLoaded = true;
       this.isDataLoaded = true;

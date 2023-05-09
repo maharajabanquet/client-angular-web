@@ -1,9 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ViewChild } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms';
 import { BookingServiceService } from 'src/app/services/booking-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { environment } from 'src/environments/environment';
+import { saveAs } from 'file-saver';
 interface DialogData {
   selectedDate: any;
   disabled: any;
@@ -60,6 +60,11 @@ export class BookingModalComponent implements OnInit {
   showSettleLoader!: boolean;
   isBooked!: boolean;
   bookedFinalAmount: any;
+  @ViewChild('fileInput') fileInput : any;
+  file: File | null = null;
+  uploadedFiles: any;
+  isDisable = false;
+  fileuploaded!: boolean;
   constructor(
     public dialogRef: MatDialogRef<BookingModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -71,6 +76,35 @@ export class BookingModalComponent implements OnInit {
 
   ) { }
 
+  onChangeFileInput(element: any): void {
+    this.uploadedFiles = element.target.files;
+    const files: { [key: string]: File } = this.fileInput.nativeElement.files;
+    this.file = files[0];
+    console.log(this.file);
+    let base64 = this.getBase64(this.file);
+  }
+
+
+  getBase64(file:any) {
+    let self = this;
+    var reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = function () {
+        let ext = file.name.split(".")[1]
+        self.bookingService.uploadExpenseSheet(reader.result, file.name, ext).subscribe((res: any) => {
+        self.bookingForm.get('expense_sheet')?.patchValue(res && res.url);
+        self.fileuploaded = true;
+        console.log( self.bookingForm.get('expense_sheet')?.value);
+        self.bookingService.addExpenseUrl(self.bookingForm.get('expense_sheet')?.value, self.bookingId).subscribe(res => {
+          console.log("Expense Added To Booking Id", self.bookingId);
+          
+        })
+      })
+    };
+    reader.onerror = function (error) {
+      console.log('Error: ', error);
+    };
+ }
   ngOnInit(): void {
     this.dialog.openDialogs.pop();
     this.selectedBookingDate = this.data.selectedDate;
@@ -123,7 +157,8 @@ export class BookingModalComponent implements OnInit {
       balancedAmount: [, [Validators.required]],
       facilities: [[]],
       status: ['pending'],
-      dgWithDiesel: [true, [Validators.required]]
+      dgWithDiesel: [true, [Validators.required]],
+      expense_sheet: []
 
     })
     this.bookingForm.get('finalAmount')?.valueChanges.subscribe(famountValue => {
@@ -241,7 +276,9 @@ export class BookingModalComponent implements OnInit {
       this.ready = true;
       
       this.bookingForm.get('dgWithDiesel')?.patchValue(data.bookingData[0].dgWithDiesel);
-
+      this.bookingForm.get('expense_sheet')?.patchValue(data && data.bookingData && data.bookingData[0] && data.bookingData[0].expense_sheet)
+      console.log("CHECK",this.bookingForm.get('expense_sheet')?.value );
+      
       this.bookingForm.get('dgWithDiesel')?.disable();
     })
   }
@@ -342,6 +379,15 @@ export class BookingModalComponent implements OnInit {
       }
     });
 }
+onClickFileInputButton(): void {
+  this.fileInput.nativeElement.click();
+  this.fileuploaded = false;
+}
+downloadExpenseSheet() {
+  saveAs(this.bookingForm.get('expense_sheet')?.value, `${this.bookingForm.get('bookingDate')?.value}_${this.bookingForm.get('requirements')?.value}`);
+
+  window.open()
+}
 }
 
 
@@ -350,6 +396,7 @@ export class BookingModalComponent implements OnInit {
   templateUrl: './dialog-overview-example-dialog.html',
 })
 export class DialogOverviewExampleDialog {
+
   constructor(
     public dialogRef: MatDialogRef<DialogOverviewExampleDialog>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -358,5 +405,7 @@ export class DialogOverviewExampleDialog {
   onNoClick(): void {
     this.dialogRef.close();
   }
+
+
 
 }

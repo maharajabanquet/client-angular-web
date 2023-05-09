@@ -12,56 +12,81 @@
       Create Flow
     </button>
     &nbsp;
+    <button  color="primary"  mat-raised-button (click)="exportexcel()"  class="demo-button">
+      Download Ledger Report
+    </button>
 </div>
 <br>
 
-  <table *ngIf="isLoaded"  mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
-     <!-- party_name Column -->
-     <ng-container matColumnDef="sl-no">
-        <th mat-header-cell  *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
-    
+  
+  
+
+  <table    mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <!-- party_name Column -->
-    <ng-container matColumnDef="party-name">
-      <th mat-header-cell *matHeaderCellDef> Party Name </th>
-      <td mat-cell *matCellDef="let element"> {{element.partyName}} </td>
-    </ng-container>
-  
-    <!-- transcation_type Column -->
-    <ng-container matColumnDef="transcation-type">
-      <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
-      <td mat-cell *matCellDef="let element"> {{element.transactionType}} </td>
-    </ng-container>
-  
-    <!-- transcation-date Column -->
-    <ng-container matColumnDef="transcation-date">
-      <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
-      <td mat-cell *matCellDef="let element"> {{element.transactionDate}} </td>
-    </ng-container>
-  
-    <!-- amount Column -->
-    <ng-container matColumnDef="amount">
-      <th mat-header-cell *matHeaderCellDef> Amount </th>
-      <td mat-cell [ngClass]="checknum(element.amount)" *matCellDef="let element"> {{element.amount}} </td>
-    </ng-container>
-
-    <!-- remarks Column -->
-    <ng-container matColumnDef="remarks">
-        <th mat-header-cell *matHeaderCellDef> Remarks </th>
-        <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
-      </ng-container>
-
-      <ng-container matColumnDef="action">
-        <th mat-header-cell *matHeaderCellDef> Action </th>
-        <td mat-cell style="cursor: pointer;" (click)="deleteEmployee(element.id)" *matCellDef="let element">  <mat-icon>delete_forever</mat-icon> </td>
-      </ng-container>
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    <ng-container matColumnDef="sl-no">
+       <th mat-header-cell  *matHeaderCellDef> No. </th>
+       <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+     </ng-container>
    
-  </table>
+   <!-- party_name Column -->
+   <ng-container matColumnDef="party-name">
+     <th mat-header-cell *matHeaderCellDef> Party Name </th>
+     <td mat-cell *matCellDef="let element"> {{element.partyName}} </td>
+   </ng-container>
+ 
+   <!-- transcation_type Column -->
+   <ng-container matColumnDef="transcation-type">
+     <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+     <td mat-cell *matCellDef="let element"> {{element.transactionType}} </td>
+   </ng-container>
+ 
+   <!-- transcation-date Column -->
+   <ng-container matColumnDef="transcation-date">
+     <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+     <td mat-cell *matCellDef="let element"> {{element.transactionDate}} </td>
+   </ng-container>
+ 
+   <!-- amount Column -->
+   <ng-container matColumnDef="amount">
+     <th mat-header-cell *matHeaderCellDef> Amount </th>
+     <td mat-cell [ngClass]="checknum(element.amount)" *matCellDef="let element"> {{element.amount}} </td>
+   </ng-container>
+
+   <!-- remarks Column -->
+   <ng-container matColumnDef="remarks">
+       <th mat-header-cell *matHeaderCellDef> Remarks </th>
+       <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+     </ng-container>
+
+     <ng-container matColumnDef="action">
+       <th mat-header-cell *matHeaderCellDef> Action </th>
+       <td mat-cell style="cursor: pointer;" (click)="deleteEmployee(element.id)" *matCellDef="let element">  <mat-icon>delete_forever</mat-icon> </td>
+     </ng-container>
+ 
+   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
   
+ </table>
+
+ <table [hidden]="true" id="excel-table">
+  <tr>
+    <th>Party Name</th>
+    <th>Transaction Type</th>
+    <th>Transaction Date</th>
+    <th>Amount</th>
+    <th>Remarks</th>
+
+  </tr>
+  <tr *ngFor="let item of allCashFlow">
+    <td>{{item.partyName}}</td>
+    <td>{{item.transactionType}}</td>
+    <td>{{item.transactionDate}}</td>
+    <td>{{item.amount}}</td>
+    <td>{{item.remarks}}</td>
+
+    
+  </tr>
+</table>
   <mat-paginator  [length]="length"
   [pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions"
