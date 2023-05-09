@@ -46,7 +46,7 @@
 
       <p>
         <div >
-            <input  type="file" style="display: none" #fileInput accept="image/*" (change)="onChangeFileInput($event)" />
+            <input  type="file" style="display: none" #fileInput accept="*" (change)="onChangeFileInput($event)" />
             <button [disabled]="!isDisable" mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
               <mat-icon>attach_file</mat-icon>
              Upload Proof
