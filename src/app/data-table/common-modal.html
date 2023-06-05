@@ -1,66 +1,46 @@
 <h2 mat-dialog-title>{{modalMetaData.header}}</h2>
-<div class="demo-button-container">
-  <button [disabled]="employeeForm.status === 'INVALID'" mat-raised-button (click)="submit()" class="demo-button">
-    Add Employee
-  </button>
-</div>
 
-<mat-dialog-content class="mat-typography" [formGroup]="employeeForm">
-    <p>
+<mat-dialog-content class="mat-typography" [formGroup]="mediaForm">
+  <mat-form-field>
+    <mat-label>Select Type</mat-label>
+    <mat-select formControlName="type">
+      <mat-option value="photos">Photos</mat-option>
+      <mat-option value="videos">Videos</mat-option>
+    </mat-select>
+    </mat-form-field>
+  <p>
+    <div *ngIf="mediaForm.get('type')?.value === 'photos'">
+      <input type="file" style="display: none" #fileInput accept="*" (change)="onChangeFileInput($event)" />
+      <button  class="file-select-button"
+        (click)="onClickFileInputButton()">
+        <mat-icon>attach_file</mat-icon>
+        Upload Media
+      </button>
+
+      <p class="file-name" *ngIf="!file; else fileName"></p>
+      <ng-template #fileName>
+        <p *ngIf="mediaForm.get('proof')?.value === ''" class="file-name">{{ file?.name }}</p>
+        <p style="color:green;" *ngIf="fileuploaded">Media Has Been Uploaded</p>
+      </ng-template>
+
+    </div>
+    <div *ngIf="mediaForm.get('type')?.value === 'videos'">
+      <p>
         <mat-form-field appearance="legacy">
-          <mat-label>Employee Name</mat-label>
-          <input formControlName="employeeName" matInput placeholder="Enter Employee Name">
-          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
-         
+          <mat-label>Youtube Video ID</mat-label>
+          <input formControlName="mediaSource" matInput placeholder="Enter Youtube Video ID">
         </mat-form-field>
       </p>
-      <p>
-        <mat-form-field appearance="legacy">
-          <mat-label>Phone Number</mat-label>
-          <input formControlName="contact" matInput placeholder="Enter Phone Number">
-        </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="legacy">
-            <mat-label>Select Department</mat-label>
-            <mat-select formControlName="department">
-              <mat-option *ngFor="let dept of modalMetaData.department" [value]="dept.departmentName">{{dept.departmentName}}</mat-option>
-            </mat-select>
-          </mat-form-field>
-      </p>
-      <p>
-        <mat-form-field appearance="legacy">
-          <mat-label>Salary Per Month</mat-label>
-          <input formControlName="salary" matInput placeholder="Enter Salary">         
-        </mat-form-field>
-      </p>
-      <p>
-            <mat-form-field appearance="legacy">
-                <mat-label>Joining Date</mat-label>
-                <input formControlName="joiningDate" matInput [matDatepicker]="dp" >
-                <mat-hint>MMMM DD, YYYY</mat-hint>
-                <mat-datepicker-toggle matSuffix [for]="dp"></mat-datepicker-toggle>
-                <mat-datepicker #dp></mat-datepicker>
-              </mat-form-field>
-      </p>
+    </div>
 
-      <p>
-        <div >
-            <input  type="file" style="display: none" #fileInput accept="*" (change)="onChangeFileInput($event)" />
-            <button [disabled]="!isDisable" mat-raised-button color="primary" class="file-select-button" (click)="onClickFileInputButton()">
-              <mat-icon>attach_file</mat-icon>
-             Upload Proof
-            </button>
-          
-            <p class="file-name" *ngIf="!file; else fileName"></p>
-            <ng-template #fileName>
-              <p *ngIf="employeeForm.get('proof')?.value === ''" class="file-name">{{ file?.name }}</p>
-              <p style="color:green;" *ngIf="fileuploaded">File Has Been Uploaded</p>
-            </ng-template>
-            
-          </div>
-       <p>
-        
+    <div class="demo-button-container">
+      <p style="text-align: center;">
+        <button slot="center"  mat-raised-button (click)="submit()"
+          class="demo-button">
+          Submit
+        </button>
+      </p>
+    </div>
 
-          
+
 </mat-dialog-content>

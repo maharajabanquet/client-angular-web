@@ -39,7 +39,7 @@ export class UtilityService {
 
   uploadFile(base64:any, empName: any, ext: any){
     const url = `api/v1/upload/upload-proof?ext=${ext}`;
-    return this.apiService.post(url, {file: base64, employeeName: empName, ext: ext})
+    return this.apiService.post(url, {file: base64, fileName: empName, ext: ext})
   }
   uploadCustomerIdProof(base64:any, empName: any, ext: any) {
     const url = `api/v1/upload/upload-customer-id-proof?ext=${ext}`;
@@ -49,6 +49,21 @@ export class UtilityService {
   login(payload: any) {
     const url = 'api/v1/user/login';
     return this.apiService.post(url, payload);
+  }
+
+  sendNotification(payload: any, mobile: any) {
+    const url = `api/v1/app-user/send_notification?mobile=${mobile}`;
+    return this.apiService.post(url, payload);
+  }
+
+  getMedia() {
+    const url = `api/v1/media/get-all-media`;
+    return this.apiService.get(url);
+  }
+
+  addMedia(payload: any) {
+    const url = `api/v1/media/add-media`;
+    return this.apiService.post(url, payload)
   }
 }
 

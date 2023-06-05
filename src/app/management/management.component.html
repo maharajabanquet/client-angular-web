@@ -1,17 +1,10 @@
 <mat-tab-group mat-align-tabs="start" >
-    <mat-tab label="Employee">
-      <div style="display: flex;" >
-      
-        <mat-card style="flex: 1 1 auto;">
-               <data-table [type]="'employee'"></data-table>
-        </mat-card>
-      </div>
-    </mat-tab>
+ 
     
-     <mat-tab label="Hotel">
+     <mat-tab label="App User">
       <div >
         <mat-card  class="card-style">
-          <hotel-table [type]="'hotel'"></hotel-table>
+          <hotel-table [type]="'App User'"></hotel-table>
         </mat-card>
       </div>
     </mat-tab>
@@ -34,6 +27,17 @@
       <div >
         <mat-card  class="card-style">
           <receiving></receiving>
+        </mat-card>
+      </div>
+    </mat-tab>
+    <mat-tab label="Media">
+      <div >
+        <mat-card  class="card-style">
+          <div style="display: flex;" >
+            <mat-card style="flex: 1 1 auto;">
+                   <data-table [type]="'media'"></data-table>
+            </mat-card>
+          </div>
         </mat-card>
       </div>
     </mat-tab>

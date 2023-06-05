@@ -6,6 +6,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./management.component.css']
 })
 export class ManagementComponent implements OnInit {
+  type = 'Booking Cash Inflow'
   constructor() { }
 
   ngOnInit(): void {

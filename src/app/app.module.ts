@@ -33,7 +33,7 @@ import { TentHouseTableComponent } from './tent-house/tent-house-table/tent-hous
 import { LazyImgDirectiveDirective } from './lazy-img-directive.directive';
 import { ManagementComponent } from './management/management.component';
 import { CommonModalDialog, DataTableComponent } from './data-table/data-table.component';
-import { HotelModalDialog, HotelTableComponent } from './hotel-table/hotel-table.component';
+import { HotelModalDialog, HotelTableComponent, NotifcationModalDialog } from './hotel-table/hotel-table.component';
 import { CashInFlowDialog, InCashflowComponent } from './management/in-cashflow/in-cashflow.component';
 import { LoginFormComponent } from './booking-dashboard/login-form.component';
 import { ReceivingComponent, ReceivingModalComponent } from './management/receiving/receiving.component';
@@ -68,7 +68,8 @@ import { ReceivingComponent, ReceivingModalComponent } from './management/receiv
     CashInFlowDialog,
     LoginFormComponent,
     ReceivingComponent,
-    ReceivingModalComponent
+    ReceivingModalComponent,
+    NotifcationModalDialog
   ],
   imports: [
     BrowserModule,

@@ -28,7 +28,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 })
 export class DataTableComponent implements OnInit {
  
-  displayedColumns: string[] = ['position', 'employeeName','contact' ,'department', 'salary', 'joiningDate', 'documentProof', 'action'];
+  displayedColumns: string[] = ['position', 'type','mediaSoruce'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
   @Input() label: any = 'Employee'
@@ -42,22 +42,17 @@ export class DataTableComponent implements OnInit {
 
   ngOnInit(): void {
     this.getDepartment();
-    this.getEmployeeList();
+    this.getAllMedia();
   }
 
-  getEmployeeList() {
-    this.employeeService.getEmployeeList().subscribe((empList: any) => {
+  getAllMedia() {
+    this.utillityService.getMedia().subscribe((media: any) => {
       let counter = 0;
-      const elements = (empList && empList.employeeList) || [];
+      const elements = (media) || [];
       const mapElements = elements.map((element: any) => ({
         position: counter+1,
-        employeeName: element.employeeName,
-        contact: element.contact,
-        department: element.department,
-        salary: element.salary,
-        documentProof: element.proof,
-        joiningDate: element.joiningDate
-
+        type: element.type,
+        mediaSoruce: element.mediaSource,
       }))
       this.dataSource = mapElements;
       // {position: 1, employeeName: 'Madan Paswan', contact: '8970777693',department: 'cleaning', salary: 'View', documentProof: 'View', joiningDate: '02/12/2022', action: ''},
@@ -85,7 +80,7 @@ export class DataTableComponent implements OnInit {
             'Emplyee Data has been deleted.',
             'success'
           )
-          this.getEmployeeList();
+          this.getAllMedia();
         })
       }
     })
@@ -123,7 +118,7 @@ export class DataTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.getEmployeeList();
+      this.getAllMedia();
     });
   }
 
@@ -149,7 +144,7 @@ declare var swal: any
 })
 export class CommonModalDialog {
   @ViewChild('fileInput') fileInput : any;
-  employeeForm!: FormGroup;
+  mediaForm!: FormGroup;
   
 
   file: File | null = null;
@@ -167,7 +162,7 @@ export class CommonModalDialog {
     
     this.modalMetaData = data;
     this.createEmployeeForm();
-    this.employeeForm.get('employeeName')?.valueChanges.subscribe(value => {
+    this.mediaForm.get('employeeName')?.valueChanges.subscribe(value => {
       if(value && value.length > 0) {
         this.isDisable = true;
       } else {
@@ -177,13 +172,9 @@ export class CommonModalDialog {
   }
 
   createEmployeeForm() {
-    this.employeeForm = this.fb.group({
-      employeeName: ['', [Validators.required]],
-      contact: ['', Validators.required],
-      department: ['', [Validators.required]],
-      salary: ['', [Validators.required]],
-      proof: ['', [Validators.required]],
-      joiningDate: ['', [Validators.required]],
+    this.mediaForm = this.fb.group({
+      mediaSource: ['', [Validators.required]],
+      type: ['', Validators.required],
     })
   }
 
@@ -202,7 +193,7 @@ export class CommonModalDialog {
 
   submit() {
     console.log();
-    this.employeeService.addEmployee(this.employeeForm.getRawValue()).subscribe((resp) => {
+    this.us.addMedia(this.mediaForm.getRawValue()).subscribe((resp) => {
       Swal.fire(
         'Employee Added!',
         'Employe Has Been Added To Record',
@@ -218,8 +209,8 @@ export class CommonModalDialog {
     reader.readAsDataURL(file);
     reader.onload = function () {
       let ext = file.name.split(".")[1]
-      self.us.uploadFile(reader.result, self.employeeForm.get('employeeName')?.value, ext).subscribe((res: any) => {
-        self.employeeForm.get('proof')?.patchValue(res && res.url);
+      self.us.uploadFile(reader.result, file.name, ext).subscribe((res: any) => {
+        self.mediaForm.get('mediaSource')?.patchValue(res && res.url);
         self.fileuploaded = true;
       })
     };

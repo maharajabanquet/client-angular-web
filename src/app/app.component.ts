@@ -11,6 +11,9 @@ export class AppComponent {
   websiteRead!: boolean;
   constructor(private trafficService: TrafficService) {
     this.snapShot();
+  //   window.otpless = (otplessUser) => {
+  //   alert(JSON.stringify(otplessUser));
+  // };
     
   }
 

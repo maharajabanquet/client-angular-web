@@ -1,76 +1,77 @@
 <div class="demo-button-container">
-    <button  mat-raised-button (click)="add()" class="demo-button">
-      Add
-    </button>
-  </div>
-  
+  <button  mat-raised-button (click)="add()" class="demo-button">
+    Add User
+  </button>
+</div>
+
 
 <table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
 
-    <!-- Checkbox Column -->
-    <ng-container matColumnDef="select">
-      <th mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? toggleAllRows() : null"
-                      [checked]="selection.hasValue() && isAllSelected()"
-                      [indeterminate]="selection.hasValue() && !isAllSelected()"
-                      [aria-label]="checkboxLabel()">
-        </mat-checkbox>
-      </th>
-      <td mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)"
-                      [aria-label]="checkboxLabel(row)">
-        </mat-checkbox>
-      </td>
-    </ng-container>
-  
-    <!-- Position Column -->
-    <ng-container>
-        <ng-container matColumnDef="position">
-            <th mat-header-cell class="bold-header" *matHeaderCellDef> No. </th>
-            <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-          </ng-container>
-          <!-- Name Column -->
-          <ng-container matColumnDef="customerName">
-            <th mat-header-cell class="bold-header" *matHeaderCellDef> Customer Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.customerName}} </td>
-          </ng-container>
-          <ng-container matColumnDef="contactNumber">
-            <th mat-header-cell class="bold-header" *matHeaderCellDef> Contact Number </th>
-            <td mat-cell *matCellDef="let element"> {{element.contactNumber}} </td>
-          </ng-container>
-          
-          <ng-container matColumnDef="purpose">
-            <th mat-header-cell class="bold-header" *matHeaderCellDef> Purpose </th>
-            <td mat-cell *matCellDef="let element"> {{element.purpose}} </td>
-          </ng-container>
-          <!-- Weight Column -->
-          <ng-container matColumnDef="idProof">
-            <th mat-header-cell  class="bold-header" *matHeaderCellDef> ID Proof </th>
-            <td mat-cell class="hyper hover"  *matCellDef="let element" (click)="viewDocumentProof(element.idProof) "> View </td>
-          </ng-container>
-          <ng-container matColumnDef="amountPaid">
-              <th mat-header-cell class="bold-header" *matHeaderCellDef> Amount Paid </th>
-              <td mat-cell  *matCellDef="let element"> {{element.amountPaid}} </td>
-            </ng-container>
-            <ng-container matColumnDef="date">
-                <th mat-header-cell class="bold-header" *matHeaderCellDef> Date </th>
-                <td mat-cell  *matCellDef="let element"> {{element.date|date}} </td>
-              </ng-container>
-              <ng-container matColumnDef="action">
-                <th mat-header-cell class="bold-header" *matHeaderCellDef> Action </th>
-                <td class="hover" mat-cell *matCellDef="let element" (click)="deleteEmployee(element.contactNumber)"> <mat-icon>delete_forever</mat-icon>
-                </td>
-              </ng-container>
-    </ng-container>
-  
-    <!-- Symbol Column -->
+  <!-- Checkbox Column -->
+  <ng-container matColumnDef="select">
+    <th mat-header-cell *matHeaderCellDef>
+      <mat-checkbox (change)="$event ? toggleAllRows() : null"
+                    [checked]="selection.hasValue() && isAllSelected()"
+                    [indeterminate]="selection.hasValue() && !isAllSelected()"
+                    [aria-label]="checkboxLabel()">
+      </mat-checkbox>
+    </th>
+    <td mat-cell *matCellDef="let row">
+      <mat-checkbox (click)="$event.stopPropagation()"
+                    (change)="$event ? selection.toggle(row) : null"
+                    [checked]="selection.isSelected(row)"
+                    [aria-label]="checkboxLabel(row)">
+      </mat-checkbox>
+    </td>
+  </ng-container>
 
-  
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-        (click)="selection.toggle(row)">
-    </tr>
-  </table>
-  
+  <!-- Position Column -->
+  <ng-container>
+      <ng-container matColumnDef="position">
+          <th mat-header-cell class="bold-header" *matHeaderCellDef> No. </th>
+          <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+        </ng-container>
+        <!-- Name Column -->
+        <ng-container matColumnDef="userName">
+          <th mat-header-cell class="bold-header" *matHeaderCellDef> UserName</th>
+          <td mat-cell *matCellDef="let element"> {{element.userName}} </td>
+        </ng-container>
+        <ng-container matColumnDef="mobile">
+          <th mat-header-cell class="bold-header" *matHeaderCellDef> Mobile </th>
+          <td mat-cell *matCellDef="let element"> {{element.mobile}} </td>
+        </ng-container>
+        
+        <ng-container matColumnDef="password">
+          <th mat-header-cell class="bold-header" *matHeaderCellDef> Password </th>
+          <td mat-cell *matCellDef="let element"> {{element.password}} </td>
+        </ng-container>
+        <!-- Weight Column -->
+        <ng-container matColumnDef="dateOfBooking">
+          <th mat-header-cell  class="bold-header" *matHeaderCellDef> Date Of Booking </th>
+          <td mat-cell  *matCellDef="let element" > {{element.dateOfBooking}} </td>
+        </ng-container>
+        <ng-container matColumnDef="Admin">
+          <th mat-header-cell  class="bold-header" *matHeaderCellDef> Admin </th>
+          <td mat-cell  *matCellDef="let element" > {{element.isAdmin}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="Action">
+          <th mat-header-cell  class="bold-header" *matHeaderCellDef> Action </th>
+          <td mat-cell class="hyper hover"  *matCellDef="let element" (click)="remove(element.mobile)"> Remove</td>
+        </ng-container>
+
+        <ng-container matColumnDef="Notify">
+          <th mat-header-cell  class="bold-header" *matHeaderCellDef> Notify </th>
+          <td mat-cell class=" hover" (click)="openNotificationModalForm(element)"  *matCellDef="let element"> <mat-icon>notifications</mat-icon></td>
+        </ng-container>
+     
+  </ng-container>
+
+  <!-- Symbol Column -->
+
+
+  <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+  <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+      (click)="selection.toggle(row)">
+  </tr>
+</table>

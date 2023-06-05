@@ -1,0 +1,30 @@
+<h2 mat-dialog-title><mat-icon>notifications</mat-icon> Notify ({{modalMetaData.userName}})</h2>
+<mat-dialog-content class="mat-typography" [formGroup]="notifyForm">
+    <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Title</mat-label>
+          <input formControlName="title"  matInput placeholder="Enter Title">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+         
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Body</mat-label>
+          <input formControlName="body"  matInput placeholder="Enter Body">
+        </mat-form-field>
+      </p>
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Image URL</mat-label>
+          <input formControlName="img" matInput placeholder="Enter Image URL">
+        </mat-form-field>
+      </p>
+        <div class="demo-button-container">
+            <button (click)="sendNotification()"  [disabled]="notifyForm.status === 'INVALID'"  mat-raised-button class="demo-button"> Send Notification
+            </button>
+   
+          </div>
+          
+</mat-dialog-content>

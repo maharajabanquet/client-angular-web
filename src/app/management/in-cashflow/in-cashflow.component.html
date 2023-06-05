@@ -39,6 +39,10 @@
      <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
      <td mat-cell *matCellDef="let element"> {{element.transactionType}} </td>
    </ng-container>
+   <ng-container matColumnDef="type">
+    <th mat-header-cell *matHeaderCellDef> Type </th>
+    <td mat-cell [ngClass]="checknum(element.amount)" *matCellDef="let element"> {{changeType(element.amount) }}</td>
+  </ng-container>
  
    <!-- transcation-date Column -->
    <ng-container matColumnDef="transcation-date">

@@ -26,7 +26,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
   styleUrls: ['./hotel-table.component.css']
 })
 export class HotelTableComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'customerName','contactNumber','purpose' ,'idProof', 'amountPaid', 'date', 'action'];
+  displayedColumns: string[] = ['position', 'userName','mobile','password' , 'dateOfBooking', 'Admin', 'Action', 'Notify'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
   selection = new SelectionModel<PeriodicElement>(true, []);
   @Input() label: any = 'Hotel'
@@ -40,54 +40,62 @@ export class HotelTableComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.getHotelActivityList();
+    this.getUser();
   }
 
-  getHotelActivityList() {
-    this.employeeService.getHotelActivityList().subscribe((empList: any) => {
+  remove(element: any) {
+    console.log(element);
+    this.employeeService.removeUser(element).subscribe((resp: any) => {
+      Swal.fire(
+        'Successfully Removed!',
+        'User Has Been Removed !!!',
+        'success'
+      )
+      this.getUser();
+    })
+
+  }
+
+  getUser() {
+    this.employeeService.getUser().subscribe((userList: any) => {
       let counter = 0;
-      const elements = (empList && empList.activities) || [];
+      const elements = (userList && userList) || [];
       const mapElements = elements.map((element: any) => ({
         position: counter+1,
-        customerName: element.customerName,
-        purpose: element.purpose,
-        idProof: element.idProof,
-        amountPaid: element.amountPaid,
-        contactNumber: element.contactNumber,
-        date:element.date
-
+        userName: element.userName,
+        password: element.password,
+        mobile: element.mobile,
+        dateOfBooking: element.dateOfBooking,
+        isAdmin: this.isAdminTrue(element.isAdmin)
       }))
       this.dataSource = mapElements;
       // {position: 1, employeeName: 'Madan Paswan', contact: '8970777693',department: 'cleaning', salary: 'View', documentProof: 'View', joiningDate: '02/12/2022', action: ''},
     })
   }
 
+  isAdminTrue(isAdmin: any) {
+    if(isAdmin) {
+      return 'Yes'
+    } else {
+      return 'No'
+    }
+  }
+
   viewDocumentProof(url: any) {
     window.open(url, "_blank");
   }
 
-  deleteEmployee(contactNumber: any) {
-    Swal.fire({
-      title: 'Are you sure?',
-      text: "You won't be able to revert this!",
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#3085d6',
-      cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
-    }).then((result) => {
-      if (result.isConfirmed) {
-        this.employeeService.deleteHotelActivites(contactNumber).subscribe((res: any) => {
-          Swal.fire(
-            'Deleted!',
-            'Emplyee Data has been deleted.',
-            'success'
-          )
-          this.getHotelActivityList();
-        })
-      }
-    })
+  openNotificationModalForm(data: any) {
+    
+    const dialogRef = this.dialog.open(NotifcationModalDialog, {
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(`Dialog result: ${result}`);})
   }
+
+  
   
 
   isAllSelected() {
@@ -122,7 +130,7 @@ export class HotelTableComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
-      this.getHotelActivityList();
+      this.getUser();
     });
   }
 
@@ -134,6 +142,39 @@ export class HotelTableComponent implements OnInit {
   
 }
 
+@Component({
+  selector: 'common-modal',
+  templateUrl: 'notification-modal.html',
+  styleUrls: ['hotel-modal.css']
+})
+export class NotifcationModalDialog {
+  modalMetaData: any;
+  notifyForm!: FormGroup;
+  constructor(
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+    private fb: FormBuilder,
+    private us: UtilityService,
+  ){ 
+    this.modalMetaData = data;
+    this.notifyForm = this.fb.group({
+      title: ['', [Validators.required]],
+      body: ['', [Validators.required]],
+      img: ['', [Validators.required]]
+    })
+  }
+
+  sendNotification() {
+    const payload = this.notifyForm.getRawValue();
+    this.us.sendNotification(payload, this.modalMetaData.mobile).subscribe(resp => {
+      Swal.fire(
+        'Notification Sent!',
+        'User Has Been Notified !!!',
+        'success'
+      )
+    })
+  }
+}
+
 
 declare var swal: any
 @Component({
@@ -143,7 +184,7 @@ declare var swal: any
 })
 export class HotelModalDialog {
   @ViewChild('fileInput') fileInput : any;
-  hotelForm!: FormGroup;
+  userForm!: FormGroup;
   
 
   file: File | null = null;
@@ -161,7 +202,7 @@ export class HotelModalDialog {
     
     this.modalMetaData = data;
     this.createHotelForm();
-    this.hotelForm.get('customerName')?.valueChanges.subscribe(value => {
+    this.userForm.get('customerName')?.valueChanges.subscribe(value => {
       if(value && value.length > 0) {
         this.isDisable = true;
       } else {
@@ -171,54 +212,119 @@ export class HotelModalDialog {
   }
 
   createHotelForm() {
-    this.hotelForm = this.fb.group({
-      customerName: ['', [Validators.required]],
-      contactNumber: ['', Validators.required],
-      purpose: ['', Validators.required],
-      idProof: [''],
-      amountPaid: ['', [Validators.required]],
-      date: ['', [Validators.required]],
-     
+    this.userForm = this.fb.group({
+      mobile: ['', [Validators.required]],
+      userName: ['', Validators.required],
+      password: ['', Validators.required],
+      dateOfBooking: [''],
+      isAdmin: [false, Validators.required]
     })
   }
-  onClickFileInputButton(): void {
-    this.fileInput.nativeElement.click();
-    this.fileuploaded = false;
-  }
+ 
 
-  onChangeFileInput(element: any): void {
-    this.uploadedFiles = element.target.files;
-    const files: { [key: string]: File } = this.fileInput.nativeElement.files;
-    this.file = files[0];
-    console.log(this.file);
-    let base64 = this.getBase64(this.file);
-  }
 
   submit() {
-    console.log();
-    this.employeeService.addHotelActivities(this.hotelForm.getRawValue()).subscribe((resp) => {
+    const payload = {
+      "mobile": this.userForm.get('mobile')?.value,
+      "userName": this.userForm.get('userName')?.value,
+      "password": this.userForm.get('password')?.value,
+      "dateOfBooking": this.userForm.get('dateOfBooking')?.value,
+      "isAdmin": this.userForm.get('isAdmin')?.value,
+      "payment": 0,
+      "cart": [
+        {
+          "_id": "645f32244c440597d142d72d",
+          "id": "0",
+          "category": "Tent",
+          "discription": "Center Table, Steel Chair, ...",
+          "img": "https://5.imimg.com/data5/VD/KL/PS/SELLER-9029459/marriage-hall-chair-500x500.jpg",
+          "categoryList": [
+            {
+              "itemName": "Plastic Chair",
+              "price": 5,
+              "quantity": 100,
+              "orderQuant": 0
+            },
+            {
+              "itemName": "Steel Chair with Cover",
+              "price": 25,
+              "quantity": 100,
+              "orderQuant": 0
+            },
+            {
+              "itemName": "Center Table",
+              "price": 100,
+              "quantity": 5,
+              "orderQuant": 0
+            },
+            {
+              "itemName": "Blanket",
+              "price": 0,
+              "quantity": 15,
+              "orderQuant": 0
+            }
+          ]
+        },
+        {
+          "_id": "645f329b4c440597d142d72f",
+          "id": "1",
+          "category": "Catering",
+          "discription": "Plates & Spoon, ...",
+          "img": "https://i.pinimg.com/originals/a7/41/0d/a7410d1c429840ab6d883347a8c9c59c.jpg",
+          "categoryList": [
+            {
+              "itemName": "Coffee Tea Machine",
+              "price": 2000,
+              "quantity": 1,
+              "orderQuant": 0
+            },
+            {
+              "itemName": "Plates & Spoon",
+              "price": 5,
+              "quantity": 200,
+              "orderQuant": 0
+            },
+            {
+              "itemName": "Mixer grinder",
+                "price": 5,
+                "quantity": 1,
+                "orderQuant": 0
+              }
+          ],
+          "__v": 0
+        },
+        {
+          "_id": "645f32b44c440597d142d733",
+          "id": "2",
+          "category": "Party Props",
+          "discription": "Pyro gun, ...",
+          "img": "https://5.imimg.com/data5/ANDROID/Default/2022/7/PK/AS/FW/120886659/product-jpeg-500x500.jpg",
+          "categoryList": [
+            {
+              "itemName": "Pyro Gun",
+              "price": 250,
+              "quantity": 4,
+              "orderQuant": 0
+            }
+          ]
+        }
+      ],
+      "__v": 0
+    }
+    this.employeeService.addUser(payload).subscribe((resp) => {
       Swal.fire(
         'Successfully Added!',
-        'Employe Has Been Added To Record',
+        'User Has Been Added To Record',
         'success'
       )
       this.dialogRef.close();
+    }, (err) => {
+      Swal.fire(
+        'Not Added!',
+        'Failed to add user',
+        'error'
+      )
     })
   }
 
-  getBase64(file:any) {
-    let self = this;
-    var reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = function () {
-      let ext = file.name.split(".")[1]
-      self.us.uploadFile(reader.result, self.hotelForm.get('employeeName')?.value, ext).subscribe((res: any) => {
-        self.hotelForm.get('idProof')?.patchValue(res && res.url);
-        self.fileuploaded = true;
-      })
-    };
-    reader.onerror = function (error) {
-      console.log('Error: ', error);
-    };
- }
 }

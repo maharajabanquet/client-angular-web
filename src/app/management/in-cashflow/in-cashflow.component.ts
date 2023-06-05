@@ -26,7 +26,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
   styleUrls: ['./in-cashflow.component.css']
 })
 export class InCashflowComponent implements OnInit {
-  displayedColumns: string[] = ['sl-no', 'party-name', 'transcation-type', 'transcation-date', 'amount', 'remarks', 'action'];
+  displayedColumns: string[] = ['sl-no', 'party-name', 'transcation-type', 'type' ,'transcation-date', 'amount', 'remarks', 'action'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   ELEMENT_DATA: PeriodicElement[] = [];
   isLoaded!: boolean
@@ -185,6 +185,23 @@ export class InCashflowComponent implements OnInit {
       return 'red-color'
     }
   
+  }
+
+  changeType(numberCheck: any) {
+    if (Math.sign(numberCheck) === 1) {
+      return 'Credited';
+    }
+    else {
+      return 'Debited'
+    }
+  }
+  status(element: any) {
+    if (element.transactionType === 'credited') {
+      return 'green-color';
+    }
+    else {
+      return 'red-color'
+    }
   }
   numberWithCommas(x: any) {
     if(x) {

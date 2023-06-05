@@ -1,13 +1,8 @@
 <div class="demo-button-container">
     <button  mat-raised-button (click)="addEmployee()" class="demo-button">
-      Add Employee
+      Add Media
     </button>
-    <button
-        mat-raised-button
-        (click)="uploadSalarySlip()"
-        class="demo-button">
-      Upload Salary Slip
-    </button>
+   
   </div>
   
 
@@ -32,46 +27,30 @@
     </ng-container>
   
     <!-- Position Column -->
-    <ng-container *ngIf="type === 'employee'">
+    <ng-container *ngIf="type === 'media'">
         <ng-container matColumnDef="position">
             <th mat-header-cell class="bold-header" *matHeaderCellDef> No. </th>
             <td mat-cell *matCellDef="let element"> {{element.position}} </td>
           </ng-container>
         
           <!-- Name Column -->
-          <ng-container matColumnDef="employeeName">
-            <th mat-header-cell class="bold-header" *matHeaderCellDef> Employee Name </th>
-            <td mat-cell *matCellDef="let element"> {{element.employeeName}} </td>
+          <ng-container matColumnDef="type">
+            <th mat-header-cell class="bold-header" *matHeaderCellDef> Type </th>
+            <td mat-cell *matCellDef="let element"> {{element.type}} </td>
           </ng-container>
 
-          <ng-container matColumnDef="contact">
-            <th mat-header-cell class="bold-header" *matHeaderCellDef> Phone Number </th>
-            <td mat-cell *matCellDef="let element"> {{element.contact}} </td>
+          <ng-container matColumnDef="mediaSoruce">
+            <th mat-header-cell class="bold-header" *matHeaderCellDef> Media </th>
+            <td mat-cell *matCellDef="let element">
+              <ng-container *ngIf="element.type === 'photos'">
+                <img [src]="element.mediaSoruce">
+              </ng-container>
+              <ng-container *ngIf="element.type === 'videos'">
+                <a [href]="'https://www.youtube.com/watch?v='+element.mediaSoruce" target="_blank">Youtube</a>
+              </ng-container>
+             </td>
           </ng-container>
-        
-          <!-- Weight Column -->
-          <ng-container matColumnDef="department">
-            <th mat-header-cell  class="bold-header" *matHeaderCellDef> Department </th>
-            <td mat-cell *matCellDef="let element"> {{element.department}} </td>
-          </ng-container>
-      
-          <ng-container matColumnDef="salary">
-              <th mat-header-cell class="bold-header" *matHeaderCellDef> Salary </th>
-              <td mat-cell class="hyper hover"  *matCellDef="let element"> {{element.salary}} </td>
-            </ng-container>
-            <ng-container matColumnDef="documentProof">
-              <th mat-header-cell class="bold-header" *matHeaderCellDef> Document Proof </th>
-              <td mat-cell class="hyper hover" *matCellDef="let element" (click)="viewDocumentProof(element.documentProof) "> View</td>
-            </ng-container>
-            <ng-container matColumnDef="joiningDate">
-              <th mat-header-cell class="bold-header" *matHeaderCellDef> Joining Date </th>
-              <td mat-cell *matCellDef="let element"> {{element.joiningDate|date}} </td>
-            </ng-container>
-            <ng-container matColumnDef="action">
-              <th mat-header-cell class="bold-header" *matHeaderCellDef> Action </th>
-              <td class="hover" mat-cell *matCellDef="let element" (click)="deleteEmployee(element.contact)"> <mat-icon>delete_forever</mat-icon>
-              </td>
-            </ng-container>
+
     </ng-container>
   
     <!-- Symbol Column -->
