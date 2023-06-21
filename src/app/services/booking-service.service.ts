@@ -71,4 +71,19 @@ export class BookingServiceService {
 
   }
 
+  getLatestBooking() {
+    const url = `api/v1/booking/get-latest-booking`;
+    return this.apiService.get(url)
+  }
+
+  updateBookingDetails(bookingData: any) {
+    const url = `api/v1/booking/update-booking-details`;
+    return this.apiService.post(url, bookingData)
+
+  }
+
+  purgeBooking(bookingData: any) {
+    const url = `api/v1/booking/purge-booking`;
+    return this.apiService.post(url, bookingData)
+  }
 }

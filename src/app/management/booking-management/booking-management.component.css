@@ -1,0 +1,29 @@
+table {
+    width: 100%;
+  }
+  
+.engagement {
+    color: #926d2f;
+    font-weight: bold;
+}
+
+.wedding {
+    color: green;
+    font-weight: bold;
+}
+
+.dekha-suno {
+    color: #1489b4;
+    font-weight: bold;
+}
+
+.approved {
+    color: green;
+    font-weight: bold;
+
+}
+
+.pending {
+    color: red;
+    font-weight: bold;
+}

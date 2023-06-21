@@ -164,6 +164,7 @@
             
           <button  mat-stroked-button style="color:red" (click)="closeModal()">Cancel</button>&nbsp;
           <button *ngIf="!printReady"  mat-stroked-button style="color:green" [disabled]="bookingForm?.status === 'INVALID'" (click)="submit()">Submit</button>&nbsp;
+          <button *ngIf="invoice_generated"  mat-stroked-button style="color:green" [disabled]="bookingForm?.status === 'INVALID'" (click)="update()">Update</button>&nbsp;
        <ng-container *ngIf="!invoice_generated">
          <button *ngIf="printReady"  mat-stroked-button   (click)="givePrint()"> 
            <mat-icon>print</mat-icon>&nbsp;Print

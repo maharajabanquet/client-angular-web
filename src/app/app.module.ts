@@ -37,6 +37,7 @@ import { HotelModalDialog, HotelTableComponent, NotifcationModalDialog } from '.
 import { CashInFlowDialog, InCashflowComponent } from './management/in-cashflow/in-cashflow.component';
 import { LoginFormComponent } from './booking-dashboard/login-form.component';
 import { ReceivingComponent, ReceivingModalComponent } from './management/receiving/receiving.component';
+import { BookingManagementComponent } from './management/booking-management/booking-management.component';
 
 @NgModule({
   declarations: [
@@ -69,7 +70,8 @@ import { ReceivingComponent, ReceivingModalComponent } from './management/receiv
     LoginFormComponent,
     ReceivingComponent,
     ReceivingModalComponent,
-    NotifcationModalDialog
+    NotifcationModalDialog,
+    BookingManagementComponent
   ],
   imports: [
     BrowserModule,

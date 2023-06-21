@@ -168,15 +168,15 @@ export class BookingModalComponent implements OnInit {
         this.bookingForm.get('dgWithDiesel')?.patchValue(true)
       }
     })
-    this.bookingForm.get('BookingAmount')?.disable();
+    this.bookingForm.get('BookingAmount')?.enable();
     if(this.formDisabled) {
       this.openPatchedForm();
     } else {
       this.bookingForm.get('bookingDate')?.patchValue(new Date(this.selectedBookingDate).toLocaleDateString());
       // this.bookingForm.get('finalAmount')?.disable();
-      this.bookingForm.get('balancedAmount')?.disable();
-      this.bookingForm.get('bookingDate')?.disable();
-      this.bookingForm.get('BookingAmount')?.disable();
+      this.bookingForm.get('balancedAmount')?.enable();
+      this.bookingForm.get('bookingDate')?.enable();
+      this.bookingForm.get('BookingAmount')?.enable();
     }
   
     this.formReadyToLoad = true;
@@ -239,6 +239,16 @@ export class BookingModalComponent implements OnInit {
   
   }
 
+  update() {
+    this.bookingService.updateBookingDetails(this.bookingForm.getRawValue()).subscribe(res => {
+      this.closeModal();
+      this._snackBar.open('Booking Details Updated!', 'OK');
+      
+    }, (err) => {
+      this._snackBar.open('Error, Please Try Again!', 'OK');
+    })
+  }
+
   public checkError = (controlName: string, errorName: string) => {
     return this.bookingForm.controls[controlName].hasError(errorName);
   }
@@ -253,7 +263,7 @@ export class BookingModalComponent implements OnInit {
 
   openPatchedForm() {
     this.ready = false;
-    this.bookingService.getASpecificBooking(this.selectedBookingDate.toLocaleDateString()).subscribe((data: any) => {
+    this.bookingService.getASpecificBooking(this.selectedBookingDate).subscribe((data: any) => {
       this.bookingForm.patchValue(data.bookingData[0])
       this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
       this.settled = data && data.bookingData && data.bookingData[0] && data.bookingData[0].settled
@@ -271,7 +281,7 @@ export class BookingModalComponent implements OnInit {
         this.ELEMENT_DATA.push({position: index+1, facilities: data.bookingData[0].facilities[index].label, price: data.bookingData[0].facilities[index].price})
       }
       this.dataSource = this.ELEMENT_DATA;
-      this.bookingForm.disable();
+      this.bookingForm.enable();
       this.printReady = true;
       this.ready = true;
       
@@ -279,7 +289,7 @@ export class BookingModalComponent implements OnInit {
       this.bookingForm.get('expense_sheet')?.patchValue(data && data.bookingData && data.bookingData[0] && data.bookingData[0].expense_sheet)
       console.log("CHECK",this.bookingForm.get('expense_sheet')?.value );
       
-      this.bookingForm.get('dgWithDiesel')?.disable();
+      this.bookingForm.get('dgWithDiesel')?.enable();
     })
   }
 
@@ -298,7 +308,7 @@ export class BookingModalComponent implements OnInit {
       link.href = downloadURL;
       link.download = `${this.bookingForm.getRawValue().firstName}`+ "_invoice.pdf";
       link.click();
-      this.bookingService.getASpecificBooking(this.selectedBookingDate.toLocaleDateString()).subscribe((data: any) => {
+      this.bookingService.getASpecificBooking(this.selectedBookingDate).subscribe((data: any) => {
         this.showLoader = false;
         this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
         this.openPatchedForm();
@@ -338,7 +348,7 @@ export class BookingModalComponent implements OnInit {
       this.bookingForm.get('BookingAmount')?.enable();
       this.bookingForm.get('finalAmount')?.patchValue(finalAmount);
       if(value && value.length === 0) {
-      this.bookingForm.get('BookingAmount')?.disable();
+      this.bookingForm.get('BookingAmount')?.enable();
         
       }
     })

@@ -1,0 +1,68 @@
+<table mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+  
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="booking-date">
+      <th mat-header-cell *matHeaderCellDef> Booking Date </th>
+      <td mat-cell style="font-weight:bold;" *matCellDef="let element"> {{element.bookingDate|date}} </td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="client-name">
+      <th mat-header-cell *matHeaderCellDef> Client Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.clientName}} </td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="contact-number">
+      <th mat-header-cell *matHeaderCellDef> Contact Number </th>
+      <td mat-cell style="color:rgb(5, 5, 127);font-weight:bold" (click)="notifyPayment(element)" *matCellDef="let element"> {{element.phoneNumber}} </td>
+    </ng-container>
+  
+    <ng-container matColumnDef="requirements">
+        <th mat-header-cell *matHeaderCellDef> Requirements</th>
+        <td [ngClass]="checkReq(element.requirements)" mat-cell *matCellDef="let element"> {{element.requirements}} </td>
+      </ng-container>
+
+      <ng-container matColumnDef="booking-amount">
+        <th mat-header-cell *matHeaderCellDef> Advance</th>
+        <td mat-cell *matCellDef="let element"> {{element.BookingAmount}} </td>
+      </ng-container>
+      <ng-container matColumnDef="final-amount">
+        <th mat-header-cell *matHeaderCellDef> Deal Amount</th>
+        <td mat-cell *matCellDef="let element"> {{element.finalAmount}} </td>
+      </ng-container>
+      <ng-container matColumnDef="balanced-amount">
+        <th mat-header-cell *matHeaderCellDef> Due Amount</th>
+        <td mat-cell *matCellDef="let element"> {{element.balancedAmount}} </td>
+      </ng-container>
+      <ng-container matColumnDef="dg-with-diesel">
+        <th mat-header-cell *matHeaderCellDef> DG With Diesel</th>
+        <td mat-cell *matCellDef="let element"> {{element.dgWithDiesel}} </td>
+      </ng-container>
+      <ng-container matColumnDef="settled">
+        <th mat-header-cell *matHeaderCellDef> Settled</th>
+        <td mat-cell *matCellDef="let element"> {{element.settled}} </td>
+      </ng-container>
+      <ng-container matColumnDef="status">
+        <th mat-header-cell *matHeaderCellDef> Status</th>
+        <td mat-cell [ngClass]="checkStatus(element.status)" *matCellDef="let element"> {{element.status |uppercase}} </td>
+      </ng-container>
+      <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef> Action</th>
+        <td mat-cell *matCellDef="let element" > 	<mat-icon (click)="edit(element)">edit</mat-icon> &nbsp;<mat-icon (click)="delete(element)">delete</mat-icon> </td>
+      </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+  
+  
