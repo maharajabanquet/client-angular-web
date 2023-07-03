@@ -48,6 +48,7 @@ export class BookingModalComponent implements OnInit {
   formReadyToLoad: boolean | undefined;
   ready: boolean | undefined;
   formDisabled: boolean | undefined;
+  isUpdate: boolean | undefined;
   printReady: boolean | undefined;
   facilites: any;
   blob!: Blob;
@@ -178,7 +179,8 @@ export class BookingModalComponent implements OnInit {
       this.bookingForm.get('bookingDate')?.disable();
       this.bookingForm.get('BookingAmount')?.disable();
     }
-  
+
+ 
     this.formReadyToLoad = true;
     if(!this.formDisabled) {
       this.onRequirementSelect();
@@ -218,6 +220,32 @@ export class BookingModalComponent implements OnInit {
    
     // })
   
+  }
+  edit() {
+    this.formDisabled = false;
+    this.isUpdate = true;
+    this.bookingForm.enable()
+  }
+
+  update() {
+    const payload = {
+      BookingAmount: this.bookingForm.get('BookingAmount')?.value,
+      finalAmount: this.bookingForm.get('finalAmount')?.value,
+      balancedAmount: this.bookingForm.get('balancedAmount')?.value,
+      dgWithDiesel: this.bookingForm.get('dgWithDiesel')?.value
+    }
+    this.bookingService.updateBooking(payload, this.bookingId, this.bookingForm.get('bookingDate')?.value)
+    .subscribe(res => {
+      this.closeModal();
+      this._snackBar.open('Update Done!', 'OK');
+    })
+  }
+
+  deleteBooking() {
+    this.bookingService.deleteBooking(this.bookingId, this.bookingForm.get('bookingDate')?.value).subscribe(res => {
+      this.closeModal();
+      this._snackBar.open('Booking Removed From Calendar!', 'OK');
+    })
   }
 
   patchForm(value: any, controlName: string) {

@@ -167,7 +167,16 @@
        <ng-container *ngIf="!invoice_generated">
          <button *ngIf="printReady"  mat-stroked-button   (click)="givePrint()"> 
            <mat-icon>print</mat-icon>&nbsp;Print
-         </button>
+         </button>&nbsp;
+         <button *ngIf="printReady"  mat-stroked-button   (click)="edit()"> 
+          Edit
+        </button> &nbsp;
+        <button *ngIf="printReady && isUpdate"  mat-stroked-button style="font-weight: bold;"  mat-stroked-button   (click)="update()"> 
+          Update
+        </button>&nbsp;
+        <button *ngIf="printReady"  mat-stroked-button style="font-weight: bold;"  mat-stroked-button   (click)="deleteBooking()"> 
+          Delete
+        </button>&nbsp;
          <mat-spinner *ngIf="showLoader" [diameter]="30" style="margin-left:194px;margin-top:-36px;"></mat-spinner>
        </ng-container>&nbsp;
 
@@ -178,6 +187,15 @@
        </ng-container>
        <ng-container *ngIf="invoice_generated">
         <button *ngIf="!settled"  mat-stroked-button style="font-weight: bold;" (click)="openDialog()">Settle</button>&nbsp;
+        <button *ngIf="printReady"  mat-stroked-button style="font-weight: bold;"  mat-stroked-button   (click)="edit()"> 
+          Edit
+        </button>&nbsp;
+        <button *ngIf="printReady && isUpdate"  mat-stroked-button style="font-weight: bold;"  mat-stroked-button   (click)="update()"> 
+          Update
+        </button>&nbsp;
+        <button *ngIf="printReady"  mat-stroked-button style="font-weight: bold;"  mat-stroked-button   (click)="deleteBooking()"> 
+          Delete
+        </button>&nbsp;
         <mat-label style="color:green;font-weight: bold;">Invoice Generated</mat-label>
        </ng-container>
        <ng-container>

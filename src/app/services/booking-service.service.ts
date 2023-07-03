@@ -15,6 +15,17 @@ export class BookingServiceService {
     return this.apiService.post(URL, payload);
   }
 
+  updateBooking(payload: any, _id: any, bookingDate: any) {
+    const URL = `api/v1/booking/update-booking?_id=${_id}&bookingDate=${bookingDate}`;
+    return this.apiService.post(URL, payload);
+
+  }
+
+  deleteBooking(_id: any, bookingDate: any) {
+    const URL = `api/v1/booking/delete-booking?_id=${_id}&bookingDate=${bookingDate}`;
+    return this.apiService.get(URL);
+  }
+
   getConfig() {
     const URL = 'api/v1/config/get-config';
     return this.apiService.get(URL);
