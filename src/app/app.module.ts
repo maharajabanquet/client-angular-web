@@ -24,7 +24,7 @@ import { NgImageSliderModule } from 'ng-image-slider';
 import { BnNgIdleService } from 'bn-ng-idle';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns'; // import bn-ng-idle service
-import { PublicCalendarComponent } from './public-calendar/public-calendar.component';
+import { DialogAnimationsExampleDialog, PublicCalendarComponent } from './public-calendar/public-calendar.component';
 import { FlatpickrModule } from 'angularx-flatpickr';
 import { QRCodeModule } from 'angularx-qrcode';
 import { QrcodeGenComponent } from './components/qrcode-gen/qrcode-gen.component';
@@ -69,7 +69,8 @@ import { ReceivingComponent, ReceivingModalComponent } from './management/receiv
     LoginFormComponent,
     ReceivingComponent,
     ReceivingModalComponent,
-    NotifcationModalDialog
+    NotifcationModalDialog,
+    DialogAnimationsExampleDialog
   ],
   imports: [
     BrowserModule,

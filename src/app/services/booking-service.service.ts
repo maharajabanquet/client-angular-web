@@ -82,4 +82,9 @@ export class BookingServiceService {
 
   }
 
+  assignDj(mobile: any, payload: any) {
+    const url = `api/v1/app-user/assign-dj?mobile=${mobile}`;
+    return this.apiService.post(url, payload);
+  }
+
 }

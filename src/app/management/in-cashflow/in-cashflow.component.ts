@@ -43,14 +43,50 @@ export class InCashflowComponent implements OnInit {
   pageNo = 1;
   allCashFlow: any = [];
   fileName= 'ledger.xlsx';
+  transcationType = 'Credited'
+  dateFilter!: FormGroup;
+  bookingList: any = [];
+  filteredTotalBal: any;
+  filteredCredited: any;
   constructor(
     public dialog: MatDialog,
-    private cashInflowService: CashInflowService
+    private cashInflowService: CashInflowService,
+    private fb: FormBuilder,
+    private bookingService: BookingServiceService
   ) { }
 
   ngOnInit(): void {
    this.getCashFlow();
    this.getCashInflowWithoutPaginate();
+   this.dateFilter = this.fb.group({
+    transactionDate: [],
+    partyName: []
+   })
+   this.dateFilter.get('transactionDate')?.valueChanges.subscribe(value => {
+    let formatToLocal = new Date(value).toLocaleDateString()
+    let splitDate = formatToLocal.split("/");
+    let finalDate = splitDate[1] + "/" + splitDate[0] + "/" + splitDate[2]
+    this.filterbyDate(finalDate)
+    
+   })
+   this.bookingService.getBookingList().subscribe((bList: any) => {
+    bList.success.forEach((element: any) => {
+      if(!element.settle) {
+        this.bookingList.push({partyName: `${ element.firstName} ${element.lastName} (${element.bookingDate})`})
+      }
+    });
+  })
+  }
+
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  reset() {
+    this.getCashFlow()
+    this.dateFilter.reset();
+    this.filteredCredited = null;
   }
 
   exportexcel(): void
@@ -78,8 +114,8 @@ export class InCashflowComponent implements OnInit {
 
   getCashFlow() {
     let index = 1;
-    this.cashInflowService.getCashInflow(this.pageNo, this.pageSize).subscribe((cashInflowData: any) => {
-      const elements = (cashInflowData && cashInflowData.data && cashInflowData.data.docs) || [];
+    this.cashInflowService.getAllCashFlow(true).subscribe((cashInflowData: any) => {
+      const elements = (cashInflowData && cashInflowData.data && cashInflowData.data) || [];
       
       const mapElements = elements.map((element: any) => ({
         position: index++,
@@ -118,6 +154,26 @@ export class InCashflowComponent implements OnInit {
       this.pageNo = 1;
     }
     this.getCashFlow();
+  }
+
+  getFilteredBalance() {
+     let incash = 0;
+    let outcash = 0;
+    this.filteredTotalBal = '';
+    this.filteredCredited = '';
+    this.incashLoad.forEach((element: any) => {
+      if(Math.sign(element.amount) === 1) {
+        incash = incash+element.amount
+        this.filteredCredited = incash;
+      }
+      if(Math.sign(element.amount) === - 1) {
+        outcash = outcash + element.amount;
+        this.filteredTotalBal = Math.abs(outcash);
+      }
+      console.log('this.', this.filteredTotalBal);
+      
+      // this.filteredTotalBal = incash - Math.abs(outcash);  
+    });
   }
 
   getTotalBalance() {
@@ -220,6 +276,67 @@ export class InCashflowComponent implements OnInit {
     });
   }
 
+  filterbyDate(date: any) {
+    this.cashInflowService.filterByDate(date).subscribe((cashInflowData: any) => {
+      const elements = (cashInflowData && cashInflowData.data && cashInflowData.data) || [];
+      let index = 1;
+      const mapElements = elements.map((element: any) => ({
+        position: index++,
+        id: element._id,
+        partyName: element.partyName,
+        transactionType: element.transactionType,
+        transactionDate: element.transactionDate,
+        amount: element.amount,
+        remarks: element.remarks
+      }))
+      this.incashLoad = mapElements;
+      this.ELEMENT_DATA = mapElements
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+    })
+  }
+
+  filterbyTranscationType(event: any) {
+    this.cashInflowService.filterByType(event?.value).subscribe((cashInflowData: any) => {
+      const elements = (cashInflowData && cashInflowData.data && cashInflowData.data) || [];
+      let index = 1;
+      const mapElements = elements.map((element: any) => ({
+        position: index++,
+        id: element._id,
+        partyName: element.partyName,
+        transactionType: element.transactionType,
+        transactionDate: element.transactionDate,
+        amount: element.amount,
+        remarks: element.remarks
+      }))
+      this.incashLoad = mapElements;
+      this.ELEMENT_DATA = mapElements
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.getFilteredBalance()
+    })
+  }
+  filterByBookedDate(event: any) {
+    this.cashInflowService.filterByPartyname(event?.value).subscribe((cashInflowData: any) => {
+      const elements = (cashInflowData && cashInflowData.data && cashInflowData.data) || [];
+      let index = 1;
+      const mapElements = elements.map((element: any) => ({
+        position: index++,
+        id: element._id,
+        partyName: element.partyName,
+        transactionType: element.transactionType,
+        transactionDate: element.transactionDate,
+        amount: element.amount,
+        remarks: element.remarks
+      }))
+      this.incashLoad = mapElements;
+      this.ELEMENT_DATA = mapElements
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      this.getFilteredBalance();
+    })
+  }
+  onDateChange(event: any) {
+    console.log(event.value);
+    
+  }
 }
 
 

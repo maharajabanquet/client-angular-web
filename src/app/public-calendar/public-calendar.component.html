@@ -1,7 +1,7 @@
 <ng-container *ngIf="isready">
   <ng-container *ngIf="status === 'not-hide'">
     <br><br><div class="row text-center">
-      <div class="col-md-4">
+      <div [style]="isVisitorCodes()" class="col-md-4">
         <div class="btn-group">
           <div
             class="btn btn-primary"
@@ -30,10 +30,10 @@
           </div>
         </div>
       </div>
-      <div class="col-md-4" style="text-align: center;font-size: 20px;">
+      <div [style]="isVisitorCodes()" class="col-md-4" style="text-align: center;font-size: 20px;">
         <h3 style="font-weight: bold; color: red;">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
       </div>
-      <div class="col-md-4">
+      <div [style]="isVisitorCodes()" class="col-md-4">
         <div class="btn-group">
           <div
             class="btn btn-primary"
@@ -62,43 +62,78 @@
       <br>
     
       <div>
-        <span class="lagan"></span>&nbsp;LAGAN&nbsp;&nbsp;
-        <span class="booking"></span>&nbsp;BOOKING
+        
+        <span class="booking"></span>&nbsp;Check Availability
       </div>
     </div>
     
     <br />
-    <div [ngSwitch]="view">
-      <mwl-calendar-month-view
-        *ngSwitchCase="CalendarView.Month"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        [activeDayIsOpen]="activeDayIsOpen"
-        (dayClicked)="dayClicked($event.day)"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
+    <form align="center" class="example-form">
+      <mat-form-field [formGroup]="visitorCodeForm" class="example-full-width" appearance="outline">
+        <mat-label>Visit Code</mat-label>
+        <input type="Number"
+               placeholder="Enter Visitor Code"
+               aria-label="Number"
+               matInput
+               formControlName="visitorCode">
+      <mat-hint> 
+         <div *ngIf="!isSubmitBtn" align="center" 
+        style="background-color: white;color:black"
+        mwlCalendarNextView
+       (click)="openDialog()"
+        class="btn btn-primary"
       >
-      </mwl-calendar-month-view>
-      <mwl-calendar-week-view
-        *ngSwitchCase="CalendarView.Week"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
-      >
-      </mwl-calendar-week-view>
-      <mwl-calendar-day-view
-        *ngSwitchCase="CalendarView.Day"
-        [viewDate]="viewDate"
-        [events]="events"
-        [refresh]="refresh"
-        (eventClicked)="handleEvent('Clicked', $event.event)"
-        (eventTimesChanged)="eventTimesChanged($event)"
-      >
-      </mwl-calendar-day-view>
+        Get Visitor Code
+      </div>
+      <div *ngIf="isSubmitBtn" align="center" 
+      style="background-color: white;color:black"
+      mwlCalendarNextView
+     (click)="submitVisitorCode()"
+      class="btn btn-primary"
+    >
+      Submit
     </div>
+    </mat-hint>
+      </mat-form-field>
+    </form>
+    <br>
+
+    <div [style]="isVisitorCodes()">
+    
+      <div [ngSwitch]="view" >
+        <mwl-calendar-month-view
+          *ngSwitchCase="CalendarView.Month"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          [activeDayIsOpen]="activeDayIsOpen"
+          (dayClicked)="dayClicked($event.day)"
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)"
+        >
+        </mwl-calendar-month-view>
+        <mwl-calendar-week-view
+          *ngSwitchCase="CalendarView.Week"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)"
+        >
+        </mwl-calendar-week-view>
+        <mwl-calendar-day-view
+          *ngSwitchCase="CalendarView.Day"
+          [viewDate]="viewDate"
+          [events]="events"
+          [refresh]="refresh"
+          (eventClicked)="handleEvent('Clicked', $event.event)"
+          (eventTimesChanged)="eventTimesChanged($event)"
+        >
+        </mwl-calendar-day-view>
+      </div>
+      
+    </div>
+    
     
     
     <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
@@ -107,4 +142,3 @@
     
   </ng-container>
 </ng-container>
-

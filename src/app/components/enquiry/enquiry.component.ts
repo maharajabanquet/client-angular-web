@@ -39,10 +39,11 @@ export class EnquiryComponent implements OnInit {
   submit() {
     this.hideForm = true;
     this.enquiryServie.addEnquiry(this.enquiryForm.getRawValue()).subscribe((resp: any) => {
-      if(resp && resp['success']) {
+      if(resp && resp['visitorCode']) {
         this._snackBar.open('Enquiry Form Successfully Submitted', 'OK');
         this.createEnquiryForm();
         this.hideForm = false;
+        this.enquiryServie.visitorCode.next(resp['visitorCode'])
       }
     }, (err) => {
       this.hideForm = false;

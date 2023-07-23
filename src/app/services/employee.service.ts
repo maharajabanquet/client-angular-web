@@ -46,6 +46,11 @@ export class EmployeeService {
     return this.apiService.get(url);
     
   }
+
+  getDjUser() {
+    const url = 'api/v1/app-user/get-dj-user';
+    return this.apiService.get(url)
+  }
   removeUser(mobile: string) {
     const url = `api/v1/app-user/remove-user?mobile=${mobile}`;
     return this.apiService.get(url);

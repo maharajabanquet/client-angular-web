@@ -1,99 +1,138 @@
-<h1>Transaction Inflows and Outflows 2022 - 2023 (Balance: <span style="color: green;font-weight:bold;">{{numberWithCommas(total) || 0}}</span>)</h1>
-<div class="chip_credited">
-  {{numberWithCommas(credited)}}
-</div>
-&nbsp;
-<div class="chip_debited">
-  {{numberWithCommas(debited)}}
-</div>
+<div style="background: #cccccc;">
 
-<div class="demo-button-container">
-    <button  color="primary"  mat-raised-button (click)="openDialog()"  class="demo-button">
+  <h1 style="color:rgb(5, 62, 113); font-weight: bold;text-decoration: underline;">Transaction Inflows and Outflows 2022
+    - 2023 (Balance: {{numberWithCommas(total) || 0}})</h1>
+  <div class="chip_credited">
+    {{numberWithCommas(credited)}}
+  </div>
+  &nbsp;
+  <div class="chip_debited">
+    {{numberWithCommas(debited)}}
+  </div>
+
+  <div class="demo-button-container">
+    <button color="primary" mat-raised-button (click)="openDialog()" class="demo-button">
       Create Flow
     </button>
     &nbsp;
-    <button  color="primary"  mat-raised-button (click)="exportexcel()"  class="demo-button">
+    <button color="primary" mat-raised-button (click)="exportexcel()" class="demo-button">
       Download Ledger Report
     </button>
-</div>
-<br>
+  </div> &nbsp;
+  <hr>
 
-  
-  
+  <div class="example-container">
 
-  <table    mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <mat-form-field>
+      <mat-label>Select Type</mat-label>
+      <mat-select (selectionChange)="filterbyTranscationType($event)">
+        <mat-option value="credited">Credited</mat-option>
+        <mat-option value="Debited">Debited</mat-option>
+      </mat-select>
+      <mat-hint align="end">Filter Down Transaction Type</mat-hint>
+    </mat-form-field>
+  </div>&nbsp;<mat-form-field>
+    <mat-label>Search By Text</mat-label>
+    <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
+  </mat-form-field>
+  <div [formGroup]="dateFilter">
+
+
+    <mat-form-field class="example-full-width">
+      <mat-label>Choose a date</mat-label>
+      <input formControlName="transactionDate" matInput [matDatepicker]="picker">
+      <mat-datepicker dateChange="onDateChange($event)" #picker></mat-datepicker>
+    </mat-form-field>&nbsp;&nbsp;
+    <button mat-raised-button color="primary" (click)="picker.open()">Open</button>
+    &nbsp;&nbsp;
+    <mat-form-field class="example-full-width">
+      <mat-label>Party Name</mat-label>
+      <mat-select (selectionChange)="filterByBookedDate($event)" formControlName="partyName">
+        <mat-option *ngFor="let party of bookingList" [value]="party.partyName">{{party.partyName}}</mat-option>
+      </mat-select>
+    </mat-form-field>&nbsp;&nbsp;<button color="primary" mat-raised-button clear (click)="reset()">Reset</button>
+  </div>
+  <div *ngIf="filteredCredited" class="chip_credited">
+    {{filteredCredited}}
+  </div>
+  <div *ngIf="filteredTotalBal" class="chip_debited">
+    {{filteredTotalBal}}
+  </div>
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <!-- party_name Column -->
     <ng-container matColumnDef="sl-no">
-       <th mat-header-cell  *matHeaderCellDef> No. </th>
-       <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-     </ng-container>
-   
-   <!-- party_name Column -->
-   <ng-container matColumnDef="party-name">
-     <th mat-header-cell *matHeaderCellDef> Party Name </th>
-     <td mat-cell *matCellDef="let element"> {{element.partyName}} </td>
-   </ng-container>
- 
-   <!-- transcation_type Column -->
-   <ng-container matColumnDef="transcation-type">
-     <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
-     <td mat-cell *matCellDef="let element"> {{element.transactionType}} </td>
-   </ng-container>
-   <ng-container matColumnDef="type">
-    <th mat-header-cell *matHeaderCellDef> Type </th>
-    <td mat-cell [ngClass]="checknum(element.amount)" *matCellDef="let element"> {{changeType(element.amount) }}</td>
-  </ng-container>
- 
-   <!-- transcation-date Column -->
-   <ng-container matColumnDef="transcation-date">
-     <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
-     <td mat-cell *matCellDef="let element"> {{element.transactionDate}} </td>
-   </ng-container>
- 
-   <!-- amount Column -->
-   <ng-container matColumnDef="amount">
-     <th mat-header-cell *matHeaderCellDef> Amount </th>
-     <td mat-cell [ngClass]="checknum(element.amount)" *matCellDef="let element"> {{element.amount}} </td>
-   </ng-container>
+      <th mat-header-cell *matHeaderCellDef> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+    </ng-container>
 
-   <!-- remarks Column -->
-   <ng-container matColumnDef="remarks">
-       <th mat-header-cell *matHeaderCellDef> Remarks </th>
-       <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
-     </ng-container>
+    <!-- party_name Column -->
+    <ng-container matColumnDef="party-name">
+      <th mat-header-cell *matHeaderCellDef> Party Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.partyName}} </td>
+    </ng-container>
 
-     <ng-container matColumnDef="action">
-       <th mat-header-cell *matHeaderCellDef> Action </th>
-       <td mat-cell style="cursor: pointer;" (click)="deleteEmployee(element.id)" *matCellDef="let element">  <mat-icon>delete_forever</mat-icon> </td>
-     </ng-container>
- 
-   <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-   <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-  
- </table>
+    <!-- transcation_type Column -->
+    <ng-container matColumnDef="transcation-type">
+      <th mat-header-cell *matHeaderCellDef> Transaction Type </th>
+      <td mat-cell *matCellDef="let element"> {{element.transactionType}} </td>
+    </ng-container>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef> Type </th>
+      <td mat-cell [ngClass]="checknum(element.amount)" *matCellDef="let element"> {{changeType(element.amount) }}</td>
+    </ng-container>
 
- <table [hidden]="true" id="excel-table">
-  <tr>
-    <th>Party Name</th>
-    <th>Transaction Type</th>
-    <th>Transaction Date</th>
-    <th>Amount</th>
-    <th>Remarks</th>
+    <!-- transcation-date Column -->
+    <ng-container matColumnDef="transcation-date">
+      <th mat-header-cell *matHeaderCellDef> Transaction Date </th>
+      <td mat-cell *matCellDef="let element"> {{element.transactionDate}} </td>
+    </ng-container>
 
-  </tr>
-  <tr *ngFor="let item of allCashFlow">
-    <td>{{item.partyName}}</td>
-    <td>{{item.transactionType}}</td>
-    <td>{{item.transactionDate}}</td>
-    <td>{{item.amount}}</td>
-    <td>{{item.remarks}}</td>
+    <!-- amount Column -->
+    <ng-container matColumnDef="amount">
+      <th mat-header-cell *matHeaderCellDef> Amount </th>
+      <td mat-cell [ngClass]="checknum(element.amount)" *matCellDef="let element"> {{element.amount}} </td>
+    </ng-container>
 
-    
-  </tr>
-</table>
-  <mat-paginator  [length]="length"
+    <!-- remarks Column -->
+    <ng-container matColumnDef="remarks">
+      <th mat-header-cell *matHeaderCellDef> Remarks </th>
+      <td mat-cell *matCellDef="let element"> {{element.remarks}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="action">
+      <th mat-header-cell *matHeaderCellDef> Action </th>
+      <td mat-cell style="cursor: pointer;" (click)="deleteEmployee(element.id)" *matCellDef="let element">
+        <mat-icon>delete_forever</mat-icon> </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+  </table>
+
+  <table [hidden]="true" id="excel-table">
+    <tr>
+      <th>Party Name</th>
+      <th>Transaction Type</th>
+      <th>Transaction Date</th>
+      <th>Amount</th>
+      <th>Remarks</th>
+
+    </tr>
+    <tr *ngFor="let item of allCashFlow">
+      <td>{{item.partyName}}</td>
+      <td>{{item.transactionType}}</td>
+      <td>{{item.transactionDate}}</td>
+      <td>{{item.amount}}</td>
+      <td>{{item.remarks}}</td>
+
+
+    </tr>
+  </table>
+  <!-- <mat-paginator  [length]="length"
   [pageSize]="pageSize"
   [pageSizeOptions]="pageSizeOptions"
   (page)="getCurrentPage($event)"
   aria-label="Select page">
-</mat-paginator>
+</mat-paginator> -->
+</div>

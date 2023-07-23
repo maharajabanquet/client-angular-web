@@ -113,6 +113,31 @@
                 <mat-checkbox  class="example-margin" formControlName="dgWithDiesel" >DG WITH DIESEL</mat-checkbox>
               </td>
             </tr>
+            <tr>
+              <td>
+                <mat-checkbox  class="example-margin" formControlName="DJ" >DJ</mat-checkbox>
+              </td>
+            </tr>
+            <tr>
+              <td *ngIf="showDjAssigned">
+                <mat-form-field  appearance="outline" >
+                  <mat-label>Assign DJ</mat-label>
+                  <mat-select  formControlName="assignedDj">
+                    <mat-option *ngFor="let dj of djUser" [value]="dj.mobile">{{dj.userName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+              <td *ngIf="showDjAssigned">
+                <mat-form-field  appearance="outline" >
+                  <mat-label>DJ Type</mat-label>
+                  <mat-select  formControlName="djType">
+                    <mat-option value="Basic">Basic</mat-option>
+                    <mat-option value="Intermediate">Intermediate</mat-option>
+                    <mat-option value="Advance">Advance</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </td>
+            </tr>
           </table>
           <br>
         <table class="example-full-width" cellspacing="0"><tr>

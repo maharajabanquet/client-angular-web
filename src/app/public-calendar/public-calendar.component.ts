@@ -1,6 +1,7 @@
 import {
   BookingServiceService
 } from 'src/app/services/booking-service.service';
+import {map, startWith} from 'rxjs/operators';
 
 import {
   Component,
@@ -24,6 +25,7 @@ import {
   addHours,
 } from 'date-fns';
 import {
+  Observable,
   Subject
 } from 'rxjs';
 
@@ -36,6 +38,11 @@ import {
 import {
   EventColor
 } from 'calendar-utils';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { EnquiryServiceService } from '../services/enquiry-service.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 const colors: Record < string, EventColor > = {
   red: {
@@ -106,15 +113,18 @@ export class PublicCalendarComponent implements OnInit {
   @ViewChild('modalContent', {
     static: true
   }) modalContent!: TemplateRef < any > ;
-
+  myControl = new FormControl();
+  options: string[] = ['One', 'Two', 'Three'];
+  filteredOptions!: Observable<string[]>;
   view: CalendarView = CalendarView.Month;
 
   CalendarView = CalendarView;
-
+  visitorCodeForm !: FormGroup;
   viewDate: Date = new Date();
   isready !: Boolean
   @Input() status!: String;
   @Output() isReady = new EventEmitter();
+  showSubmitBtn : boolean = false;
   modalData!: {
     action: string;
     event: CalendarEvent;
@@ -150,16 +160,56 @@ export class PublicCalendarComponent implements OnInit {
   events: CalendarEvent[] = [];
 
   activeDayIsOpen: boolean = false;
+  visitCodeEntered: boolean = false;
+  isSubmitBtn: boolean = false;
+  isOpenModal: boolean = false;
+  visitorCode: any = null;
+  
+  constructor(private bookingService: BookingServiceService, private dialog:MatDialog, private enService: EnquiryServiceService, private fb: FormBuilder, private _snackBar: MatSnackBar,
+    ) {
 
-  constructor(private bookingService: BookingServiceService) {
+  }
 
+  submitVisitorCode() {
+    if(this.visitorCodeForm.getRawValue() && this.visitorCodeForm.getRawValue().visitorCode) {
+      this.enService.verifyVisitorCode(this.visitorCodeForm.getRawValue()).subscribe((status) => {
+        this.visitCodeEntered = true;
+      }, (err) =>{
+        this._snackBar.open('Invalid Visitor Code, Please contact Us For Visitor Code', 'OK');
+        this.visitorCodeForm.reset()
+        this.visitCodeEntered = false;
+      })
+    }
   }
 
   ngOnInit(): void {
+    this.visitorCodeForm = this.fb.group({
+      visitorCode : ['', [Validators.required]]
+    })
+
+    this.visitorCodeForm.get('visitorCode')?.valueChanges.subscribe((value: any) => {
+      if(value) {
+        this.isSubmitBtn = true;
+      } else {
+        this.isSubmitBtn = false;
+        this.visitCodeEntered = false;
+      }
+    })
+    this.filteredOptions = this.myControl.valueChanges.pipe(
+      startWith(''),
+      map(value => this._filter(value))
+    );
     this.getBookedDates();
     // this.getLaganDate();
+    if(localStorage.getItem('token')) {
+      this.visitCodeEntered = true;
+    }
   }
+  private _filter(value: string): string[] {
+    const filterValue = value.toLowerCase();
 
+    return this.options.filter(option => option.toLowerCase().includes(filterValue));
+  }
   dayClicked({
     date,
     events
@@ -178,7 +228,7 @@ export class PublicCalendarComponent implements OnInit {
       this.viewDate = date;
     }
   }
-
+ 
   eventTimesChanged({
     event,
     newStart,
@@ -202,6 +252,18 @@ export class PublicCalendarComponent implements OnInit {
       event,
       action
     };
+  }
+
+  isVisitorCodes() {
+    if(this.visitCodeEntered) {
+      return 'filter:blur(0px)';
+    } else {
+      return 'filter:blur(8px)'
+    }
+  }
+
+  isOpen() {
+    this.isOpenModal = true;
   }
 
   addEvent(): void {
@@ -273,4 +335,21 @@ export class PublicCalendarComponent implements OnInit {
     })
   }
 
+  openDialog(): void {
+    window.open('https://wa.me/+919572177693/?text=Please share visitor Code', '_blank')
+  }
+
+}
+
+
+@Component({
+  selector: 'dialog-animations-example-dialog',
+  templateUrl: 'enquiry.html',
+  styles: [`
+  button {
+    margin-right: 8px;
+  }`]
+})
+export class DialogAnimationsExampleDialog {
+  constructor(public dialogRef: MatDialogRef<DialogAnimationsExampleDialog>) {}
 }

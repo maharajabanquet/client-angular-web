@@ -30,4 +30,18 @@ export class CashInflowService {
     const url = `api/v1/cashinflow/deletecashflow?_id=${id}`;
     return this.apiService.get(url);
   }
+
+  filterByType(type: any) {
+    const url = `api/v1/cashinflow/filter-by-type?type=${type}`;
+    return this.apiService.get(url);
+  }
+  filterByDate(date: any) {
+    const url = `api/v1/cashinflow/filter-by-date?date=${date}`;
+    return this.apiService.get(url);
+  }
+
+  filterByPartyname(name: any) {
+    const url = `api/v1/cashinflow/filter-by-name?name=${name}`;
+    return this.apiService.get(url);
+  }
 }

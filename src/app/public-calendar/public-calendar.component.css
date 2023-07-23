@@ -1,3 +1,18 @@
 .background-lagan {
     background-color: hwb(51 7% 43%);
 }
+
+div {
+    filter: blur(100px);
+    -webkit-filter: blur(100px);
+}
+
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
+}

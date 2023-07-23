@@ -66,7 +66,8 @@ export class HotelTableComponent implements OnInit {
         password: element.password,
         mobile: element.mobile,
         dateOfBooking: element.dateOfBooking,
-        isAdmin: this.isAdminTrue(element.isAdmin)
+        isAdmin: this.isAdminTrue(element.isAdmin),
+        
       }))
       this.dataSource = mapElements;
       // {position: 1, employeeName: 'Madan Paswan', contact: '8970777693',department: 'cleaning', salary: 'View', documentProof: 'View', joiningDate: '02/12/2022', action: ''},
@@ -217,100 +218,116 @@ export class HotelModalDialog {
       userName: ['', Validators.required],
       password: ['', Validators.required],
       dateOfBooking: [''],
-      isAdmin: [false, Validators.required]
+      isAdmin: [false, Validators.required],
+      isDj: []
     })
   }
  
 
 
   submit() {
-    const payload = {
-      "mobile": this.userForm.get('mobile')?.value,
-      "userName": this.userForm.get('userName')?.value,
-      "password": this.userForm.get('password')?.value,
-      "dateOfBooking": this.userForm.get('dateOfBooking')?.value,
-      "isAdmin": this.userForm.get('isAdmin')?.value,
-      "payment": 0,
-      "cart": [
-        {
-          "_id": "645f32244c440597d142d72d",
-          "id": "0",
-          "category": "Tent",
-          "discription": "Center Table, Steel Chair, ...",
-          "img": "https://5.imimg.com/data5/VD/KL/PS/SELLER-9029459/marriage-hall-chair-500x500.jpg",
-          "categoryList": [
-            {
-              "itemName": "Plastic Chair",
-              "price": 5,
-              "quantity": 100,
-              "orderQuant": 0
-            },
-            {
-              "itemName": "Steel Chair with Cover",
-              "price": 25,
-              "quantity": 100,
-              "orderQuant": 0
-            },
-            {
-              "itemName": "Center Table",
-              "price": 100,
-              "quantity": 5,
-              "orderQuant": 0
-            },
-            {
-              "itemName": "Blanket",
-              "price": 0,
-              "quantity": 15,
-              "orderQuant": 0
-            }
-          ]
-        },
-        {
-          "_id": "645f329b4c440597d142d72f",
-          "id": "1",
-          "category": "Catering",
-          "discription": "Plates & Spoon, ...",
-          "img": "https://i.pinimg.com/originals/a7/41/0d/a7410d1c429840ab6d883347a8c9c59c.jpg",
-          "categoryList": [
-            {
-              "itemName": "Coffee Tea Machine",
-              "price": 2000,
-              "quantity": 1,
-              "orderQuant": 0
-            },
-            {
-              "itemName": "Plates & Spoon",
-              "price": 5,
-              "quantity": 200,
-              "orderQuant": 0
-            },
-            {
-              "itemName": "Mixer grinder",
+    let payload: any;
+    if(this.userForm.get('isDj')?.value) {
+       payload = {
+        "mobile": this.userForm.get('mobile')?.value,
+        "userName": this.userForm.get('userName')?.value,
+        "password": this.userForm.get('password')?.value,
+        "dateOfBooking": this.userForm.get('dateOfBooking')?.value,
+        "isAdmin": this.userForm.get('isAdmin')?.value,
+        "payment": 0,
+        "__v": 0,
+        "isDj": this.userForm.get('isDj')?.value
+      }
+    } else {
+       payload = {
+        "mobile": this.userForm.get('mobile')?.value,
+        "userName": this.userForm.get('userName')?.value,
+        "password": this.userForm.get('password')?.value,
+        "dateOfBooking": this.userForm.get('dateOfBooking')?.value,
+        "isAdmin": this.userForm.get('isAdmin')?.value,
+        "payment": 0,
+        "cart": [
+          {
+            "_id": "645f32244c440597d142d72d",
+            "id": "0",
+            "category": "Tent",
+            "discription": "Center Table, Steel Chair, ...",
+            "img": "https://5.imimg.com/data5/VD/KL/PS/SELLER-9029459/marriage-hall-chair-500x500.jpg",
+            "categoryList": [
+              {
+                "itemName": "Plastic Chair",
                 "price": 5,
-                "quantity": 1,
+                "quantity": 100,
+                "orderQuant": 0
+              },
+              {
+                "itemName": "Steel Chair with Cover",
+                "price": 25,
+                "quantity": 100,
+                "orderQuant": 0
+              },
+              {
+                "itemName": "Center Table",
+                "price": 100,
+                "quantity": 5,
+                "orderQuant": 0
+              },
+              {
+                "itemName": "Blanket",
+                "price": 0,
+                "quantity": 15,
                 "orderQuant": 0
               }
-          ],
-          "__v": 0
-        },
-        {
-          "_id": "645f32b44c440597d142d733",
-          "id": "2",
-          "category": "Party Props",
-          "discription": "Pyro gun, ...",
-          "img": "https://5.imimg.com/data5/ANDROID/Default/2022/7/PK/AS/FW/120886659/product-jpeg-500x500.jpg",
-          "categoryList": [
-            {
-              "itemName": "Pyro Gun",
-              "price": 250,
-              "quantity": 4,
-              "orderQuant": 0
-            }
-          ]
-        }
-      ],
-      "__v": 0
+            ]
+          },
+          {
+            "_id": "645f329b4c440597d142d72f",
+            "id": "1",
+            "category": "Catering",
+            "discription": "Plates & Spoon, ...",
+            "img": "https://i.pinimg.com/originals/a7/41/0d/a7410d1c429840ab6d883347a8c9c59c.jpg",
+            "categoryList": [
+              {
+                "itemName": "Coffee Tea Machine",
+                "price": 2000,
+                "quantity": 1,
+                "orderQuant": 0
+              },
+              {
+                "itemName": "Plates & Spoon",
+                "price": 5,
+                "quantity": 200,
+                "orderQuant": 0
+              },
+              {
+                "itemName": "Mixer grinder",
+                  "price": 5,
+                  "quantity": 1,
+                  "orderQuant": 0
+                }
+            ],
+            "__v": 0
+          },
+          {
+            "_id": "645f32b44c440597d142d733",
+            "id": "2",
+            "category": "Party Props",
+            "discription": "Pyro gun, ...",
+            "img": "https://5.imimg.com/data5/ANDROID/Default/2022/7/PK/AS/FW/120886659/product-jpeg-500x500.jpg",
+            "categoryList": [
+              {
+                "itemName": "Pyro Gun",
+                "price": 250,
+                "quantity": 4,
+                "orderQuant": 0
+              }
+            ]
+          }
+        ],
+        "__v": 0
+      }
     }
+    
     this.employeeService.addUser(payload).subscribe((resp) => {
       Swal.fire(
         'Successfully Added!',

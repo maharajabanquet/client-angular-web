@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators, FormControl } from '@angular/forms'
 import { BookingServiceService } from 'src/app/services/booking-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { saveAs } from 'file-saver';
+import { EmployeeService } from 'src/app/services/employee.service';
 interface DialogData {
   selectedDate: any;
   disabled: any;
@@ -66,6 +67,8 @@ export class BookingModalComponent implements OnInit {
   uploadedFiles: any;
   isDisable = false;
   fileuploaded!: boolean;
+  showDjAssigned!: boolean;
+  djUser : any = [];
   constructor(
     public dialogRef: MatDialogRef<BookingModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -73,6 +76,7 @@ export class BookingModalComponent implements OnInit {
     private bookingService: BookingServiceService,
     private _snackBar: MatSnackBar,
     public dialog: MatDialog,
+    private employeeService: EmployeeService
     
 
   ) { }
@@ -107,6 +111,9 @@ export class BookingModalComponent implements OnInit {
     };
  }
   ngOnInit(): void {
+    this.employeeService.getDjUser().subscribe((res: any) => {
+      this.djUser = res && res.result || [];
+    })
     this.dialog.openDialogs.pop();
     this.selectedBookingDate = this.data.selectedDate;
     this.formDisabled = this.data.disabled;
@@ -142,6 +149,7 @@ export class BookingModalComponent implements OnInit {
       this._snackBar.open('Error, Please Try Again!', 'OK');
     })
     
+    
    
   }
 
@@ -159,7 +167,11 @@ export class BookingModalComponent implements OnInit {
       facilities: [[]],
       status: ['pending'],
       dgWithDiesel: [true, [Validators.required]],
-      expense_sheet: []
+      expense_sheet: [],
+      DJ: [false],
+      assignedDj: [],
+      djType: []
+
 
     })
     this.bookingForm.get('finalAmount')?.valueChanges.subscribe(famountValue => {
@@ -186,6 +198,16 @@ export class BookingModalComponent implements OnInit {
       this.onRequirementSelect();
       this.onFacilitiesSelection();
     }
+    this.bookingForm.get('DJ')?.valueChanges.subscribe(value => {
+      console.log(value);
+      
+      if(value) {
+        this.showDjAssigned = true;
+      } else {
+        this.showDjAssigned = false;
+        this.bookingForm.get('assignedDj')?.reset();
+      }
+    })
     // this.bookingForm.get('requirements')?.valueChanges.subscribe(value => {
     //   this.bookingForm.get('dgWithDiesel')?.patchValue(false);
     // })
@@ -258,8 +280,24 @@ export class BookingModalComponent implements OnInit {
 
   submit() {
     this.bookingService.add_booking(this.bookingForm.getRawValue()).subscribe(res => {
-      this.closeModal();
-      this._snackBar.open('Booking Done!', 'OK');
+      const payload = {
+        bookingDate: this.bookingForm.get('bookingDate')?.value,
+        status: 'Pending',
+        notifcation: 'Please accept order before 1 month of booking date',
+        djType: this.bookingForm.get('djType')?.value,
+        quotes: 0
+      }
+      if(this.showDjAssigned) {
+        this.bookingService.assignDj(this.bookingForm.get('assignedDj')?.value, payload).subscribe((res: any) => {
+          if(res && res.status === 'Dj Assigned') {
+            this.closeModal();
+            this._snackBar.open('Booking Done!', 'OK');
+          }
+        })
+      } else {
+        this.closeModal();
+        this._snackBar.open('Booking Done without Dj Assigned!', 'OK');
+      }
       
     }, (err) => {
       this._snackBar.open('Error, Please Try Again!', 'OK');
