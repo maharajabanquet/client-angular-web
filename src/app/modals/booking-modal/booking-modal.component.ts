@@ -30,6 +30,7 @@ export class BookingModalComponent implements OnInit {
   requirements: string[] = [
     'Wedding',
     'Engagement',
+    'Reception'
   ]
   status = {
     Pending: 'yellow',
