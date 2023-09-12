@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>Add Debt</h2>
+
+<mat-dialog-content class="mat-typography" [formGroup]="debtForm">
+    <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Name</mat-label>
+          <input formControlName="name" matInput placeholder="Enter Name">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+         
+        </mat-form-field>
+      </p>
+
+      <p>
+        <mat-form-field appearance="legacy">
+          <mat-label>Balance</mat-label>
+          <input formControlName="balance" matInput placeholder="Enter Mobile Number">
+        </mat-form-field>
+      </p>
+      <div class="demo-button-container">
+        <button  mat-raised-button (click)="submit()" class="demo-button">
+          Save
+        </button>
+      </div>
+      
+</mat-dialog-content>

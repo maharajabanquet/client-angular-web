@@ -1,0 +1,82 @@
+<div class="demo-button-container">
+    <button mat-raised-button (click)="addData()" class="demo-button">
+      Add data
+    </button>
+    <button
+        mat-raised-button
+        [disabled]="!dataToDisplay.length"
+        (click)="removeData()"
+        class="demo-button">
+      Remove data
+    </button>
+  </div>
+  
+  <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
+    <!-- Position Column -->
+    <ng-container matColumnDef="position">
+      <th mat-header-cell *matHeaderCellDef>No.</th>
+      <td mat-cell *matCellDef="let element">{{element.position}}</td>
+    </ng-container>
+  
+    <!-- Name Column -->
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef>Name</th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+  
+    <!-- Weight Column -->
+    <ng-container matColumnDef="payment_history">
+      <th mat-header-cell *matHeaderCellDef>Payment History</th>
+      <td mat-cell style="color:blue;font-weight: bold;text-decoration: underline;" *matCellDef="let element" (click)="viewPaymentHistory(element.payment_history, template)">View Payment History</td>
+    </ng-container>
+  
+    <!-- Symbol Column -->
+    <ng-container matColumnDef="balance">
+      <th mat-header-cell *matHeaderCellDef>Balance</th>
+      <td mat-cell *matCellDef="let element">{{element.balance}}</td>
+    </ng-container>
+  
+    <ng-container matColumnDef="action">
+        <th mat-header-cell *matHeaderCellDef>Action</th>
+        <td mat-cell style="color:green;font-weight: bold;text-decoration: underline;" (click)="update(element,updateTemplate)" *matCellDef="let element">Update</td>
+      </ng-container>
+    
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <ng-template #template>
+    <ng-container *ngIf="paymentHistory.length > 0">
+        <table>
+            <tr>
+              <th>S.No</th>
+              <th>Amount</th>
+              <th>Payment Date</th>
+            </tr>
+            <tr *ngFor="let history of paymentHistory;let i=index">
+              <td>{{i+1}}</td>
+              <td>{{history.amount}}</td>
+              <td>{{history.date}}</td>
+            </tr>
+           
+          </table>
+    </ng-container>
+    <ng-container *ngIf="paymentHistory.length === 0"> No Payment History Found</ng-container>
+   </ng-template>
+
+
+   <ng-template #updateTemplate>
+    <h1>Update Payment</h1>
+    <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Balance Paid</mat-label>
+          <input [(ngModel)]="amount" matInput placeholder="Enter Paid Amount">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+      </p>
+      <div class="demo-button-container">
+        <button  mat-raised-button (click)="submitUpdate()" class="demo-button">
+          Update
+        </button>
+      </div>
+   </ng-template>

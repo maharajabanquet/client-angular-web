@@ -65,5 +65,23 @@ export class UtilityService {
     const url = `api/v1/media/add-media`;
     return this.apiService.post(url, payload)
   }
+
+  addDebt(payload: any) {
+    const url = 'api/v1/debt/add-debt';
+    return this.apiService.post(url, payload);
+  }
+
+  getDebt() {
+    const url = 'api/v1/debt/get-debt';
+    return this.apiService.get(url);
+
+  }
+  
+  updatePayment(payload: any, name: any) {
+    const url = `api/v1/debt/update-payment?name=${name}`;
+    return this.apiService.post(url, payload);
+    
+  }
+
 }
 
