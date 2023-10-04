@@ -23,3 +23,16 @@
   tr:nth-child(even) {
     background-color: #dddddd;
   }
+
+  .chip_debited {
+    display: inline-block;
+    padding: 0 25px;
+    height: 41px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 41px;
+    border-radius: 25px;
+    margin-bottom: 14px;
+    background-color: #e1c0c0;
+  }
+  

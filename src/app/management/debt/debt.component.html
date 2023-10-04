@@ -2,15 +2,11 @@
     <button mat-raised-button (click)="addData()" class="demo-button">
       Add data
     </button>
-    <button
-        mat-raised-button
-        [disabled]="!dataToDisplay.length"
-        (click)="removeData()"
-        class="demo-button">
-      Remove data
-    </button>
+   
   </div>
-  
+  <div slot="center" class="chip_debited">
+    {{totalDebtAmount}}
+  </div>
   <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 demo-table">
     <!-- Position Column -->
     <ng-container matColumnDef="position">

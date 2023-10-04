@@ -1,10 +1,18 @@
 <mat-tab-group mat-align-tabs="start" >
  
+  <mat-tab label="Pending Booking Invoice">
+    <div >
+      <mat-card  class="card-style">
+        <pending-cashflow></pending-cashflow>
     
-     <mat-tab label="App User">
+      </mat-card>
+    </div>
+  </mat-tab>
+     <mat-tab label="Cash Flow">
       <div >
         <mat-card  class="card-style">
-          <hotel-table [type]="'App User'"></hotel-table>
+          <in-cashflow></in-cashflow>
+      
         </mat-card>
       </div>
     </mat-tab>
@@ -16,10 +24,10 @@
       </div>
     </mat-tab>
 
-    <mat-tab label="Booking Cash Inflow">
+    <mat-tab label="App User">
       <div >
         <mat-card style="background: gray;"  class="card-style">
-       <in-cashflow></in-cashflow>
+          <hotel-table [type]="'App User'"></hotel-table>
         </mat-card>
       </div>
     </mat-tab>
@@ -52,21 +60,16 @@
         </mat-card>
       </div>
     </mat-tab>
-    <!-- <mat-tab label="Rate Card">
+    <mat-tab label="Enquiry">
       <div >
         <mat-card  class="card-style">
-            <data-table ></data-table>
+          <div style="display: flex;" >
+            <mat-card style="flex: 1 1 auto;">
+                 <enquiry></enquiry>
+            </mat-card>
+          </div>
         </mat-card>
       </div>
     </mat-tab>
-
-    <mat-tab label="Attendance">
-        <div >
-          <mat-card  class="card-style">
-            <data-table ></data-table>
-          </mat-card>
-        </div>
-      </mat-tab> -->
-   
   </mat-tab-group>
   

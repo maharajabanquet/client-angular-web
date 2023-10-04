@@ -29,27 +29,45 @@ export class DebtComponent implements OnInit {
   dataSource = new ExampleDataSource(this.dataToDisplay);
   updateData: any;
   amount!: Number
+  copyData: any = [];
+  totalDebtAmount : any = 0;
   constructor(private dialog: MatDialog, private ut: UtilityService,  private _snackBar: MatSnackBar) {
     this.getDebt();
   }
 
   getDebt() {
+    let index = 1;
     this.ut.getDebt().subscribe((resp: any) =>{
       const elements = (resp && resp.debt) || [];
       const mapElements = elements.map((element: any) => ({
+        position: index++,
         name: element.name,
         balance: element.balance,
         payment_history: element.payment_history
       }))
       this.dataSource = mapElements;
+      this.copyData = mapElements;
+      this.totalDebt(mapElements)
     })
   }
+  totalDebt(data: any) {
+    let count = 0;
+    let cash = 0;
+    let outcash = 0;
+    data.forEach((element: any) => {
+        cash = cash+element.balance
+        this.totalDebtAmount = cash;
+    });
+  
+  }
+
   addData() {
     const dialogRef = this.dialog.open(DebtModalDialog, {
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);})
       this.getDebt()
+    })
+    
   }
 
   ngOnInit(): void {
@@ -66,7 +84,10 @@ export class DebtComponent implements OnInit {
   update(data: any, templateRef: any) {
     let dialogRef = this.dialog.open(templateRef, {
     });
-    this.update = data;
+    this.updateData = data;
+    dialogRef.afterClosed().subscribe(result => {
+      this.getDebt()
+    })
   }
 
   submitUpdate() {
@@ -74,9 +95,11 @@ export class DebtComponent implements OnInit {
       amount: this.amount,
       date: new Date().toLocaleDateString('en-GB')
     }
-    const name = this.update.name;
+    const name = this.updateData.name;
     this.ut.updatePayment(payload, name).subscribe((resp: any) => {
       this._snackBar.open('Data has been added', 'OK');
+      this.dialog.closeAll();
+      this.getDebt();
     })
     
 
@@ -116,7 +139,7 @@ declare var swal: any
 
 export class DebtModalDialog {
   debtForm!: FormGroup
-  constructor(private fb: FormBuilder,private utilitiyService: UtilityService,  private _snackBar: MatSnackBar) {
+  constructor(private dialog: MatDialog,private fb: FormBuilder,private utilitiyService: UtilityService,  private _snackBar: MatSnackBar) {
     this.debtForm = this.fb.group({
     name: [],
     payment_history: [[]],
@@ -127,6 +150,7 @@ export class DebtModalDialog {
   submit() {
     this.utilitiyService.addDebt(this.debtForm.getRawValue()).subscribe((resp: any) => {
       this._snackBar.open('Data has been added', 'OK');
+      this.dialog.closeAll();
     }) 
   }
 

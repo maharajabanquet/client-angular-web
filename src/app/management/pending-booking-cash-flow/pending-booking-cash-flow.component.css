@@ -1,0 +1,65 @@
+.demo-table {
+    width: 100%;
+  }
+  
+  .mat-column-demo-position {
+    width: 32px;
+    border-right: 1px solid currentColor;
+    padding-right: 24px;
+    text-align: center;
+  }
+  
+  .mat-column-demo-name {
+    padding-left: 16px;
+    font-size: 20px;
+  }
+  
+  .mat-column-demo-weight {
+    font-style: italic;
+  }
+  
+  .mat-column-demo-symbol {
+    width: 32px;
+    text-align: center;
+    font-weight: bold;
+  }
+  
+
+  .green-color{
+    color:green;
+    font-weight: bold;
+   }
+   
+   .red-color{
+       color:red;
+       font-weight: bold;
+
+   }
+
+   .chip_debited {
+    display: inline-block;
+    padding: 0 25px;
+    height: 41px;
+    font-weight: bold;
+    font-size: 20px;
+    line-height: 41px;
+    border-radius: 25px;
+    margin-bottom: 14px;
+    background-color: #e1c0c0;
+  }
+  
+  .chip_credited {
+    display: inline-block;
+    padding: 0 25px;
+    height: 41px;
+    font-size: 20px;
+    font-weight: bold;
+    line-height: 41px;
+    border-radius: 25px;
+    margin-bottom: 14px;
+    background-color: #b8e5c1;
+  }
+
+  .example-container {
+    margin-left: 20px;
+  }
