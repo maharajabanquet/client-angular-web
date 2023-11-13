@@ -3,16 +3,29 @@
   <mat-tab label="Pending Booking Invoice">
     <div >
       <mat-card  class="card-style">
-        <pending-cashflow></pending-cashflow>
-    
+        <pending-cashflow *ngIf="isAdmin"></pending-cashflow>
+        <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>PIN</mat-label>
+            <input type="number" formControlName="pin" matInput #message maxlength="256" placeholder="Enter Admin Password">
+          </mat-form-field>
+          <br><button (click)="auth()" mat-button color="primary">Authenticate</button>
+        </form>
+        
       </mat-card>
     </div>
   </mat-tab>
      <mat-tab label="Cash Flow">
       <div >
         <mat-card  class="card-style">
-          <in-cashflow></in-cashflow>
-      
+          <in-cashflow *ngIf="isAdmin"></in-cashflow>
+          <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
+            <mat-form-field class="example-full-width">
+              <mat-label>PIN</mat-label>
+              <input type="number" formControlName="pin" matInput #message maxlength="256" placeholder="Enter Admin Password">
+            </mat-form-field>
+            <br><button (click)="auth()" mat-button color="primary">Authenticate</button>
+          </form>
         </mat-card>
       </div>
     </mat-tab>
@@ -54,7 +67,14 @@
         <mat-card  class="card-style">
           <div style="display: flex;" >
             <mat-card style="flex: 1 1 auto;">
-                 <app-debt></app-debt>
+                 <app-debt  *ngIf="isAdmin"></app-debt>
+                 <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
+                  <mat-form-field class="example-full-width">
+                    <mat-label>PIN</mat-label>
+                    <input type="number" formControlName="pin" matInput #message maxlength="256" placeholder="Enter Admin Password">
+                  </mat-form-field>
+                  <br><button (click)="auth()" mat-button color="primary">Authenticate</button>
+                </form>
             </mat-card>
           </div>
         </mat-card>
@@ -66,6 +86,17 @@
           <div style="display: flex;" >
             <mat-card style="flex: 1 1 auto;">
                  <enquiry></enquiry>
+            </mat-card>
+          </div>
+        </mat-card>
+      </div>
+    </mat-tab>
+    <mat-tab label="Attendance">
+      <div >
+        <mat-card  class="card-style">
+          <div style="display: flex;" >
+            <mat-card style="flex: 1 1 auto;">
+                 <app-attendance (isReady)="isReadyToLoad($event)"></app-attendance>
             </mat-card>
           </div>
         </mat-card>

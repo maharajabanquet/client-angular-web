@@ -1,7 +1,27 @@
-<mat-spinner *ngIf="!ready" color="warn" style="margin:50% auto;" mode="indeterminate"></mat-spinner>
-<mat-icon (click)="getBookedDates();">refresh</mat-icon>
-
-<h2 style="text-align: center;">Booking</h2>
-<mat-card *ngIf="ready"   class="demo-inline-calendar-card">
-    <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDate" (selectedChange)="onSelect($event)"></mat-calendar>
-</mat-card>
+<ng-container *ngIf="ready" >
+    <mat-spinner *ngIf="!ready" color="warn" style="margin:50% auto;" mode="indeterminate"></mat-spinner>
+   
+    <mat-card class="example-card">
+        <mat-card-header>
+          <mat-card-subtitle>Booking Statistics </mat-card-subtitle>
+          <mat-card-title>Total Booking: {{totalBooking}}</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+          <mat-divider></mat-divider>
+        </mat-card-content>
+        <mat-card-actions>
+            <button mat-button  (click)="getBookedDates();" style="color:black;">REFRESH</button>
+            <button mat-button (click)="setStatus('completed')" style="color:green;">COMPLETED: {{completedBooking}}</button>
+            <button mat-button (click)="setStatus('pending')" style="color:orange;">PENDING: {{pendingBooking}}</button>
+            <button mat-button (click)="setStatus('cancelled')" style="color:red;">CANCELLED: {{cancelledBooking}}</button>
+          
+        </mat-card-actions>
+        <mat-card-footer>
+          <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        </mat-card-footer>
+      </mat-card>
+      
+    <mat-card  class="demo-inline-calendar-card">
+        <mat-calendar  [dateClass]="dateClass()" [selected]="selectedDate" (selectedChange)="onSelect($event)"></mat-calendar>
+    </mat-card>
+</ng-container>

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
 import { ApiServiceService } from './api-service.service';
+import { BehaviorSubject, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BookingServiceService {
-
+  setStatus = new BehaviorSubject(null)
   constructor(
     private apiService: ApiServiceService
   ) { }
@@ -85,6 +86,16 @@ export class BookingServiceService {
   assignDj(mobile: any, payload: any) {
     const url = `api/v1/app-user/assign-dj?mobile=${mobile}`;
     return this.apiService.post(url, payload);
+  }
+
+  markAbsent(payload: any) {
+    const url = 'api/v1/attendance/mark-absent';
+    return this.apiService.post(url, payload);
+  }
+
+  getAttendance() {
+    const url = 'api/v1/attendance/get-attendance';
+    return this.apiService.get(url);
   }
 
 }

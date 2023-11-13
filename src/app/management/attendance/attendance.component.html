@@ -1,0 +1,93 @@
+<p>attendance works!</p>
+<ng-container *ngIf="isready">
+    <ng-container >
+      <br><br><div class="row text-center">
+        <div [style]="isVisitorCodes()" class="col-md-4">
+          <div class="btn-group">
+            <div
+              class="btn btn-primary"
+              mwlCalendarPreviousView
+              [view]="view"
+              [(viewDate)]="viewDate"
+              (viewDateChange)="closeOpenMonthViewDay()"
+            >
+              Previous
+            </div>
+            <div
+              class="btn btn-outline-secondary"
+              mwlCalendarToday
+              [(viewDate)]="viewDate"
+            >
+              Today
+            </div>
+            <div
+              class="btn btn-primary"
+              mwlCalendarNextView
+              [view]="view"
+              [(viewDate)]="viewDate"
+              (viewDateChange)="closeOpenMonthViewDay()"
+            >
+              Next
+            </div>
+          </div>
+        </div>
+        <div [style]="isVisitorCodes()" class="col-md-4" style="text-align: center;font-size: 20px;">
+          <h3 style="font-weight: bold; color: red;">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        </div>
+    
+        <br>
+        <br>
+      
+        <div>
+          
+          <span class="staff"></span>&nbsp; Staff &nbsp;<span class="manager"></span>&nbsp; Manager
+        </div>
+      </div>
+      
+      <br />
+  
+      <div [style]="isVisitorCodes()">
+      
+        <div [ngSwitch]="view" >
+          <mwl-calendar-month-view
+            *ngSwitchCase="CalendarView.Month"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            [activeDayIsOpen]="activeDayIsOpen"
+            (dayClicked)="dayClicked($event.day)"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+          >
+          </mwl-calendar-month-view>
+          <mwl-calendar-week-view
+            *ngSwitchCase="CalendarView.Week"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+          >
+          </mwl-calendar-week-view>
+          <mwl-calendar-day-view
+            *ngSwitchCase="CalendarView.Day"
+            [viewDate]="viewDate"
+            [events]="events"
+            [refresh]="refresh"
+            (eventClicked)="handleEvent('Clicked', $event.event)"
+            (eventTimesChanged)="eventTimesChanged($event)"
+          >
+          </mwl-calendar-day-view>
+        </div>
+        
+      </div>
+      
+      
+      
+      <!-- Everything you see below is just for the demo, you don't need to include it in your app -->
+      
+      <br /><br /><br />
+      
+    </ng-container>
+  </ng-container>
+  

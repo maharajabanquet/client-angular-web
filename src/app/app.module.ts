@@ -38,6 +38,8 @@ import { CashInFlowDialog, InCashflowComponent } from './management/in-cashflow/
 import { LoginFormComponent } from './booking-dashboard/login-form.component';
 import { ReceivingComponent, ReceivingModalComponent } from './management/receiving/receiving.component';
 import { DebtComponent, DebtModalDialog } from './management/debt/debt.component';
+import { PendingBookingCashFlowComponent } from './management/pending-booking-cash-flow/pending-booking-cash-flow.component';
+import { AttendanceComponent, AttendanceDialog } from './management/attendance/attendance.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,11 @@ import { DebtComponent, DebtModalDialog } from './management/debt/debt.component
     NotifcationModalDialog,
     DialogAnimationsExampleDialog,
     DebtComponent,
-    DebtModalDialog
+    DebtModalDialog,
+    PendingBookingCashFlowComponent,
+    AttendanceComponent,
+    AttendanceDialog
+
   ],
   imports: [
     BrowserModule,
@@ -87,7 +93,7 @@ import { DebtComponent, DebtModalDialog } from './management/debt/debt.component
     FlatpickrModule.forRoot(),
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     QRCodeModule,
-    MatChipsModule
+    MatChipsModule,
     
   ],
   providers: [BnNgIdleService],

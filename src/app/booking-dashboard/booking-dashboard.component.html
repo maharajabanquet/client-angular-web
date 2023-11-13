@@ -13,24 +13,17 @@
 </ng-container>
 
 <mat-tab-group mat-align-tabs="start" *ngIf="isAuthenticate">
-  <mat-tab label="Booking">
+  <mat-tab label="Dashboard">
     <div style="display: flex;" *ngIf="isAuthenticate">
       <mat-card  class="card-style">
-        <enquiry ></enquiry>
+        <management></management>
       </mat-card>
       <mat-card style="flex: 1 1 auto;">
         <inline-calendar ></inline-calendar>
       </mat-card>
     </div>
   </mat-tab>
-  <mat-tab  label="Management">
-    <div >
-      <mat-card  class="card-style">
-      <management></management>
-      </mat-card>
-   
-    </div>
-  </mat-tab>
+ 
  
 </mat-tab-group>
 

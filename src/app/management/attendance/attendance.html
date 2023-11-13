@@ -1,0 +1,28 @@
+<ng-container  [formGroup]="attendanceForm">
+    <h1>Mark Absent</h1>
+    <p>
+        <mat-form-field appearance="fill">
+          <mat-label>Add Attendance</mat-label>
+          <input formControlName="employeeName" matInput placeholder="Enter Staff Name">
+          <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+        </mat-form-field>
+        <br><mat-form-field [formGroup]="attendanceForm" appearance="fill">
+            <mat-label>Reason</mat-label>
+            <input formControlName="reason" matInput placeholder="Enter Specific Reason">
+            <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+          </mat-form-field>
+          <br>
+          <mat-form-field appearance="outline">
+            <mat-label>Staff Type</mat-label>
+            <mat-select  formControlName="typeColor">
+              <mat-option value="staff">Staff</mat-option>
+              <mat-option value="manager">Manager</mat-option>
+            </mat-select>
+            </mat-form-field>
+      </p>
+      <div class="demo-button-container">
+        <button [disabled]="attendanceForm.invalid"  mat-raised-button (click)="submit()" class="demo-button">
+          Update
+        </button>
+      </div>
+   </ng-container>

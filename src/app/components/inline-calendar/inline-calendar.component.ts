@@ -26,6 +26,10 @@ export class InlineCalendarComponent implements OnInit {
   name: string | undefined;
   ready: boolean | undefined;
   holdDate  = [];
+  completedBooking: any;
+  pendingBooking: any;
+  cancelledBooking: any;
+  totalBooking: any;
   onSelect(event: any){
     let matchDate : any;
     this.selectedDate = event;
@@ -70,13 +74,38 @@ export class InlineCalendarComponent implements OnInit {
     private bookingService: BookingServiceService
   ) {
     this.setTimeout();
+    this.getAllBooking()
     this.userInactive.subscribe(() => this.getBookedDates());
+   }
+   setStatus(status: any) {
+    this.bookingService.setStatus.next(status);
    }
 
   ngOnInit(): void {
    this.getBookedDates();
   
  
+  }
+
+  getAllBooking() {
+    this.bookingService.getBookingList().subscribe((bList: any) => {
+      const data = bList && bList.success || [];
+      this.totalBooking = data.length;
+      let cCount = 1;
+      let pCount = 1;
+      let canCount = 1;
+      for(let index=0; index < data.length; index++) {
+        if(data[index].status === 'approved' && data[index].settled) {
+          this.completedBooking = cCount++;
+        }
+        if(data[index].status === "cancelled") {
+          this.cancelledBooking = canCount++;
+        }
+          if(data[index].settled === false) {
+            this.pendingBooking = pCount++;
+        }
+      }
+    })
   }
   setTimeout() {
     this.userActivity = setTimeout(() => this.userInactive.next(undefined), 300000);
@@ -134,7 +163,7 @@ export class InlineCalendarComponent implements OnInit {
       this.ready = true;
       console.log(this.datesToHighlight);
       console.log(this.holdDate);
-      
+      this.getAllBooking();
       
     })
   }
