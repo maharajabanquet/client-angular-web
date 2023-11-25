@@ -64,6 +64,7 @@ const colors: Record < string, EventColor > = {
 
   }
 };
+declare const window: any;
 
 @Component({
   selector: 'public-calendar',
@@ -164,10 +165,22 @@ export class PublicCalendarComponent implements OnInit {
   isSubmitBtn: boolean = false;
   isOpenModal: boolean = false;
   visitorCode: any = null;
-  
+  isLoggedIN!: boolean;
+  public menuActive = false;
   constructor(private bookingService: BookingServiceService, private dialog:MatDialog, private enService: EnquiryServiceService, private fb: FormBuilder, private _snackBar: MatSnackBar,
     ) {
+      window.otpless = (otplessUser: any) => {
+        console.log(JSON.stringify(otplessUser));
+        this.bookingService.otpAuthAdd({user: JSON.stringify(otplessUser)}).subscribe(res => {
+          console.log("USER ADDED", {user: JSON.stringify(otplessUser)});
+          this.visitCodeEntered = true;
+        })
+       };
 
+       this.bookingService.getAuthUser().subscribe((user) => {
+        console.log(user);
+        
+       })
   }
 
   submitVisitorCode() {

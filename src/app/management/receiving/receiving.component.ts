@@ -116,7 +116,7 @@ info: any;
       name: ['', Validators.required],
       address: ['', Validators.required],
       mobileNumber: ['', Validators.required],
-      securityDeposit: [this.securityMoney,  Validators.required]
+      securityDeposit: [0,  Validators.required]
   });
   this.bookingService.getConfig().subscribe((config: any) => {
     this.securityMoney = config && config.config &&  config.config.securityDepositCharges || 0;
@@ -137,15 +137,20 @@ info: any;
     return this.form.controls["items"] as FormArray;
   }
 
-  addReciving(item: any) {
+  addReciving() {
     this.items = this.fb.group({
-      itemName: [item.itemName],
-      quantity: [item.quantity, Validators.required],
-      itemCode: [item.itemCode],
-      displayName: [item.displayName],
-      createdOn: [item.createdOn]
+      itemName: [],
+      quantity: [],
+      itemCode: [],
+      displayName: [],
+      createdOn: []
     });
-    this.lessons.push(this.items);
+    for(let i = 0 ; i < 15 ; i++) {
+      this.ADD()
+
+    }
+
+    
   }
   ADD() {
     this.items = this.fb.group({
@@ -238,18 +243,19 @@ info: any;
   }
 
   getInventoryList() {
-    this.rService.getInventory().subscribe((resp: any) => {
-      console.log(resp);
-      const inventoryList = resp && resp.inventory || [];
-      let transformedItems = inventoryList.map((item: any) =>
-      {
-        this.addReciving(item)
-      }
-    );
+    this.addReciving()
+    // this.rService.getInventory().subscribe((resp: any) => {
+    //   console.log(resp);
+    //   const inventoryList = resp && resp.inventory || [];
+    //   let transformedItems = inventoryList.map((item: any) =>
+    //   {
+      
+    //   }
+    // );
 
     // this.form.setControl('items', this.fb.array(transformedItems));
       
-    })
+    // })
   }
 
 }

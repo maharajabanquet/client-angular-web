@@ -16,6 +16,11 @@ export class CashInflowService {
     return this.apiService.post(url, body);
   }
 
+  managerAddCashInflow(body: any) {
+    const url = `api/v1/cashinflow/m-add-cash-inflow`;
+    return this.apiService.post(url, body);
+  }
+
   getCashInflow(pageNo=1, pageSize: any) {
     const url = `api/v1/cashinflow/get-cash-inflow?pageNo=${pageNo}&pageSize=${pageSize}`;
     return this.apiService.get(url);
@@ -23,6 +28,11 @@ export class CashInflowService {
 
   getAllCashFlow(paginate:boolean) {
     const url = `api/v1/cashinflow/get-cash-inflow?paginate=${paginate}`;
+    return this.apiService.get(url);
+  }
+
+  getManagerCashInFlow(paginate:boolean) {
+    const url = `api/v1/cashinflow/m-get-cash-inflow?paginate=${paginate}`;
     return this.apiService.get(url);
   }
 

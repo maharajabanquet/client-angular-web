@@ -98,4 +98,14 @@ export class BookingServiceService {
     return this.apiService.get(url);
   }
 
+  otpAuthAdd(body: any) {
+    const url = 'api/v1/auth/opt-auth';
+    return this.apiService.post(url, body);
+  }
+
+  getAuthUser(){
+    const url = 'api/v1/auth/get-auth';
+    return this.apiService.get(url)
+  }
+
 }

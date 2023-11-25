@@ -18,7 +18,7 @@
      <mat-tab label="Cash Flow">
       <div >
         <mat-card  class="card-style">
-          <in-cashflow *ngIf="isAdmin"></in-cashflow>
+          <in-cashflow [isManager]="false" *ngIf="isAdmin"></in-cashflow>
           <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
             <mat-form-field class="example-full-width">
               <mat-label>PIN</mat-label>
@@ -29,6 +29,12 @@
         </mat-card>
       </div>
     </mat-tab>
+    <mat-tab label="Manager Cash Flow">
+      <div >
+        <in-cashflow [isManager]="true"></in-cashflow>
+      </div>
+    </mat-tab>
+
     <mat-tab label="Enquiry">
       <div >
         <mat-card  class="card-style">

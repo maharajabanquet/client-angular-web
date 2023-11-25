@@ -12,15 +12,6 @@ export class LandingPageComponent implements OnInit {
 
   ngOnInit(): void {
     
-    let audio = new Audio();
-    audio.src = "../assets/song.mp3";
-    audio.load();
-    audio.play();
-    audio.volume = 10;
-    console.log("audio",audio);
-    
- 
-    
 
   }
 

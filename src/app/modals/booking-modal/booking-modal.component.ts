@@ -154,6 +154,10 @@ export class BookingModalComponent implements OnInit {
    
   }
 
+  sendWhatsApp() {
+    window.open(`https://wa.me/+91${this.bookingForm.get('phoneNumber')?.value}?text=कृप्या आप अपना बकाया राशि का  भुगतान कर दे।। सधन्यवाद, महाराजा  बैंक्वेट`, '_blank')
+  }
+
   createForm() {
     this.bookingForm = this.formBuilder.group({
       bookingDate: [, Validators.required],
@@ -166,7 +170,7 @@ export class BookingModalComponent implements OnInit {
       finalAmount: [, [Validators.required]],
       balancedAmount: [, [Validators.required]],
       facilities: [[]],
-      status: ['pending'],
+      status: ['approved'],
       dgWithDiesel: [true, [Validators.required]],
       expense_sheet: [],
       DJ: [false],

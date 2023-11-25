@@ -1,7 +1,9 @@
 <div style="background: #cccccc;">
 
-  <h1 style="color:rgb(5, 62, 113); font-weight: bold;text-decoration: underline;">Transaction Inflows and Outflows 2022
+  <h1 *ngIf="!isManager" style="color:rgb(5, 62, 113); font-weight: bold;text-decoration: underline;">Transaction Inflows and Outflows 2022
     - 2023 (Balance: {{numberWithCommas(total) || 0}})</h1>
+
+    <h1 *ngIf="isManager" style="color:rgb(5, 62, 113); font-weight: bold;text-decoration: underline;">Manager Khata</h1>
   <div class="chip_credited">
     {{numberWithCommas(credited)}}
   </div>
@@ -15,13 +17,13 @@
       Create Flow
     </button>
     &nbsp;
-    <button color="primary" mat-raised-button (click)="exportexcel()" class="demo-button">
+    <button *ngIf="!isManager" color="primary" mat-raised-button (click)="exportexcel()" class="demo-button">
       Download Ledger Report
     </button>
   </div> &nbsp;
   <hr>
 
-  <div class="example-container">
+  <div  *ngIf="!isManager" class="example-container">
 
     <mat-form-field>
       <mat-label>Select Type</mat-label>
@@ -35,10 +37,10 @@
     <mat-label>Search By Text</mat-label>
     <input matInput (keyup)="applyFilter($event)" placeholder="Ex. ium" #input>
   </mat-form-field>
-  <div [formGroup]="dateFilter">
+  <div   [formGroup]="dateFilter">
 
 
-    <mat-form-field class="example-full-width">
+    <mat-form-field  class="example-full-width">
       <mat-label>Choose a date</mat-label>
       <input formControlName="transactionDate" matInput [matDatepicker]="picker">
       <mat-datepicker dateChange="onDateChange($event)" #picker></mat-datepicker>

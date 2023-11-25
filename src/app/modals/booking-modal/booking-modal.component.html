@@ -1,7 +1,10 @@
 
 <mat-spinner *ngIf="!formReadyToLoad" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
-  <p *ngIf="showStatusFlag" [ngStyle]="{color: currentStatus.color,  'font-weight': 'bold', 'font-size': '20px'}">{{currentStatus.label}}<p>
-       <form *ngIf="formReadyToLoad" [formGroup]="bookingForm" class="example-form">
+  <p *ngIf="showStatusFlag" [ngStyle]="{color: currentStatus.color,  'font-weight': 'bold', 'font-size': '20px'}">      <button (click)="sendWhatsApp()" mat-mini-fab color="accent" aria-label="Example icon button with a plus one icon">
+    <mat-icon>notification_important</mat-icon>
+  </button>  &nbsp;{{currentStatus.label}}<p>
+
+    <form *ngIf="formReadyToLoad" [formGroup]="bookingForm" class="example-form">
     
         <mat-form-field color="accent" appearance="outline">
             <mat-label>Booking Date</mat-label>

@@ -1,12 +1,13 @@
 import { PageEvent } from '@angular/material/paginator';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { Component, OnInit } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
+import { Component, OnInit , Input, Inject} from '@angular/core';
+import {MAT_DIALOG_DATA, MatDialog} from '@angular/material/dialog';
 import { BookingServiceService } from 'src/app/services/booking-service.service';
 import Swal from 'sweetalert2'
 import { CashInflowService } from 'src/app/services/cash-inflow.service';
 import {MatTableDataSource} from '@angular/material/table';
 import * as XLSX from 'xlsx';
+import { DialogData } from 'src/app/landing-page/photogallery/photogallery.component';
 
 export interface PeriodicElement {
   position: Number,
@@ -48,6 +49,7 @@ export class InCashflowComponent implements OnInit {
   bookingList: any = [];
   filteredTotalBal: any;
   filteredCredited: any;
+  @Input() isManager!: Boolean
   constructor(
     public dialog: MatDialog,
     private cashInflowService: CashInflowService,
@@ -56,8 +58,14 @@ export class InCashflowComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-   this.getCashFlow();
-   this.getCashInflowWithoutPaginate();
+    if(this.isManager) {
+      this.getMCashFlow();
+      this.getMCashInflowWithoutPaginate()
+    } else {
+      this.getCashFlow();
+      this.getCashInflowWithoutPaginate();
+    }
+  
    this.dateFilter = this.fb.group({
     transactionDate: [],
     partyName: []
@@ -110,11 +118,54 @@ export class InCashflowComponent implements OnInit {
       this.getTotalBalance();
       
     })
+    
+  }
+
+  getMCashInflowWithoutPaginate() {
+    this.cashInflowService.getManagerCashInFlow(true).subscribe((allCashFlow: any) => {
+      this.allCashFlow = allCashFlow && allCashFlow.data || [];
+      this.getTotalBalance();
+      
+    })
+    
   }
 
   getCashFlow() {
     let index = 1;
     this.cashInflowService.getAllCashFlow(true).subscribe((cashInflowData: any) => {
+      const elements = (cashInflowData && cashInflowData.data && cashInflowData.data) || [];
+      
+      const mapElements = elements.map((element: any) => ({
+        position: index++,
+        id: element._id,
+        partyName: element.partyName,
+        transactionType: element.transactionType,
+        transactionDate: element.transactionDate,
+        amount: element.amount,
+        remarks: element.remarks
+      }))
+      this.incashLoad = mapElements;
+      this.ELEMENT_DATA = mapElements
+      this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
+      console.log(this.ELEMENT_DATA);
+      
+      this.dataSource
+      this.isLoaded = true;
+      this.isDataLoaded = true;
+      
+      this.length = cashInflowData.data.total;
+      console.log("length", this.length);
+      
+     
+  })
+  console.log("check it" ,this.ELEMENT_DATA);
+ 
+  
+  }
+
+  getMCashFlow() {
+    let index = 1;
+    this.cashInflowService.getManagerCashInFlow(true).subscribe((cashInflowData: any) => {
       const elements = (cashInflowData && cashInflowData.data && cashInflowData.data) || [];
       
       const mapElements = elements.map((element: any) => ({
@@ -268,10 +319,18 @@ export class InCashflowComponent implements OnInit {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open(CashInFlowDialog);
+    const dialogRef = this.dialog.open(CashInFlowDialog, {
+      data: {'isManager': this.isManager}
+    })
     dialogRef.afterClosed().subscribe(result => {
+    if(this.isManager) {
+      this.getMCashFlow();
+      this.getMCashInflowWithoutPaginate()
+      
+    } else {
       this.getCashFlow();
       this.getCashInflowWithoutPaginate();
+    }
 
     });
   }
@@ -351,12 +410,17 @@ export class CashInFlowDialog {
   cashInflowForm!: FormGroup;
   bookingList: any = [];
   showOtherInput!: boolean;
+  isManager: any;
   constructor(
     private fb: FormBuilder,
     private bookingService: BookingServiceService,
     private dialog: MatDialog,
-    private cashInflowService: CashInflowService
+    private cashInflowService: CashInflowService,
+    @Inject(MAT_DIALOG_DATA) public data: DialogData,
+
   ) {
+    console.log(this.data);
+    this.isManager = this.data;
     this.bookingService.getBookingList().subscribe((bList: any) => {
       bList.success.forEach((element: any) => {
         if(!element.settle) {
@@ -421,30 +485,58 @@ export class CashInFlowDialog {
         amount: this.cashInflowForm.get('amount')?.value,
         remarks: this.cashInflowForm.get('remarks')?.value,
        }
-       this.cashInflowService.addCashInflow(payload).subscribe((resp: any) => {
-        if(resp && resp.status === 'Added') {
-          Swal.fire(
-            'Added!',
-            'Cash Inflow Has Been Added',
-            'success'
-          )
-          this.dialog.closeAll();
-        } else {
+       if(this.isManager.isManager) {
+        this.cashInflowService.managerAddCashInflow(payload).subscribe((resp: any) => {
+          if(resp && resp.status === 'Added') {
+            Swal.fire(
+              'Added!',
+              'Cash Inflow Has Been Added',
+              'success'
+            )
+            this.dialog.closeAll();
+          } else {
+            Swal.fire(
+              'Failed!',
+              'Oops Something went wrong',
+              'error'
+            )
+          }
+          
+         
+         }, err => {
           Swal.fire(
             'Failed!',
-            'Oops Something went wrong',
+            'Oops Something went wrong, Please Try Again!!!',
             'error'
           )
-        }
-        
-       
-       }, err => {
-        Swal.fire(
-          'Failed!',
-          'Oops Something went wrong, Please Try Again!!!',
-          'error'
-        )
-       })
+         })
+       } else {
+        this.cashInflowService.addCashInflow(payload).subscribe((resp: any) => {
+          if(resp && resp.status === 'Added') {
+            Swal.fire(
+              'Added!',
+              'Cash Inflow Has Been Added',
+              'success'
+            )
+            this.dialog.closeAll();
+          } else {
+            Swal.fire(
+              'Failed!',
+              'Oops Something went wrong',
+              'error'
+            )
+          }
+          
+         
+         }, err => {
+          Swal.fire(
+            'Failed!',
+            'Oops Something went wrong, Please Try Again!!!',
+            'error'
+          )
+         })
+       }
+      
       
      
       }
