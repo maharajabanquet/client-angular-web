@@ -15,7 +15,21 @@
       </mat-card>
     </div>
   </mat-tab>
-     <mat-tab label="Cash Flow">
+  <mat-tab label="Cash Flow 2024-2025">
+    <div >
+      <mat-card  class="card-style">
+        <cash-in-flow-24-25  ></cash-in-flow-24-25>
+        <!-- <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
+          <mat-form-field class="example-full-width">
+            <mat-label>PIN</mat-label>
+            <input type="number" formControlName="pin" matInput #message maxlength="256" placeholder="Enter Admin Password">
+          </mat-form-field>
+          <br><button (click)="auth()" mat-button color="primary">Authenticate</button>
+        </form> -->
+      </mat-card>
+    </div>
+  </mat-tab>
+     <mat-tab label="Cash Flow 2022-2023 (CLOSED)">
       <div >
         <mat-card  class="card-style">
           <in-cashflow [isManager]="false" *ngIf="isAdmin"></in-cashflow>
@@ -29,6 +43,10 @@
         </mat-card>
       </div>
     </mat-tab>
+
+    <!-- cash in flow 2024-2025 -->
+   
+
     <mat-tab label="Manager Cash Flow">
       <div >
         <in-cashflow [isManager]="true"></in-cashflow>
@@ -86,7 +104,7 @@
         </mat-card>
       </div>
     </mat-tab>
-    <mat-tab label="Enquiry">
+    <!-- <mat-tab label="Enquiry">
       <div >
         <mat-card  class="card-style">
           <div style="display: flex;" >
@@ -96,7 +114,7 @@
           </div>
         </mat-card>
       </div>
-    </mat-tab>
+    </mat-tab> -->
     <mat-tab label="Attendance">
       <div >
         <mat-card  class="card-style">

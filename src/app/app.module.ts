@@ -40,6 +40,8 @@ import { ReceivingComponent, ReceivingModalComponent } from './management/receiv
 import { DebtComponent, DebtModalDialog } from './management/debt/debt.component';
 import { PendingBookingCashFlowComponent } from './management/pending-booking-cash-flow/pending-booking-cash-flow.component';
 import { AttendanceComponent, AttendanceDialog } from './management/attendance/attendance.component';
+import { CashInFlowNewComponent } from './management/cash-in-flow-new/cash-in-flow-new.component';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -78,7 +80,8 @@ import { AttendanceComponent, AttendanceDialog } from './management/attendance/a
     DebtModalDialog,
     PendingBookingCashFlowComponent,
     AttendanceComponent,
-    AttendanceDialog
+    AttendanceDialog,
+    CashInFlowNewComponent
 
   ],
   imports: [
@@ -96,7 +99,7 @@ import { AttendanceComponent, AttendanceDialog } from './management/attendance/a
     MatChipsModule,
     
   ],
-  providers: [BnNgIdleService],
+  providers: [BnNgIdleService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

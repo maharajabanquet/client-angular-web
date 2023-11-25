@@ -2,14 +2,14 @@
 // `ng build` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
 const LOCAL_PORT = '3000'
-const LOCAL_HOST = `http://localhost:${LOCAL_PORT}/`;
+const LOCAL_HOST = `http://localhost:${LOCAL_PORT}/`; 
 const PRODUCTION = 'http://maharajaraxaul.com/';
 const ISPROD = true;
 
 export const environment = {
   production: false,
-host: PRODUCTION,
-  PROD: ISPROD
+host: LOCAL_HOST,
+  PROD: LOCAL_HOST
 };
 
 /*
