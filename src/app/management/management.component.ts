@@ -13,7 +13,15 @@ export class ManagementComponent implements OnInit {
   isAdmin !: Boolean
   pin !: any;
   adminForm !: FormGroup
+  height: any;
+  width: any;
+  isManager !: boolean;
   constructor(private fb: FormBuilder, private bookingService: BookingServiceService) {
+    this.height = window.innerHeight;
+    this.width = window.innerWidth
+    if(localStorage.getItem('email') === 'ompraksh@maharajaraxaul.com') {
+      this.isManager = true;
+    }
     this.adminForm = this.fb.group({
       pin: []
     })

@@ -1,3 +1,5 @@
+<enquiry (eventEmit)="checkStatus($event)"></enquiry>
+
 <mat-spinner style="margin:0 auto;" *ngIf="!isDataLoaded" mode="indeterminate"></mat-spinner>
 <ng-container *ngIf="isDataLoaded" >
     <mat-form-field  appearance="standard">

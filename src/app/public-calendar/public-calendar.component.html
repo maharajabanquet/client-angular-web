@@ -1,7 +1,7 @@
 <ng-container *ngIf="isready">
   <ng-container *ngIf="status === 'not-hide'">
     <br><br><div class="row text-center">
-      <div [style]="isVisitorCodes()" class="col-md-4">
+      <div  class="col-md-4">
         <div class="btn-group">
           <div
             class="btn btn-primary"
@@ -30,40 +30,20 @@
           </div>
         </div>
       </div>
-      <div [style]="isVisitorCodes()" class="col-md-4" style="text-align: center;font-size: 20px;">
+      <div  class="col-md-4" style="text-align: center;font-size: 20px;">
         <h3 style="font-weight: bold; color: red;">{{ viewDate | calendarDate:(view + 'ViewTitle'):'en' }}</h3>
+        <h3 style="font-weight: bold; color: red;">Booking Availability</h3>
+
       </div>
-      <div [style]="isVisitorCodes()" class="col-md-4">
+      <div  class="col-md-4">
         <div class="btn-group">
+        
           <div
             class="btn btn-primary"
-            (click)="setView(CalendarView.Month)"
-            [class.active]="view === CalendarView.Month"
-          >
-            Month
-          </div>
-          <div
-            class="btn btn-primary"
-            (click)="setView(CalendarView.Week)"
-            [class.active]="view === CalendarView.Week"
-          >
-            Week
-          </div>
-          <div
-            class="btn btn-primary"
-            (click)="setView(CalendarView.Day)"
-            [class.active]="view === CalendarView.Day"
-          >
-            Day
+            (click)="openDialog(null)">
+            Book Now
           </div>
         </div>
-      </div>
-      <br>
-      <br>
-    
-      <div>
-        
-        <span class="booking"></span>&nbsp;Check Availability
       </div>
     </div>
     
@@ -98,7 +78,7 @@
     </form> -->
     <br>
 
-    <div [style]="isVisitorCodes()">
+    <div >
     
       <div [ngSwitch]="view" >
         <mwl-calendar-month-view

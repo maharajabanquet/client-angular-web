@@ -9,8 +9,13 @@
         </div>
         <div class="flex flex-wrap w-1/3" *ngFor="let image of marketingImage">
           <div class="w-full p-1 md:p-2">
-            <img   loading="lazy" (click)="openDialog(image)" alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
-            [src]="image">
+            <ng-container *ngIf="image.type == 'photos'">
+              <img   loading="lazy" (click)="openDialog(image)" alt="gallery" class="block object-cover object-center w-full h-full rounded-lg"
+              [src]="image.mediaSource">
+            </ng-container>
+            <ng-container *ngIf="image.type == 'videos'">
+              <iframe  [src]="getVideoLink(image.mediaSource)"  class="block object-cover object-center w-full h-full rounded-lg" [title]="image.source" frameborder="0" allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+            </ng-container>
             
           </div>
         </div>

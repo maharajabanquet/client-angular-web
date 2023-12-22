@@ -12,6 +12,7 @@ export interface PeriodicElement {
   transactionDate: any,
   amount: Number,
   remarks: String,
+  submittedBy: String
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [];
@@ -24,7 +25,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
 export class CashInFlowNewComponent implements OnInit {
   @ViewChild('cashinflow_dailog') cashinflow_dailog !: TemplateRef<any>;
   expenseForm !: FormGroup;
-  displayedColumns: string[] =  ['position','name' ,'transactionType', 'transactionDate', 'amount', 'remarks', 'action'];
+  displayedColumns: string[] =  ['position','name' ,'transactionType', 'transactionDate', 'amount', 'remarks','submittedBy', 'action'];
   dataToDisplay = [...ELEMENT_DATA];
   selected !: Date | null;
   dataSource = new ExampleDataSource(this.dataToDisplay);
@@ -43,6 +44,7 @@ export class CashInFlowNewComponent implements OnInit {
   total: any;
   credited!: number;
   debited!: number;
+  isManager !: Boolean;
   constructor(public dialog: MatDialog, private fb: FormBuilder, private cashInFlow: CashInFlowNewService) {
     const today = new Date();
     const month = today.getMonth();
@@ -51,7 +53,11 @@ export class CashInFlowNewComponent implements OnInit {
       start: new FormControl(new Date(year, month,1)),
       end: new FormControl(new Date(year, month, 3))
     });
-  
+    if(localStorage.getItem('email') === 'ompraksh@maharajaraxaul.com') {
+      this.isManager = true;
+    } else {
+      this.isManager = false;
+    }
 
   }
 
@@ -65,10 +71,15 @@ export class CashInFlowNewComponent implements OnInit {
       amount: [, [Validators.required]],
       is_booking: [false],
       remarks: [, [Validators.required]],
+      submitted_by: [localStorage.getItem('name')]
     })
   }
   ngOnInit(): void {
     this.createExpenseForm();
+    this.getExpenses({});
+  }
+
+  reset() {
     this.getExpenses({});
   }
   getTotalBalance() {
@@ -88,10 +99,14 @@ export class CashInFlowNewComponent implements OnInit {
     });
   }
   addExpenses() {
-    this.dialogRef = this.dialog.open(this.cashinflow_dailog);
+    this.dialogRef = this.dialog.open(this.cashinflow_dailog, {
+      hasBackdrop: false
+    });
     this.dialogRef.afterClosed().subscribe((result: any) => {
      if(result === 'submit') {
+   
       this.submitExpense();
+
      }
     });
   }
@@ -147,6 +162,7 @@ export class CashInFlowNewComponent implements OnInit {
         transactionType: element.transactionType,
         transactionDate: element.transactionDate,
         amount: element.amount,
+        submittedBy: element.submitted_by || 'Ankit Kumar',
         remarks: element.remarks
       }))
       this.incashLoad = mapElements;
@@ -205,7 +221,7 @@ export class CashInFlowNewComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, Submit!'
     }).then((result) => {
       if (result.isConfirmed) {
         this.cashInFlow.deleteCashFlow(id).subscribe((res: any) => {
@@ -247,7 +263,8 @@ export class CashInFlowNewComponent implements OnInit {
       transactionDate: tDate,
       amount: this.expenseForm.get('amount')?.value,
       remarks: this.expenseForm.get('remarks')?.value,
-      is_booking: this.expenseForm.get('is_booking')?.value
+      is_booking: this.expenseForm.get('is_booking')?.value,
+      submitted_by: this.expenseForm.get('submitted_by')?.value
     }
     paylaod['amount'] = Number(paylaod['amount']);
     this.cashInFlow.addExpense(paylaod).subscribe((resp: any) => {
@@ -257,6 +274,7 @@ export class CashInFlowNewComponent implements OnInit {
         status,
         'success'
       )
+      this.expenseForm.reset();
       this.getExpenses({});
     }, (err) => {
       Swal.fire(
@@ -275,7 +293,7 @@ export class CashInFlowNewComponent implements OnInit {
       showCancelButton: true,
       confirmButtonColor: '#3085d6',
       cancelButtonColor: '#d33',
-      confirmButtonText: 'Yes, delete it!'
+      confirmButtonText: 'Yes, Submit!'
     }).then((result) => {
       if (result.isConfirmed) {
         this.callAPI()

@@ -70,6 +70,8 @@ export class BookingModalComponent implements OnInit {
   fileuploaded!: boolean;
   showDjAssigned!: boolean;
   djUser : any = [];
+  previousAdvance: any;
+  advanceHistory: any;
   constructor(
     public dialogRef: MatDialogRef<BookingModalComponent>,
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
@@ -175,7 +177,8 @@ export class BookingModalComponent implements OnInit {
       expense_sheet: [],
       DJ: [false],
       assignedDj: [],
-      djType: []
+      djType: [],
+      currentAdvance: []
 
 
     })
@@ -259,7 +262,9 @@ export class BookingModalComponent implements OnInit {
       BookingAmount: this.bookingForm.get('BookingAmount')?.value,
       finalAmount: this.bookingForm.get('finalAmount')?.value,
       balancedAmount: this.bookingForm.get('balancedAmount')?.value,
-      dgWithDiesel: this.bookingForm.get('dgWithDiesel')?.value
+      dgWithDiesel: this.bookingForm.get('dgWithDiesel')?.value,
+      previous_advance: this.bookingForm.get('currentAdvance')?.value,
+      date: new Date().toLocaleDateString('en-GB')
     }
     this.bookingService.updateBooking(payload, this.bookingId, this.bookingForm.get('bookingDate')?.value)
     .subscribe(res => {
@@ -328,6 +333,10 @@ export class BookingModalComponent implements OnInit {
       this.bookingForm.patchValue(data.bookingData[0])
       this.invoice_generated = data && data.bookingData && data.bookingData[0] && data.bookingData[0].invoice_generated
       this.settled = data && data.bookingData && data.bookingData[0] && data.bookingData[0].settled
+      this.previousAdvance = data && data.bookingData && data.bookingData[0] && data.bookingData[0].BookingAmount
+      this.advanceHistory = data && data.bookingData && data.bookingData[0] && data.bookingData[0].payment_history || []
+
+
       this.bookingId = data && data.bookingData && data.bookingData[0] && data.bookingData[0]._id;
       this.bookedFinalAmount = data && data.bookingData && data.bookingData[0] && data.bookingData[0].finalAmount
 

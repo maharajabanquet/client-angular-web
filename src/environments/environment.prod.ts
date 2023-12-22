@@ -5,7 +5,7 @@ const ISPROD = true;
 
 export const environment = {
   production: true,
-  host: LOCAL_HOST,
+  host: PRODUCTION,
   PROD: ISPROD
 
 

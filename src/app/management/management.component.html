@@ -1,45 +1,23 @@
 <mat-tab-group mat-align-tabs="start" >
- 
-  <mat-tab label="Pending Booking Invoice">
+
+  <mat-tab *ngIf="!isManager" label="Pending Booking Invoice">
     <div >
       <mat-card  class="card-style">
-        <pending-cashflow *ngIf="isAdmin"></pending-cashflow>
-        <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
-          <mat-form-field class="example-full-width">
-            <mat-label>PIN</mat-label>
-            <input type="number" formControlName="pin" matInput #message maxlength="256" placeholder="Enter Admin Password">
-          </mat-form-field>
-          <br><button (click)="auth()" mat-button color="primary">Authenticate</button>
-        </form>
-        
+        <pending-cashflow></pending-cashflow>
       </mat-card>
     </div>
   </mat-tab>
-  <mat-tab label="Cash Flow 2024-2025">
+  <mat-tab label="Cash Flow 2023-2024">
     <div >
       <mat-card  class="card-style">
-        <cash-in-flow-24-25  ></cash-in-flow-24-25>
-        <!-- <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
-          <mat-form-field class="example-full-width">
-            <mat-label>PIN</mat-label>
-            <input type="number" formControlName="pin" matInput #message maxlength="256" placeholder="Enter Admin Password">
-          </mat-form-field>
-          <br><button (click)="auth()" mat-button color="primary">Authenticate</button>
-        </form> -->
+        <cash-in-flow-24-25 ></cash-in-flow-24-25>
       </mat-card>
     </div>
   </mat-tab>
-     <mat-tab label="Cash Flow 2022-2023 (CLOSED)">
+     <mat-tab *ngIf="!isManager" label="Cash Flow 2022-2023 (CLOSED)">
       <div >
         <mat-card  class="card-style">
-          <in-cashflow [isManager]="false" *ngIf="isAdmin"></in-cashflow>
-          <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
-            <mat-form-field class="example-full-width">
-              <mat-label>PIN</mat-label>
-              <input type="number" formControlName="pin" matInput #message maxlength="256" placeholder="Enter Admin Password">
-            </mat-form-field>
-            <br><button (click)="auth()" mat-button color="primary">Authenticate</button>
-          </form>
+          <in-cashflow [isManager]="false"></in-cashflow>
         </mat-card>
       </div>
     </mat-tab>
@@ -86,19 +64,12 @@
         </mat-card>
       </div>
     </mat-tab>
-    <mat-tab label="Debt">
+    <mat-tab *ngIf="!isManager" label="Debt">
       <div >
         <mat-card  class="card-style">
           <div style="display: flex;" >
             <mat-card style="flex: 1 1 auto;">
-                 <app-debt  *ngIf="isAdmin"></app-debt>
-                 <form [formGroup]="adminForm" *ngIf="!isAdmin" class="example-form">
-                  <mat-form-field class="example-full-width">
-                    <mat-label>PIN</mat-label>
-                    <input type="number" formControlName="pin" matInput #message maxlength="256" placeholder="Enter Admin Password">
-                  </mat-form-field>
-                  <br><button (click)="auth()" mat-button color="primary">Authenticate</button>
-                </form>
+              <app-debt></app-debt>
             </mat-card>
           </div>
         </mat-card>

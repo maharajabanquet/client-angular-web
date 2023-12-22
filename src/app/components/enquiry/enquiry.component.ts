@@ -1,8 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EnquiryServiceService } from 'src/app/services/enquiry-service.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
+import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { DialogData } from 'src/app/landing-page/photogallery/photogallery.component';
 
+export interface MarketData {
+  date:any;
+  title: string
+ 
+}
 @Component({
   selector: 'enquiry',
   templateUrl: './enquiry.component.html',
@@ -12,13 +19,19 @@ export class EnquiryComponent implements OnInit {
   enquiryForm!: FormGroup;
   hideForm!: boolean;
   currentView = 'form';
+  @Output() eventEmit = new EventEmitter<string>();
+  @Input() dynamicTitle = 'Enquiry'
+
   constructor(
     private formBuilder: FormBuilder,
     private enquiryServie: EnquiryServiceService,
-    private _snackBar: MatSnackBar
+    private _snackBar: MatSnackBar,
+    @Inject(MAT_DIALOG_DATA) public data: MarketData,
   ) { }
 
   ngOnInit(): void {
+    console.log("FROM ENQUIRY:::>", this.data);
+    
     this.createEnquiryForm()
   }
 
@@ -30,6 +43,12 @@ export class EnquiryComponent implements OnInit {
       address: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
       BookingDate: ['', [Validators.required]]
     })
+    if(this.data) {
+      this.dynamicTitle = 'Booking Form'
+    
+      this.enquiryForm.get('BookingDate')?.patchValue(this.data.date);
+      this.dynamicTitle = this.data.title;
+    }
   }
 
   public checkError = (controlName: string, errorName: string) => {
@@ -44,6 +63,7 @@ export class EnquiryComponent implements OnInit {
         this.createEnquiryForm();
         this.hideForm = false;
         this.enquiryServie.visitorCode.next(resp['visitorCode'])
+        this.eventEmit.emit('submitted')
       }
     }, (err) => {
       this.hideForm = false;

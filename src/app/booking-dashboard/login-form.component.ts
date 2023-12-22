@@ -88,6 +88,8 @@ export class LoginFormComponent {
         this.utilityService.login(this.form.value).subscribe((userResp: any) => {
             if(userResp && userResp.token) {
                 localStorage.setItem('token', userResp.token)
+                localStorage.setItem('email', userResp.email)
+                localStorage.setItem('name', userResp.first_name + " " + userResp.last_name)
             }
             this.isSubmit = true;
             this.submitEM.emit(this.form.value);

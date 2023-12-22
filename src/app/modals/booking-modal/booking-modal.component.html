@@ -170,8 +170,41 @@
                   <mat-icon matSuffix>money</mat-icon>
                 </mat-form-field>
               </td>
+              <td *ngIf="isUpdate">
+                <mat-form-field color="accent" appearance="outline">
+                  <mat-label>Current Advance</mat-label>
+                  <input style="font-weight: bold;" formControlName="currentAdvance"  matInput>
+                  <mat-icon matSuffix>money</mat-icon>
+                </mat-form-field>
+              </td>
             </tr>
           </table>
+          <br>
+          <p style="text-align: center;font-weight: bold;">Advance History</p>
+          <table>
+            <tr>
+              <th>Sl.No</th>
+              <th>Amount</th>
+              <th>Date</th>
+            </tr>
+           
+            <tr *ngFor="let history of advanceHistory, let i=index;">
+              <td>{{i+1}}</td>
+              <td>{{history.payment}}</td>
+              <td>{{history.date}}</td>
+              
+            </tr>
+            <tr *ngIf="advanceHistory && advanceHistory.length === 0">
+              <td>Data Migration Pending</td>
+              <td>
+                
+              </td>
+              <td></td>
+            </tr>
+          </table>
+
+
+
           <p>
             <div >
                 <input  type="file" style="display: none" #fileInput accept="*" (change)="onChangeFileInput($event)" />

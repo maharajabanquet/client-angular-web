@@ -1,5 +1,8 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, Sanitizer } from '@angular/core';
 import {MatDialog, MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { UtilityService } from 'src/app/services/utility.service';
+import { DomSanitizer, SafeHtml, SafeStyle, SafeScript, SafeUrl, SafeResourceUrl } from '@angular/platform-browser';
+
 export interface DialogData {
   img: string;
 }
@@ -10,24 +13,27 @@ export interface DialogData {
   styleUrls: ['./photogallery.component.css']
 })
 export class PhotogalleryComponent implements OnInit {
-  marketingImage = [
-    "../../../assets/images/main.jpeg",
-    "../../../assets/images/barat.jpeg",
-    "../../../assets/images/mandap.jpeg",
-    "../../../assets/images/main2.jpeg",
-    "../../../assets/images/room.jpeg",
-    "../../../assets/images/minihall.jpeg"
-  ]
+  marketingImage: any  = []
   constructor(
-    public dialog: MatDialog
+    public dialog: MatDialog,
+    private ut: UtilityService,
+    protected _sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
-    
+      this.ut.getMedia().subscribe((resp: any) => {
+        this.marketingImage = resp;
+      })
   }
 
   
 
+  getVideoLink(source: any) {
+    var link = this._sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${source}`)
+    console.log(link);
+    
+    return link
+  }
   
   openDialog(img: any) {
     const dialogRef = this.dialog.open(DialogContentExampleDialog, {
@@ -38,7 +44,7 @@ export class PhotogalleryComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+     
     });
   }
 

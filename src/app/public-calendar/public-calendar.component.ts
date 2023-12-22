@@ -43,6 +43,7 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatButtonModule } from '@angular/material/button';
 import { EnquiryServiceService } from '../services/enquiry-service.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { EnquiryComponent } from '../components/enquiry/enquiry.component';
 
 const colors: Record < string, EventColor > = {
   red: {
@@ -92,7 +93,7 @@ declare const window: any;
     font-weight: bold;
 }
       .my-custom-class span {
-        color: #CFA240;
+        color: orange;
         animation: blinker 2s linear infinite;
         font-size:15px;
         font-weight: bold;
@@ -100,6 +101,21 @@ declare const window: any;
       .cal-month-view .cal-day-badge {
       background-color: grey;;
       color: #fff;
+      opacity:0
+}
+.cal-month-view .cal-day-cell.cal-in-month.cal-has-events {
+  cursor: pointer;
+    background: #932d2d;
+    color: #fff900;
+    font-weight: bolder;
+    font-size: 21px;
+}
+
+.cal-month-view .cal-day-cell.cal-weekend .cal-day-number {
+  color: #17180f;
+  font-weight:bold;
+  font-size: 21px;
+
 }
       @keyframes blinker {
   50% {
@@ -170,15 +186,12 @@ export class PublicCalendarComponent implements OnInit {
   constructor(private bookingService: BookingServiceService, private dialog:MatDialog, private enService: EnquiryServiceService, private fb: FormBuilder, private _snackBar: MatSnackBar,
     ) {
       window.otpless = (otplessUser: any) => {
-        console.log(JSON.stringify(otplessUser));
         this.bookingService.otpAuthAdd({user: JSON.stringify(otplessUser)}).subscribe(res => {
-          console.log("USER ADDED", {user: JSON.stringify(otplessUser)});
           this.visitCodeEntered = true;
         })
        };
 
        this.bookingService.getAuthUser().subscribe((user) => {
-        console.log(user);
         
        })
   }
@@ -194,6 +207,15 @@ export class PublicCalendarComponent implements OnInit {
       })
     }
   }
+
+  openDialog(date: any) {
+    const dialogRef = this.dialog.open(EnquiryComponent, {
+      data: {'date': date, 'title': 'Booking Form'}
+    });
+    dialogRef.afterClosed().subscribe(result => {
+    });
+  }
+  
 
   ngOnInit(): void {
     this.visitorCodeForm = this.fb.group({
@@ -238,7 +260,11 @@ export class PublicCalendarComponent implements OnInit {
       } else {
         this.activeDayIsOpen = true;
       }
-      this.viewDate = date;
+      if(!this.activeDayIsOpen) {
+        this.openDialog(date)
+      }
+      
+      
     }
   }
  
@@ -325,7 +351,6 @@ export class PublicCalendarComponent implements OnInit {
           })
         }
         this.isready = true;
-        console.log(this.events);
         this.isReady.emit(true);
       }
     })
@@ -348,9 +373,7 @@ export class PublicCalendarComponent implements OnInit {
     })
   }
 
-  openDialog(): void {
-    window.open('https://wa.me/+919572177693/?text=Please share visitor Code', '_blank')
-  }
+
 
 }
 

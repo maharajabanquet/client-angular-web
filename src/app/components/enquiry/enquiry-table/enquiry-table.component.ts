@@ -34,6 +34,12 @@ export class EnquiryTableComponent implements OnInit {
   ) { 
     
   }
+
+  checkStatus(event: any) {
+      if(event === 'submitted') {
+        this.getEnquires(); 
+      }
+  }
   
 
   applyFilter(event: Event) {

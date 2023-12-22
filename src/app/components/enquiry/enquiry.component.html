@@ -3,7 +3,7 @@
 
 
 <ng-container *ngIf="currentView === 'form'">
-<h1 style="text-align: center;" class="font-style">Enquiry</h1>
+<h1 style="text-align: center;" class="font-style">{{dynamicTitle}}</h1>
 <mat-spinner *ngIf="hideForm" style="margin:0 auto;" mode="indeterminate"></mat-spinner>
 <form (dblclick)="toggleTabel()" *ngIf="!hideForm" [formGroup]="enquiryForm">
 <p>

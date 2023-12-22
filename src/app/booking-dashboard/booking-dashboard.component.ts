@@ -14,18 +14,24 @@ export class BookingDashboardComponent implements OnInit {
   loginForm!: FormGroup
   showFiller = false;
   error = ''
+  isManager !:boolean;
   constructor(
     private fb: FormBuilder,
     private bookService: BookingServiceService,
     private _snackBar: MatSnackBar,
     private bnIdle: BnNgIdleService
-  ) { }
+  ) { 
+    if(localStorage.getItem('email') === 'ompraksh@maharajaraxaul.com') {
+      this.isManager = true;
+    }
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
       username: ['', [Validators.required]],
       password: ['', [Validators.required]]
     })
+
     console.log(localStorage.getItem('token'));
     
     if(localStorage.getItem('token')) {
