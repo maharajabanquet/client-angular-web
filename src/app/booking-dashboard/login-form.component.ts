@@ -94,7 +94,6 @@ export class LoginFormComponent {
             this.isSubmit = true;
             this.submitEM.emit(this.form.value);
         }, err => {
-          console.log(err);
           this.error = err.error;
             this.isSubmit = false;
         })

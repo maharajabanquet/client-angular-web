@@ -32,8 +32,6 @@ export class BookingDashboardComponent implements OnInit {
       password: ['', [Validators.required]]
     })
 
-    console.log(localStorage.getItem('token'));
-    
     if(localStorage.getItem('token')) {
       this.isAuthenticate = true;
     }

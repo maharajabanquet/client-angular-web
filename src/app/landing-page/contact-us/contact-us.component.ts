@@ -20,9 +20,6 @@ export class ContactUsComponent implements OnInit {
   ngOnInit(): void {
     this.createContactForm();
     this.contactForm.valueChanges.subscribe(res => {
-      console.log(this.contactForm.status);
-      
-      
     })
   }
 

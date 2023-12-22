@@ -147,20 +147,15 @@ export class InCashflowComponent implements OnInit {
       this.incashLoad = mapElements;
       this.ELEMENT_DATA = mapElements
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-      console.log(this.ELEMENT_DATA);
       
       this.dataSource
       this.isLoaded = true;
       this.isDataLoaded = true;
       
       this.length = cashInflowData.data.total;
-      console.log("length", this.length);
       
      
   })
-  console.log("check it" ,this.ELEMENT_DATA);
- 
-  
   }
 
   getMCashFlow() {
@@ -180,25 +175,15 @@ export class InCashflowComponent implements OnInit {
       this.incashLoad = mapElements;
       this.ELEMENT_DATA = mapElements
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
-      console.log(this.ELEMENT_DATA);
-      
       this.dataSource
       this.isLoaded = true;
       this.isDataLoaded = true;
-      
       this.length = cashInflowData.data.total;
-      console.log("length", this.length);
-      
-     
   })
-  console.log("check it" ,this.ELEMENT_DATA);
- 
-  
   }
 
 
   getCurrentPage(event: any) {
-    console.log(event);
     this.pageNo = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     if(event && event.pageIndex === 0) {
@@ -221,8 +206,6 @@ export class InCashflowComponent implements OnInit {
         outcash = outcash + element.amount;
         this.filteredTotalBal = Math.abs(outcash);
       }
-      console.log('this.', this.filteredTotalBal);
-      
       // this.filteredTotalBal = incash - Math.abs(outcash);  
     });
   }
@@ -245,8 +228,6 @@ export class InCashflowComponent implements OnInit {
   }
 
   deleteEmployee(id: any) {
-    console.log(id);
-    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
@@ -393,8 +374,6 @@ export class InCashflowComponent implements OnInit {
     })
   }
   onDateChange(event: any) {
-    console.log(event.value);
-    
   }
 }
 
@@ -419,7 +398,6 @@ export class CashInFlowDialog {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
 
   ) {
-    console.log(this.data);
     this.isManager = this.data;
     this.bookingService.getBookingList().subscribe((bList: any) => {
       bList.success.forEach((element: any) => {
@@ -427,8 +405,6 @@ export class CashInFlowDialog {
           this.bookingList.push({partyName: `${ element.firstName} ${element.lastName} (${element.bookingDate})`})
         }
       });
-      console.log(this.bookingList);
-      
     })
     this.cashInflowForm = this.fb.group({
       partyName: ['', Validators.required],

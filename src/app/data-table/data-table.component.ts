@@ -117,7 +117,6 @@ export class DataTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
       this.getAllMedia();
     });
   }
@@ -187,12 +186,10 @@ export class CommonModalDialog {
     this.uploadedFiles = element.target.files;
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
-    console.log(this.file);
     let base64 = this.getBase64(this.file);
   }
 
   submit() {
-    console.log();
     this.us.addMedia(this.mediaForm.getRawValue()).subscribe((resp) => {
       Swal.fire(
         'Employee Added!',
@@ -215,7 +212,7 @@ export class CommonModalDialog {
       })
     };
     reader.onerror = function (error) {
-      console.log('Error: ', error);
+     
     };
  }
  

@@ -231,7 +231,6 @@ export class AttendanceComponent implements OnInit {
       data: date,
     });
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
      this.getAttendance();
      this.dialog.openDialogs.pop();
     });
@@ -305,7 +304,6 @@ export class AttendanceComponent implements OnInit {
 
   getAttendance() {
     this.bookingService.getAttendance().subscribe((res: any)=> {
-      console.log(res);
       this.isready = true;
       let attendanceList = res && res.attendance || []
       for(let index=0; index< attendanceList.length; index++) {
@@ -342,7 +340,6 @@ export class AttendanceComponent implements OnInit {
           })
         }
         this.isready = true;
-        console.log(this.events);
         this.isReady.emit(true);
       }
     })

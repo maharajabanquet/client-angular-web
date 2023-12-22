@@ -88,7 +88,6 @@ export class BookingModalComponent implements OnInit {
     this.uploadedFiles = element.target.files;
     const files: { [key: string]: File } = this.fileInput.nativeElement.files;
     this.file = files[0];
-    console.log(this.file);
     let base64 = this.getBase64(this.file);
   }
 
@@ -102,15 +101,11 @@ export class BookingModalComponent implements OnInit {
         self.bookingService.uploadExpenseSheet(reader.result, file.name, ext).subscribe((res: any) => {
         self.bookingForm.get('expense_sheet')?.patchValue(res && res.url);
         self.fileuploaded = true;
-        console.log( self.bookingForm.get('expense_sheet')?.value);
         self.bookingService.addExpenseUrl(self.bookingForm.get('expense_sheet')?.value, self.bookingId).subscribe(res => {
-          console.log("Expense Added To Booking Id", self.bookingId);
-          
         })
       })
     };
     reader.onerror = function (error) {
-      console.log('Error: ', error);
     };
  }
   ngOnInit(): void {
@@ -207,8 +202,6 @@ export class BookingModalComponent implements OnInit {
       this.onFacilitiesSelection();
     }
     this.bookingForm.get('DJ')?.valueChanges.subscribe(value => {
-      console.log(value);
-      
       if(value) {
         this.showDjAssigned = true;
       } else {
@@ -320,10 +313,8 @@ export class BookingModalComponent implements OnInit {
   }
 
   onInputBalanceAmount(event: any) {
-    console.log(event.target.value);
     const balancedAmount = Number(this.bookingForm.get('finalAmount')?.value) - Number(this.bookingForm.get('BookingAmount')?.value);
     this.bookingForm.get('balancedAmount')?.patchValue(balancedAmount) 
-    console.log(balancedAmount);
     
   }
 
@@ -357,8 +348,6 @@ export class BookingModalComponent implements OnInit {
       
       this.bookingForm.get('dgWithDiesel')?.patchValue(data.bookingData[0].dgWithDiesel);
       this.bookingForm.get('expense_sheet')?.patchValue(data && data.bookingData && data.bookingData[0] && data.bookingData[0].expense_sheet)
-      console.log("CHECK",this.bookingForm.get('expense_sheet')?.value );
-      
       this.bookingForm.get('dgWithDiesel')?.disable();
     })
   }
@@ -452,8 +441,6 @@ export class BookingModalComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log('The dialog was closed');
-      console.log(result);
       if(result && result.status === true) {
         this.settleBooking();
       }

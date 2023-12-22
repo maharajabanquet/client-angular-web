@@ -145,8 +145,6 @@ export class CashInFlowNewComponent implements OnInit {
        outcash = outcash + element.amount;
        this.filteredTotalBal = Math.abs(outcash);
      }
-     console.log('this.', this.filteredTotalBal);
-     
      // this.filteredTotalBal = incash - Math.abs(outcash);  
    });
  }
@@ -168,8 +166,6 @@ export class CashInFlowNewComponent implements OnInit {
       this.incashLoad = mapElements;
       this.ELEMENT_DATA = mapElements
       this.dataSource = new ExampleDataSource(this.ELEMENT_DATA);
-      console.log(this.ELEMENT_DATA);
-      
       this.dataSource
       this.isLoaded = true;
       this.isDataLoaded = true;
@@ -212,8 +208,6 @@ export class CashInFlowNewComponent implements OnInit {
   }
 
   deleteEmployee(id: any) {
-    console.log(id);
-    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",

@@ -17,7 +17,6 @@ export class LandingPageComponent implements OnInit {
 
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
-    console.log(window.innerWidth);
     
     if(window.innerWidth > 1500) {
       this.isMobile = false

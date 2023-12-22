@@ -44,7 +44,6 @@ export class HotelTableComponent implements OnInit {
   }
 
   remove(element: any) {
-    console.log(element);
     this.employeeService.removeUser(element).subscribe((resp: any) => {
       Swal.fire(
         'Successfully Removed!',
@@ -93,7 +92,7 @@ export class HotelTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);})
+      })
   }
 
   
@@ -130,7 +129,7 @@ export class HotelTableComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result}`);
+   
       this.getUser();
     });
   }

@@ -45,7 +45,6 @@ export class QrcodeGenComponent implements OnInit {
 
   checkComm() {
     this.ul.checkComm().subscribe((status: any) => {
-      console.log(status);
       let commArray = status && status.docs || [];
       if(commArray && commArray.length === 0) {
         this.ul.checkComm().subscribe((status: any) => {

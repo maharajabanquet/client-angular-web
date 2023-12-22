@@ -30,8 +30,6 @@ export class PhotogalleryComponent implements OnInit {
 
   getVideoLink(source: any) {
     var link = this._sanitizer.bypassSecurityTrustResourceUrl(`https://www.youtube.com/embed/${source}`)
-    console.log(link);
-    
     return link
   }
   

@@ -9,7 +9,6 @@ export class LazyImgDirectiveDirective {
 
     if (supports) {
       nativeElement.setAttribute('loading', 'lazy');
-      console.log("SUPPORTS");
       
     } else {
       // fallback to IntersectionObserver

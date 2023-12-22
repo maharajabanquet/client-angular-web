@@ -26,10 +26,7 @@ export class ManagementComponent implements OnInit {
       pin: []
     })
     window.otpless = (otplessUser: any) => {
-      console.log(JSON.stringify(otplessUser));
       this.bookingService.otpAuthAdd({user: JSON.stringify(otplessUser)}).subscribe(res => {
-        console.log("USER ADDED", {user: JSON.stringify(otplessUser)});
-        
       })
      };
    }

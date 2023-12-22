@@ -57,7 +57,6 @@ export class ReceivingComponent implements OnInit {
 
   getReceivingList() {
     this.resService.get().subscribe((data:any) => {
-      console.log(data);
       this.dataSource = data;
       
     })
@@ -65,8 +64,6 @@ export class ReceivingComponent implements OnInit {
 
   
   print(element: any) {
-    console.log(element);
-    
     // window.open(environment.host + `api/v1/invoice/invoice?data=${JSON.stringify(this.bookingForm.getRawValue())}`, "_blank");
     // this.bookingService.generateInvoice(this.bookingForm.getRawValue()).subscribe(res => {
     //   this._snackBar.open('Invoice Generated!', 'OK',{duration: 1000});
@@ -87,7 +84,6 @@ export class ReceivingComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       this.getReceivingList();
-      console.log(`Dialog result: ${result}`);
     });
   }
 }
@@ -245,7 +241,6 @@ info: any;
   getInventoryList() {
     this.addReciving()
     // this.rService.getInventory().subscribe((resp: any) => {
-    //   console.log(resp);
     //   const inventoryList = resp && resp.inventory || [];
     //   let transformedItems = inventoryList.map((item: any) =>
     //   {

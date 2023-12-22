@@ -30,8 +30,6 @@ export class EnquiryComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    console.log("FROM ENQUIRY:::>", this.data);
-    
     this.createEnquiryForm()
   }
 
@@ -76,6 +74,5 @@ export class EnquiryComponent implements OnInit {
     } else if(this.currentView = 'table') {
       this.currentView = 'form';
     }
-    console.log(this.currentView);
   }
 }

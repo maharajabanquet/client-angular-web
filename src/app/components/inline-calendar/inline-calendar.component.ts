@@ -38,8 +38,6 @@ export class InlineCalendarComponent implements OnInit {
         matchDate =  new Date(data).toISOString()
       }
     })
-    console.log(matchDate);
-    
     if(new Date(event).toISOString() !== matchDate) {
       this.openDialog(this.selectedDate, false)
     } else {
@@ -129,7 +127,6 @@ export class InlineCalendarComponent implements OnInit {
       });
   
       dialogRef.afterClosed().subscribe(result => {
-        console.log('The dialog was closed');
         this.selectedDate = null;
        this.getBookedDates();
        this.dialog.openDialogs.pop();
@@ -146,7 +143,6 @@ export class InlineCalendarComponent implements OnInit {
       if(date && date.bookingData && date.bookingData.length > 0) {
         
         for(let index=0; index < date.bookingData.length; index++) {
-        console.log(date.bookingData[index]);
         if(date.bookingData[index].status === 'pending') {
           let dateToFormat = new Date(date.bookingData[index].bookingDate).toLocaleDateString();
           holdDates.push(dateToFormat);
@@ -161,8 +157,6 @@ export class InlineCalendarComponent implements OnInit {
         this.holdDate = holdDates;
       }
       this.ready = true;
-      console.log(this.datesToHighlight);
-      console.log(this.holdDate);
       this.getAllBooking();
       
     })

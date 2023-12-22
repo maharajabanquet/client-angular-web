@@ -68,19 +68,15 @@ export class EnquiryTableComponent implements OnInit {
       this.isDataLoaded = true;
       
       this.length = data.success.total;
-      console.log(data);
-      
     })
   }
 
   getCurrentPage(event: any) {
-    console.log(event);
     this.pageNo = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     if(event && event.pageIndex === 0) {
       this.pageNo = 1;
     }
-    console.log("PAGE NO ", this.pageNo);
     
     this.getEnquires();
   }

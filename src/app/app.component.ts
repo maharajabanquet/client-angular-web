@@ -23,7 +23,6 @@ export class AppComponent {
   snapShot() {
     this.trafficService.getUserIp().subscribe((resp: any) => {
       this.trafficService.snapShot(resp).subscribe(res => {
-        console.log('snapshot completed');
         this.websiteRead = true;
       })
     })

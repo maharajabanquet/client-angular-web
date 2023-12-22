@@ -104,8 +104,6 @@ export class PendingBookingCashFlowComponent implements OnInit {
     this.bookingData = [];
     let index = 1;
    this.bookingService.getBookingList().subscribe((bList: any) => {
-    console.log('here', bList.success);
-    
     const data = bList && bList.success || []
     for(let i = 0 ; i < data.length; i++) {
       if(!data[i].settled) {
@@ -122,7 +120,6 @@ export class PendingBookingCashFlowComponent implements OnInit {
       paymentDate: element.timestamp
     }))
     this.excelArray = mapElements;
-       console.log('MAPPED' , mapElements);
        this.ELEMENT_DATA = mapElements;
        this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);
        this.getTotalBalance();
@@ -131,7 +128,6 @@ export class PendingBookingCashFlowComponent implements OnInit {
 
 
   getCurrentPage(event: any) {
-    console.log(event);
     this.pageNo = event.pageIndex + 1;
     this.pageSize = event.pageSize;
     if(event && event.pageIndex === 0) {
@@ -156,13 +152,9 @@ export class PendingBookingCashFlowComponent implements OnInit {
       total = total + element.balancedAmount + element.BookingAmount;
       this.total = total;
     });
-    console.log('DUE', this.due);
-    
   }
 
   deleteEmployee(id: any) {
-    console.log(id);
-    
     Swal.fire({
       title: 'Are you sure?',
       text: "You won't be able to revert this!",
