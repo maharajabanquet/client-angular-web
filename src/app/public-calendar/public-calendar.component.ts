@@ -183,6 +183,9 @@ export class PublicCalendarComponent implements OnInit {
   visitorCode: any = null;
   isLoggedIN!: boolean;
   public menuActive = false;
+  innerHeight: any;
+  innerWidth: any;
+
   constructor(private bookingService: BookingServiceService, private dialog:MatDialog, private enService: EnquiryServiceService, private fb: FormBuilder, private _snackBar: MatSnackBar,
     ) {
       window.otpless = (otplessUser: any) => {
@@ -210,7 +213,9 @@ export class PublicCalendarComponent implements OnInit {
 
   openDialog(date: any) {
     const dialogRef = this.dialog.open(EnquiryComponent, {
-      data: {'date': date, 'title': 'Booking Form'}
+      data: {'date': date, 'title': 'Booking Form'},
+      width: this.innerWidth,
+      height: this.innerHeight
     });
     dialogRef.afterClosed().subscribe(result => {
     });
@@ -218,6 +223,8 @@ export class PublicCalendarComponent implements OnInit {
   
 
   ngOnInit(): void {
+    this.innerHeight = window.innerHeight;
+    this.innerWidth = window.innerWidth;
     this.visitorCodeForm = this.fb.group({
       visitorCode : ['', [Validators.required]]
     })

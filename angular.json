@@ -36,7 +36,8 @@
               "src/assets/css/bootstrap.css",
               "src/assets/css/font-awesome.css",
               "src/assets/css/style.css",
-              "src/assets/css/swipebox.css"
+              "src/assets/css/swipebox.css",
+              "src/assets/css/flower.scss"
             ],
             "scripts": [
               "src/assets/js/bootstrap.js",

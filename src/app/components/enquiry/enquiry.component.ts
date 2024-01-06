@@ -2,7 +2,7 @@ import { Component, EventEmitter, Inject, Input, OnInit, Output } from '@angular
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { EnquiryServiceService } from 'src/app/services/enquiry-service.service';
 import {MatSnackBar} from '@angular/material/snack-bar';
-import { MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MAT_DIALOG_DATA, MatDialog } from '@angular/material/dialog';
 import { DialogData } from 'src/app/landing-page/photogallery/photogallery.component';
 
 export interface MarketData {
@@ -27,6 +27,7 @@ export class EnquiryComponent implements OnInit {
     private enquiryServie: EnquiryServiceService,
     private _snackBar: MatSnackBar,
     @Inject(MAT_DIALOG_DATA) public data: MarketData,
+    private dialog:MatDialog
   ) { }
 
   ngOnInit(): void {
@@ -39,14 +40,20 @@ export class EnquiryComponent implements OnInit {
       lastName: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(20)]],
       phoneNumber: ['', [Validators.required,Validators.minLength(10), Validators.maxLength(10), Validators.pattern(/^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/)]],
       address: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-      BookingDate: ['', [Validators.required]]
+      BookingDate: ['', [Validators.required]],
+      is_public: [false]
     })
-    if(this.data) {
+    if(this.data && this.data.date) {
       this.dynamicTitle = 'Booking Form'
     
       this.enquiryForm.get('BookingDate')?.patchValue(this.data.date);
       this.dynamicTitle = this.data.title;
+      this.enquiryForm.get('is_public')?.patchValue(true);
     }
+  }
+
+  cancel() {
+    this.dialog.closeAll();
   }
 
   public checkError = (controlName: string, errorName: string) => {
@@ -62,6 +69,7 @@ export class EnquiryComponent implements OnInit {
         this.hideForm = false;
         this.enquiryServie.visitorCode.next(resp['visitorCode'])
         this.eventEmit.emit('submitted')
+        this.dialog.closeAll();
       }
     }, (err) => {
       this.hideForm = false;

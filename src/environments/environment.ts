@@ -3,7 +3,7 @@
 // The list of file replacements can be found in `angular.json`.
 const LOCAL_PORT = '3000'
 const LOCAL_HOST = `http://localhost:${LOCAL_PORT}/`; 
-const PRODUCTION = 'http://maharajaraxaul.com/';
+const PRODUCTION = 'https://indiashelpingyouth.in/';
 const ISPROD = true;
 
 export const environment = {

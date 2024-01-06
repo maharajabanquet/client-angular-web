@@ -42,6 +42,7 @@ import { PendingBookingCashFlowComponent } from './management/pending-booking-ca
 import { AttendanceComponent, AttendanceDialog } from './management/attendance/attendance.component';
 import { CashInFlowNewComponent } from './management/cash-in-flow-new/cash-in-flow-new.component';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 
 @NgModule({
   declarations: [
@@ -97,9 +98,11 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
     CalendarModule.forRoot({ provide: DateAdapter, useFactory: adapterFactory }),
     QRCodeModule,
     MatChipsModule,
+
     
   ],
-  providers: [BnNgIdleService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
+  providers: [BnNgIdleService, { provide: MAT_DATE_LOCALE, useValue: 'en-GB' },  { provide: MAT_DIALOG_DATA, useValue: {} },
+  { provide: MatDialogRef, useValue: {} }],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

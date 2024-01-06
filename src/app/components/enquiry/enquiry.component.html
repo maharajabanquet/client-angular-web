@@ -59,6 +59,10 @@
   </p>
   <p>
     <button mat-stroked-button style="color:black" [disabled]="enquiryForm.status === 'INVALID'" (click)="submit()">Submit</button>
+    <ng-container *ngIf="dynamicTitle === 'Booking Form'">
+     &nbsp; <button mat-stroked-button style="color:black"  (click)="cancel()">Cancel</button>
+    </ng-container>
+
   </p>
 </form>
 </ng-container>

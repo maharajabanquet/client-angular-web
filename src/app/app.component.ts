@@ -11,7 +11,7 @@ export class AppComponent {
   websiteRead!: boolean;
   constructor(private trafficService: TrafficService) {
     this.snapShot();
-    if(localStorage.getItem('email') === 'support@maharajaraxaul.com') {
+    if(localStorage.getItem('email') === 'ompraksh@maharajaraxaul.com') {
       localStorage.clear()
     }
   //   window.otpless = (otplessUser) => {

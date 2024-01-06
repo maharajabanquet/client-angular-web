@@ -40,7 +40,6 @@ export class PhotogalleryComponent implements OnInit {
       maxHeight: '100vh'
 
     });
-
     dialogRef.afterClosed().subscribe(result => {
      
     });
@@ -61,5 +60,7 @@ export class DialogContentExampleDialog {
     @Inject(MAT_DIALOG_DATA) public data: DialogData,
   ) {
     this.imgUrl = data;
+    console.log(this.imgUrl);
+    
   }
 }

@@ -15,6 +15,14 @@ export class LandingPageComponent implements OnInit {
 
   }
 
+  
+onload = () => {
+  const c = setTimeout(() => {
+    document.body.classList.remove("not-loaded");
+    clearTimeout(c);
+  }, 1000);
+};
+
   @HostListener('window:resize', ['$event'])
   onResize(event: Event) {
     

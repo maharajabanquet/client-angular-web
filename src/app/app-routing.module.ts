@@ -5,7 +5,7 @@ import { BookingDashboardComponent } from './booking-dashboard/booking-dashboard
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
-  { path: 'booking', component: BookingDashboardComponent },
+  { path: 'admin-mbh', component: BookingDashboardComponent },
 
 ];
 

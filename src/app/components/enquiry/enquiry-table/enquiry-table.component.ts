@@ -8,6 +8,7 @@ export interface PeriodicElement {
   phoneNumber: string;
   address: string;
   bookingDate: any;
+  is_public: any
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [];
@@ -18,7 +19,7 @@ const ELEMENT_DATA: PeriodicElement[] = [];
   styleUrls: ['./enquiry-table.component.css']
 })
 export class EnquiryTableComponent implements OnInit {
-  displayedColumns: string[] = ['position', 'name', 'phoneNumber', 'address', 'bookingDate'];
+  displayedColumns: string[] = ['position', 'name', 'phoneNumber', 'address', 'bookingDate', 'isPublic'];
   dataSource = new MatTableDataSource(ELEMENT_DATA);
   ELEMENT_DATA: PeriodicElement[] = [];
   isDataLoaded!: boolean;
@@ -61,7 +62,8 @@ export class EnquiryTableComponent implements OnInit {
         name:  element.firstName + " " + element.lastName,
         phoneNumber: element.phoneNumber,
         address: element.address,
-        bookingDate: new Date(element.BookingDate).toLocaleDateString()
+        bookingDate: new Date(element.BookingDate).toLocaleDateString(),
+        is_public: element && element.is_public || false
       }))
       this.ELEMENT_DATA = mapElements;
       this.dataSource = new MatTableDataSource(this.ELEMENT_DATA);

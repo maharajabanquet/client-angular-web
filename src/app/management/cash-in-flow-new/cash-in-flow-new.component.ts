@@ -98,6 +98,9 @@ export class CashInFlowNewComponent implements OnInit {
       this.total = incash - Math.abs(outcash);  
     });
   }
+  closeModal() {
+    this.dialog.closeAll();
+  }
   addExpenses() {
     this.dialogRef = this.dialog.open(this.cashinflow_dailog, {
       hasBackdrop: false
