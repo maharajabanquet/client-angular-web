@@ -33,23 +33,27 @@
               "node_modules/angular-calendar/css/angular-calendar.css",
               "src/custom-theme.scss",
               "src/styles.css",
-              "src/assets/css/bootstrap.css",
-              "src/assets/css/font-awesome.css",
-              "src/assets/css/style.css",
-              "src/assets/css/swipebox.css",
-              "src/assets/css/flower.scss"
+              "src/assets/css/animate.css",
+              "src/assets/css/aos.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/default-min.css",
+              "src/assets/css/default.css",
+              "src/assets/css/font-awesome.min.css",
+              "src/assets/css/LineIcons.css",
+              "src/assets/css/slick.css",
+              "src/assets/css/style.css"
+              
             ],
             "scripts": [
-              "src/assets/js/bootstrap.js",
-              "src/assets/js/controls.js",
-              "src/assets/js/easing.js",
-              "src/assets/js/jquery-2.2.3.min.js",
-              "src/assets/js/jquery.filterizr.js",
-              "src/assets/js/jquery.swipebox.min.js",
-              "src/assets/js/move-top.js",
-              "src/assets/js/responsiveslides.min.js",
-              "src/assets/js/SmoothScroll.min.js",
-              "src/assets/js/jquery-3.6.0.min.js"
+              "src/assets/js/vendor/jquery-1.12.4.min.js",
+              "src/assets/js/vendor/modernizr-3.6.0.min.js",
+              "src/assets/js/aos.js",
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/jquery.easing.min.js",
+              "src/assets/js/main.js",
+              "src/assets/js/scrolling-nav.js",
+              "src/assets/js/slick.min.js",
+              "src/assets/js/wow.min.js"
             ]
           },
           "configurations": {

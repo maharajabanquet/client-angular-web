@@ -7,14 +7,13 @@
   </mat-toolbar>
 </p>
 
-<ng-container *ngIf="!isAuthenticate">
+<ng-container>
   
-  <my-login-form [error]="error" (submitEM)='open($event)'>Your Form With Error Message</my-login-form>
 </ng-container>
 
-<mat-tab-group mat-align-tabs="start" *ngIf="isAuthenticate">
+<mat-tab-group mat-align-tabs="start">
   <mat-tab label="Dashboard">
-    <div style="display: flex;" *ngIf="isAuthenticate">
+    <div style="display: flex;">
       <mat-card  class="card-style">
         <management></management>
       </mat-card>
@@ -24,7 +23,7 @@
     </div>
   </mat-tab>
   <mat-tab *ngIf="!isManager" label="Ledger">
-    <div style="display: flex;" *ngIf="isAuthenticate">
+    <div style="display: flex;" >
       <mat-card  class="card-style">
         <iframe width='100%' height='1500' src="https://docs.google.com/spreadsheets/d/e/2PACX-1vQEBvuCqtHOq5QVwPPztJqureUe09G4THHRQ1TV8YIw-1CrGbDpIgTT72A567y30nTTlVbrzJaCsm_T/pubhtml?widget=true&amp;headers=false"></iframe>
       </mat-card>
